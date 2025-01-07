@@ -167,7 +167,8 @@ a {
     height: 100%;
     object-fit:contain;
     border-radius: 20px;
-    mix-blend-mode: darken;
+    /*Como no sabemos porque estaba el mix blend mode darken lo ponemos a normal*/
+    mix-blend-mode: normal; 
 }
 
 .cover .right-column {
@@ -394,7 +395,7 @@ ul{
     font-size: 12px;
     padding-top: 10px;
     margin-top: -20px;
-    line-height: 1.2;
+    line-height: 1.4;
     margin-bottom: 30px;
     color: #d2d2d2;
 }
