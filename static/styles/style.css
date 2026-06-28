@@ -1359,11 +1359,40 @@ footer {
 }
 
 .scroller-wrapper {
+    position: relative;
     width: 100%;
     padding: 0 4vw;
     box-sizing: border-box;
     overflow: visible;
 }
+
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    padding: 0;
+}
+
+.scroll-arrow:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.arrow-left  { left:  4vw; }
+.arrow-right { right: 4vw; }
 
 .projects-scroller {
     display: flex;

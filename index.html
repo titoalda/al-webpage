@@ -55,6 +55,8 @@
         </div>
         
         <div class="scroller-wrapper">
+            <button class="scroll-arrow arrow-left"  id="arrow-left"  aria-label="Anterior">&#8592;</button>
+            <button class="scroll-arrow arrow-right" id="arrow-right" aria-label="Siguiente">&#8594;</button>
             <div id="showcase-ticker" class="projects-scroller">
                 <!-- Project 1: El viejo y el mar -->
                 <div class="project-info">
@@ -321,6 +323,14 @@
                 end: () => "+=" + (ticker.scrollWidth - window.innerWidth),
                 invalidateOnRefresh: true
             }
+        });
+        // Flechas: avanza/retrocede un proyecto por click
+        const scrollStep = () => (ticker.scrollWidth - window.innerWidth) / ticker.children.length;
+        document.getElementById('arrow-left').addEventListener('click', () => {
+            window.scrollBy({ top: -scrollStep(), behavior: 'smooth' });
+        });
+        document.getElementById('arrow-right').addEventListener('click', () => {
+            window.scrollBy({ top: scrollStep(), behavior: 'smooth' });
         });
     </script>
 
