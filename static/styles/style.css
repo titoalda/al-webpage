@@ -1616,31 +1616,78 @@ footer {
 }
 
 .philosophy-grid-compact .philosophy-col {
-    padding: 14px 0;
+    padding: 20px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: grid;
+    grid-template-rows: auto 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
 }
 
 .philosophy-grid-compact .philosophy-col:last-child {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+.philosophy-grid-compact .philosophy-col:hover {
+    grid-template-rows: auto 1fr;
+}
+
+.philosophy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.philosophy-toggle {
+    font-size: 20px;
+    color: var(--gray-dark);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s ease;
+    font-weight: 200;
+    padding-right: 4px;
+}
+
+.philosophy-grid-compact .philosophy-col:hover .philosophy-toggle {
+    transform: rotate(45deg);
+    color: #ffffff;
+}
+
 .philosophy-grid-compact .philosophy-col h3 {
     font-family: var(--font-display);
-    font-size: 12px; /* Compact heading */
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 400;
     text-transform: uppercase;
     color: #ffffff;
-    margin: 0 0 4px 0;
+    margin: 0;
     letter-spacing: 0.05em;
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.philosophy-grid-compact .philosophy-col:hover h3 {
+    color: var(--gray-muted);
+}
+
+.philosophy-content {
+    overflow: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.philosophy-grid-compact .philosophy-col:hover .philosophy-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.05s;
 }
 
 .philosophy-grid-compact .philosophy-col p {
     font-family: var(--font-sans);
     font-size: 13.5px;
     color: var(--gray-muted);
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 0;
     font-weight: 300;
+    padding-top: 14px;
 }
 
 @media (max-width: 1024px) {
