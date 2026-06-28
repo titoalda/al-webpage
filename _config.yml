@@ -1,5 +1,5 @@
 exclude:
-  - v1/
-  - v2/
+  - .old/v1/
+  - .old/v2/
   - URL.txt
 
