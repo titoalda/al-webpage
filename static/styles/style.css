@@ -910,14 +910,15 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 9999px;
     background-color: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
     outline: none;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-    width: 36px; /* Fallback size */
-    height: 36px;
+    height: 44px;
+    padding: 0 11px;
+    overflow: hidden;
     flex-shrink: 0;
 }
 
@@ -931,8 +932,9 @@ footer {
     align-items: center;
     justify-content: center;
     color: #f2f2f2;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
 }
 
 .dock-icon svg {
@@ -940,32 +942,25 @@ footer {
     height: 100%;
 }
 
-/* Dock Item Tooltip */
+/* Dock Item Label (inline, a la derecha del icono) */
 .dock-tooltip {
-    position: absolute;
-    bottom: 54px;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background-color: rgba(17, 17, 17, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #f2f2f2;
-    padding: 6px 12px;
     font-size: 11px;
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    letter-spacing: 0.08em;
+    color: #f2f2f2;
     white-space: nowrap;
-    z-index: 2000;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
+    pointer-events: none;
 }
 
 .dock-item:hover .dock-tooltip {
+    max-width: 100px;
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    margin-left: 7px;
 }
 
 @media (max-width: 768px) {
@@ -1371,28 +1366,27 @@ footer {
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    background: rgba(0, 0, 0, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 22px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.35);
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
+    transition: color 0.2s ease;
     padding: 0;
+    line-height: 1;
 }
 
 .scroll-arrow:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.85);
 }
 
-.arrow-left  { left:  4vw; }
-.arrow-right { right: 4vw; }
+.arrow-left  { left:  1.5vw; }
+.arrow-right { right: 1.5vw; }
 
 .projects-scroller {
     display: flex;
