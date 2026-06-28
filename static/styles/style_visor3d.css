@@ -21,6 +21,11 @@ a {
     color: inherit;
 }
 
+a:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
 .sketchfab-embed-wrapper {
     height: 70vh;
     margin: 40px auto;
@@ -57,9 +62,15 @@ footer {
     transform: rotate(90deg);
 }
 
-.image-circle:hover {
+.image-circle:hover,
+.image-circle:focus-visible {
     background-color: rgba(255, 255, 255, 0.10);
     opacity: 1;
+}
+
+.image-circle:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }
 
 @media screen and (max-width: 768px) {

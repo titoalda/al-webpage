@@ -11,7 +11,7 @@
     --footer-bg: #1e1e1e;
     --footer-text: #f6f6f6;
     
-    --font-display: 'Satoshi', sans-serif;
+    --font-display: 'Clash Display', sans-serif;
     --font-sans: 'Satoshi', sans-serif;
     --font-serif: 'Playfair Display', serif;
 }
@@ -148,9 +148,9 @@ header nav a:hover {
 }
 
 .hero-divider {
-    width: 2px;
+    width: 1px;
     height: 18vh;
-    background-color: #ffffff;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35) 20%, rgba(255, 255, 255, 0.35) 80%, transparent);
     flex-shrink: 0;
 }
 
@@ -202,7 +202,8 @@ header nav a:hover {
     
     .hero-divider {
         width: 80px;
-        height: 2px;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35) 20%, rgba(255, 255, 255, 0.35) 80%, transparent);
         margin: 0 auto;
     }
     
@@ -213,10 +214,14 @@ header nav a:hover {
 
 /* Typographic Echo Stack (Dark themes) */
 .echo-text {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.02em;
     font-size: 12vw;
     text-transform: uppercase;
     margin: 0;
     line-height: 1;
+    white-space: nowrap;
 }
 
 .echo-front {
@@ -262,7 +267,7 @@ header nav a:hover {
 /* Hero subtitle typing animation */
 .hero-subtitle {
     display: block;
-    margin: 24px auto 0;
+    margin: 24px 0 0 4px; /* Align to the left (aligned with name) on desktop */
     font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 300;
@@ -284,7 +289,7 @@ header nav a:hover {
 @media (max-width: 768px) {
     .hero-subtitle {
         font-size: 14px;
-        margin-top: 16px;
+        margin: 16px auto 0; /* Keep centered on mobile */
     }
 }
 
@@ -607,6 +612,23 @@ section {
     width: 100%;
 }
 
+.contact-form .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.contact-form .form-group label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 4px;
+    cursor: pointer;
+}
+
 .contact-form .form-group input,
 .contact-form .form-group textarea {
     width: 100%;
@@ -630,6 +652,7 @@ section {
 .contact-form .form-group textarea:focus {
     border-color: #ffffff;
     background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .contact-form .button-circle {
@@ -653,10 +676,13 @@ section {
     transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.button-circle:hover {
+.button-circle:hover,
+.button-circle:focus-visible {
     background-color: #f2f2f2;
     color: #111111;
     transform: translateY(-2px);
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
 }
 
 /* Footer */
@@ -1028,7 +1054,8 @@ footer {
     -webkit-backdrop-filter: none !important;
 }
 
-.dock-item:hover {
+.dock-item:hover,
+.dock-item:focus-visible {
     width: 125px !important; /* Optimizes layout shift size to prevent skipping buttons on leave */
 }
 
@@ -1055,10 +1082,16 @@ footer {
     height: 50%;
 }
 
-.dock-item:hover .dock-icon {
+.dock-item:hover .dock-icon,
+.dock-item:focus-visible .dock-icon {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.06) 100%), #121212;
     border-color: rgba(255, 255, 255, 0.55);
     box-shadow: 0 0 18px rgba(255, 255, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.dock-item:focus-visible .dock-icon {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }
 
 /* Tooltip/Tab (Flat, dark solid background merging with the circular button) */
@@ -1091,7 +1124,8 @@ footer {
     margin-right: 0;
 }
 
-.dock-item:hover .dock-tooltip {
+.dock-item:hover .dock-tooltip,
+.dock-item:focus-visible .dock-tooltip {
     opacity: 1;
     flex-grow: 1;
     width: auto;
@@ -1549,11 +1583,17 @@ footer {
     line-height: 1;
 }
 
-.scroll-arrow:hover {
+.scroll-arrow:hover,
+.scroll-arrow:focus-visible {
     background: rgba(50, 50, 50, 0.95);
     border-color: rgba(255, 255, 255, 0.35);
     transform: translateY(-50%) scale(1.08);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.scroll-arrow:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }
 
 .arrow-left  { left:  2.5vw; }
@@ -1561,13 +1601,15 @@ footer {
 
 /* Show arrows on hover of corresponding area or arrow itself */
 .hover-area-left:hover ~ .arrow-left,
-.arrow-left:hover {
+.arrow-left:hover,
+.arrow-left:focus-visible {
     opacity: 1;
     pointer-events: auto;
 }
 
 .hover-area-right:hover ~ .arrow-right,
-.arrow-right:hover {
+.arrow-right:hover,
+.arrow-right:focus-visible {
     opacity: 1;
     pointer-events: auto;
 }
