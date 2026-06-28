@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link href="../static/styles/style_individualproject.css" rel="stylesheet" type="text/css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@300,400,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+
+        <!-- efecto de deslizamiento suave extraido de https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_smooth_scroll_jquery para navegadores como safari -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="../static/scripts/smooth-scrolling.js"></script>
+
+        <!-- efecto de desaparicion de cabecera extraido de https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp -->
+        <script src="../static/scripts/script-scroll.js"></script>
+
+        <title>Aldara Álvarez</title>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- para que sea responsive -->
+    </head>
+
+    <body>
+
+        <header>
+        <a href="../" class="logo">Aldara Álvarez</a>
+        <nav class="magnification-dock">
+            <a href="../projects" class="dock-item" data-label="Proyectos">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Proyectos</span>
+            </a>
+            <a href="../about" class="dock-item" data-label="Sobre Mí">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Sobre Mí</span>
+            </a>
+            <a href="../contact" class="dock-item" data-label="Contacto">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Contacto</span>
+            </a>
+        </nav>
+    </header>
+
+        
+
+
+        <div id="bg-wrap"> <!-- fondo animado extraido de https://alvarotrigo.com/blog/animated-backgrounds-css/ y posteriormente editado -->
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5"><animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(40, 40, 40, 1)"></stop><stop offset="100%" stop-color="rgba(40, 40, 40, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5"><animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(60, 60, 60, 1)"></stop><stop offset="100%" stop-color="rgba(60, 60, 60, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5"><animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(80, 80, 80, 1)"></stop><stop offset="100%" stop-color="rgba(80, 80, 80, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient4" cx="50%" cy="50%" fx="4.56417%" fy="50%" r=".5"><animate attributeName="fx" dur="23s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(0, 40, 0, 1)"></stop><stop offset="100%" stop-color="rgba(0, 60, 0, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient5" cx="50%" cy="50%" fx="2.65405%" fy="50%" r=".5"><animate attributeName="fx" dur="24.5s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(0,0,60, 1)"></stop><stop offset="100%" stop-color="rgba(0,0,60, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient6" cx="50%" cy="50%" fx="0.981338%" fy="50%" r=".5"><animate attributeName="fx" dur="25.5s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(80,0,0, 1)"></stop><stop offset="100%" stop-color="rgba(60,0,0, 0)"></stop></radialGradient>
+                </defs>
+                <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)" transform="rotate(334.41 50 50)"><animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate><animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite"></animateTransform></rect>
+                <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)" transform="rotate(255.072 50 50)"><animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate><animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s" repeatCount="indefinite"></animateTransform></rect>
+                <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)" transform="rotate(139.903 50 50)"><animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate><animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s" repeatCount="indefinite"></animateTransform></rect>
+            </svg>
+        </div>
+
+
+        <div class="cover">
+            <div id="left-column-casadecuentos" class="left-column">
+                <img id="img-casadecuentos" src="../static/images/pr_casacuentos_cover.jpg" alt="Proyecto Namasté">
+            </div>
+            <div class="right-column">
+                <div class="subtitles">
+                    <div class="left">
+                        <div class="upper">
+                            <p class="light left">PROYECTO DE DISEÑO <br> DE Modelo 3D</p>
+                        </div>
+                        <div class="lower">
+                            <ul class="left">
+                                <li><p class="light left-list-title">PROGRAMAS UTILIZADOS</p></li>
+                                <li class="light left-list-item"><p>3DSMAX</p></li>
+                                <li class="light left-list-item"><p>PROCREATE</p></li>
+                            </ul>    
+                        </div>
+                    </div>
+                    
+
+                    <div class="right">
+                        <div class="upper">
+                            <a id="button_image" href="#briefing">
+                                <img src="../static/images/flecha.png" class="light image-circle" alt="Flecha en png">
+                            </a>
+                        </div>
+                        <div id="title_responsive" class="bold title">CASA DE CUENTOS</div>
+                    </div>
+                </div>
+                <div id="title" class="bold title">CASA DE CUENTOS</div>
+            </div>
+        </div>
+        
+        
+                <!-- Briefing Trigger Section -->
+        <div id="briefing" class="briefing-trigger-section">
+            <button id="open-briefing" class="button-circle">VER <em>BRIEFING</em> DEL PROYECTO</button>
+        </div>
+        
+
+        <div class="description">
+                        <div class="left-column"  id="description-pc">
+                <div class="fixed-content">
+                    <p class="light p3">PROYECTO DE DISEÑO DE <br> Modelo 3D</p>
+                    <p class="p4">CASA DE CUENTOS</p>
+                    
+                    <div class="resource-block">
+                        <p class="p6">Textos</p>
+                        <p class="light p7">Diseño de un modelo de casa inspirada en los cuentos infantiles y de estilo lowpoly. Modelo diseñado en Procreate.</p>
+                    </div>
+                    
+                    <div class="resource-block">
+                        <p class="p6">Ilustraciones</p>
+                        <p class="light p7">Diseño de un modelo de casa inspirada en los cuentos infantiles y de estilo lowpoly. Modelo diseñado en Procreate.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="image-container">
+                    <img src="../static/images/pr_casacuentos_description.jpg" alt="Desarrollo del Proyecto Casa de cuentos">
+                </div>
+            </div>
+                        <div class="left-column"  id="description-responsive">
+                <div class="fixed-content">
+                    <p class="light p3">PROYECTO DE DISEÑO DE <br> Modelo 3D</p>
+                    <p class="p4">CASA DE CUENTOS</p>
+                    
+                    <div class="resource-block">
+                        <p class="p6">Textos</p>
+                        <p class="light p7">Diseño de un modelo de casa inspirada en los cuentos infantiles y de estilo lowpoly. Modelo diseñado en Procreate.</p>
+                    </div>
+                    
+                    <div class="resource-block">
+                        <p class="p6">Ilustraciones</p>
+                        <p class="light p7">Diseño de un modelo de casa inspirada en los cuentos infantiles y de estilo lowpoly. Modelo diseñado en Procreate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>        
+
+
+        <div class="more_projects">
+            <div class="rectangle">
+                <a href="elviejoyelmar" class="button-circle left">PROYECTO ANTERIOR</a>
+                <form action="../projects.html"><button class="light button-circle center">VER MÁS PROYECTOS</button></form>
+                <form action="formayfuncion.html"><button class="light button-circle right">PROYECTO SIGUIENTE</button></form>
+            </div>
+        </div>
+
+
+        <div class="contact_me">
+            <p class="preguntas-text">¿TIENES ALGÚN PROYECTO EN MENTE?</p>
+            <p class="hablemos-text">¡HABLEMOS!</p>
+            <a href="../contact" class="button-circle">Ir a Contacto</a>
+            <p class="mensajefinal-text">SIEMPRE ES UN PLACER CONECTAR CON NUEVOS PROYECTOS Y PERSONAS.</p>
+        </div>
+
+
+            <!-- Footer -->
+        <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ALDARA ÁLVAREZ</h4>
+                <p>Diseño de autor con base suiza. Desarrollo soluciones visuales y multimedia con un fuerte enfoque técnico y estético.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Secciones</h4>
+                <ul>
+                    <li><a href="../projects">Proyectos</a></li>
+                    <li><a href="../about">Sobre Mí</a></li>
+                    <li><a href="../contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Proyectos Destacados</h4>
+                <ul>
+                    <li><a href="elviejoyelmar">El viejo y el mar</a></li>
+                    <li><a href="namaste">Namasté</a></li>
+                    <li><a href="casacuentos">Casa de cuentos</a></li>
+                    <li><a href="casadecor">Casa Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span>aldaraalvarezglez@gmail.com</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara Álvarez. Todos los derechos reservados.</span>
+            
+        </div>
+    </footer>
+        
+    <script src="../static/scripts/dock.js"></script>
+<!-- Briefing Popup Panel (Option 1 Modal) -->
+    <div id="briefing-popup" class="briefing-popup">
+        <div class="popup-overlay"></div>
+        <div class="popup-content">
+            <button id="close-briefing" class="close-btn">&times;</button>
+            <h2 class="popup-title"><em>Briefing</em></h2>
+            <div class="popup-body">
+                <p>Casa de cuentos es un proyecto de modelado 3D interactivo que consiste en el modelado, texturizado e iluminación de un escenario tridimensional inspirado en los cuentos infantiles. El modelado se realizó siguiendo un estilo de bajo poligonado (lowpoly) limpio y optimizado, con un cuidadoso trabajo en la iluminación y disposición de cámara.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const openBtn = document.getElementById("open-briefing");
+        const closeBtn = document.getElementById("close-briefing");
+        const popup = document.getElementById("briefing-popup");
+        const overlay = popup.querySelector(".popup-overlay");
+
+        function openPopup() {
+            popup.classList.add("active");
+            document.body.style.overflow = "hidden"; // Disable scroll
+        }
+
+        function closePopup() {
+            popup.classList.remove("active");
+            document.body.style.overflow = ""; // Enable scroll
+        }
+
+        if (openBtn && closeBtn && popup && overlay) {
+            openBtn.addEventListener("click", openPopup);
+            closeBtn.addEventListener("click", closePopup);
+            overlay.addEventListener("click", closePopup);
+        }
+    });
+    </script>
+</body>
+</html>
+

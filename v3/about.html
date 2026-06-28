@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aldara Álvarez - Sobre Mí</title>
+    <link rel="stylesheet" href="static/styles/style.css?v=12">
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header>
+        <a href="./" class="logo">Aldara Álvarez</a>
+        <nav class="magnification-dock">
+            <a href="projects" class="dock-item" data-label="Proyectos">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Proyectos</span>
+            </a>
+            <a href="about" class="dock-item" data-label="Sobre Mí">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Sobre Mí</span>
+            </a>
+            <a href="contact" class="dock-item" data-label="Contacto">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Contacto</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Compact About Section (Split Screen Card) -->
+    <section class="about-compact-section">
+        <div class="about-card-container">
+            <div class="about-card-photo">
+                <img src="static/images/author2.jpg" alt="Fotografía de Aldara Álvarez">
+            </div>
+            <div class="about-card-info">
+                <h1 class="about-title">Sobre Mí</h1>
+                <blockquote class="philosophy-quote">
+                    El diseño es la constante búsqueda de la perfecta combinación entre forma y función.
+                </blockquote>
+                
+                <div class="philosophy-grid-compact">
+                    <div class="philosophy-col">
+                        <h3>Origen</h3>
+                        <p>Nacida en Baiona, Galicia. Diseñadora con pasión por la tipografía y el diseño en todas sus formas, del papel a la pantalla.</p>
+                    </div>
+                    <div class="philosophy-col">
+                        <h3>Filosofía</h3>
+                        <p>La creatividad y la resolución de problemas van siempre de la mano. El diseño es el lenguaje con el que da forma a las ideas.</p>
+                    </div>
+                    <div class="philosophy-col">
+                        <h3>Formación</h3>
+                        <p>Grado en Diseño por la UCM y Máster en Diseño Gráfico Digital por la UNIR. Le apasiona el diseño editorial, la ilustración, el trabajo vectorial, la identidad corporativa y el retoque fotográfico.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ALDARA ÁLVAREZ</h4>
+                <p>Diseño de autor con base suiza. Desarrollo soluciones visuales y multimedia con un fuerte enfoque técnico y estético.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Secciones</h4>
+                <ul>
+                    <li><a href="projects">Proyectos</a></li>
+                    <li><a href="about">Sobre Mí</a></li>
+                    <li><a href="contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Proyectos Destacados</h4>
+                <ul>
+                    <li><a href="projects/elviejoyelmar">El viejo y el mar</a></li>
+                    <li><a href="projects/namaste">Namasté</a></li>
+                    <li><a href="projects/casacuentos">Casa de cuentos</a></li>
+                    <li><a href="projects/casadecor">Casa Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span>aldaraalvarezglez@gmail.com</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara Álvarez. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="static/scripts/dock.js"></script>
+</body>
+</html>

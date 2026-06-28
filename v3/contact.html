@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aldara Álvarez - Contacto</title>
+    <link rel="stylesheet" href="static/styles/style.css">
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header>
+        <a href="./" class="logo">Aldara Álvarez</a>
+        <nav class="magnification-dock">
+            <a href="projects" class="dock-item" data-label="Proyectos">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Proyectos</span>
+            </a>
+            <a href="about" class="dock-item" data-label="Sobre Mí">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Sobre Mí</span>
+            </a>
+            <a href="contact" class="dock-item" data-label="Contacto">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Contacto</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Centered Direct Contact Section -->
+    <section class="contact-page-section centered">
+        <h1 class="contact-page-title">Hablemos</h1>
+        <p class="contact-page-desc">Si tienes una propuesta de colaboración o un proyecto en mente, completa el formulario a continuación o escribe directamente a <a href="mailto:aldaraalvarezglez@gmail.com">aldaraalvarezglez@gmail.com</a>.</p>
+        
+        <div class="contact-form-wrapper">
+            <!-- Hidden Loading State Overlay -->
+            <div id="loading-overlay" class="loading-overlay" style="display: none;">
+                <!-- Long Fazers Background -->
+                <div class="longfazers">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="loader-container">
+                    <div class="loader">
+                        <span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <div class="base">
+                            <span></span>
+                            <div class="face"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading-content">
+                    <h2 class="loading-title">ENVIANDO MENSAJE</h2>
+                    <p class="loading-subtitle">Estableciendo conexión segura...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Success State Overlay -->
+            <div id="success-overlay" class="success-overlay" style="display: none;">
+                <div class="success-icon-container">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <h1 class="success-title" id="success-title-text">¡Gracias!</h1>
+                <p class="success-subtitle">Te contactaré en breve.</p>
+            </div>
+
+            <form id="contact-form" class="contact-form" action="#" method="POST">
+                <!-- Spambot Honeypot Field -->
+                <div class="honeypot-field" style="display:none;">
+                    <label for="honeypot">Leave this field blank</label>
+                    <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="NOMBRE" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="EMAIL" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="MENSAJE" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="button-circle">ENVIAR MENSAJE</button>
+                <div id="form-status" class="form-status" style="display:none; margin-top: 15px; font-weight: 700; font-size: 14px;"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ALDARA ÁLVAREZ</h4>
+                <p>Diseño de autor con base suiza. Desarrollo soluciones visuales y multimedia con un fuerte enfoque técnico y estético.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Secciones</h4>
+                <ul>
+                    <li><a href="projects">Proyectos</a></li>
+                    <li><a href="about">Sobre Mí</a></li>
+                    <li><a href="contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Proyectos Destacados</h4>
+                <ul>
+                    <li><a href="projects/elviejoyelmar">El viejo y el mar</a></li>
+                    <li><a href="projects/namaste">Namasté</a></li>
+                    <li><a href="projects/casacuentos">Casa de cuentos</a></li>
+                    <li><a href="projects/casadecor">Casa Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span>aldaraalvarezglez@gmail.com</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara Álvarez. Todos los derechos reservados.</span>
+            
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="static/scripts/contact.js"></script>
+    <script src="static/scripts/dock.js"></script>
+</body>
+</html>
