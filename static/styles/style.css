@@ -122,10 +122,93 @@ header nav a:hover {
     border-bottom: 1px solid var(--border-color);
 }
 
+/* Hero Split Layout */
+.hero-split-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4.5vw;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.hero-left-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hero-logo {
+    height: 22vh;
+    max-height: 220px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
+}
+
+.hero-divider {
+    width: 2px;
+    height: 18vh;
+    background-color: #ffffff;
+    flex-shrink: 0;
+}
+
+.hero-right-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+}
+
 .echo-container {
     position: relative;
     display: inline-block;
-    text-align: center;
+    text-align: left;
+}
+
+.hero-right-col .echo-text {
+    font-size: 6.5vw;
+    line-height: 1;
+}
+
+.hero-right-col .hero-subtitle {
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+@media (max-width: 768px) {
+    .hero-split-container {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+        padding: 40px 0;
+    }
+    
+    .hero-right-col {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .hero-right-col .echo-text {
+        font-size: 11vw;
+    }
+    
+    .hero-right-col .hero-subtitle {
+        align-self: center;
+        margin-top: 15px;
+    }
+    
+    .hero-divider {
+        width: 80px;
+        height: 2px;
+        margin: 0 auto;
+    }
+    
+    .hero-logo {
+        height: 140px;
+    }
 }
 
 /* Typographic Echo Stack (Dark themes) */
