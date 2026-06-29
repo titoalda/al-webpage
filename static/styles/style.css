@@ -292,7 +292,7 @@ header nav a:hover {
 
 .hero-subtitle::after {
     content: '|';
-    animation: blinkCursor 0.75s step-end infinite;
+    animation: blinkCursor 1s step-end infinite;
     color: #f2f2f2;
     margin-left: 4px;
 }
@@ -303,8 +303,8 @@ header nav a:hover {
 }
 
 @keyframes blinkCursor {
-    from, to { border-color: transparent }
-    50% { border-color: #f2f2f2 }
+    from, to { opacity: 1; }
+    50%       { opacity: 0; }
 }
 
 @media (max-width: 768px) {
@@ -1140,7 +1140,7 @@ footer {
     
     .hero-subtitle::after {
         content: '|';
-        animation: blinkCursor 0.75s step-end infinite;
+        animation: blinkCursor 1s step-end infinite;
         margin-left: 2px;
         font-weight: 300;
         color: #ffffff;
@@ -2477,4 +2477,6 @@ footer {
 .left-column:hover img {
     filter: grayscale(0%);
     transform: scale(1.03);
+}
+    50%       { opacity: 0; }
 }
