@@ -1000,7 +1000,7 @@ footer {
         align-items: flex-start !important;
         justify-content: center !important;
         gap: 32px !important;
-        padding: 40px !important;
+        padding: 40px 40px 120px 40px !important; /* Raised bottom padding for optical vertical centering */
         margin: 0;
         border: none;
         border-left: 1px solid rgba(255, 255, 255, 0.08);
@@ -1076,6 +1076,7 @@ footer {
         max-width: none !important;
         width: auto !important;
         margin: 0 !important;
+        overflow: visible !important;
     }
     
     .magnification-dock .dock-item::after {
@@ -1475,6 +1476,7 @@ footer {
     }
 }
 
+@media (min-width: 769px) {
 /* Magnification Dock Header Nav */
 .magnification-dock {
     display: flex;
@@ -1614,6 +1616,7 @@ footer {
     padding-left: 0.9rem;
     padding-right: 1.4rem; /* padding right prevents text from getting covered by overlap */
     margin-right: -0.8rem; /* negative margin slips the flat right end behind the circle */
+}
 }
 
 /* Magnification dock mobile display:none removed to allow hamburger drawer style */
