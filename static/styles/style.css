@@ -981,6 +981,26 @@ footer {
         margin: 16px auto 0;
         display: inline-block; /* Ensure width constraints apply */
     }
+
+    /* Mobile Service Cards */
+    .services-header h2 {
+        font-size: 36px;
+        text-align: center;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .service-card {
+        padding: 24px;
+        height: auto;
+        min-height: 280px;
+        box-sizing: border-box;
+    }
 }
 
 /* V3 Multi-page Layout Extensions */
@@ -1844,14 +1864,28 @@ footer {
     }
     .scroller-wrapper {
         overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: block;
+        width: 100%;
         padding-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .scroller-wrapper::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for a cleaner look */
     }
     .projects-scroller {
+        display: flex !important;
+        flex-direction: row;
+        width: max-content !important;
         transform: none !important; /* Disable GSAP translation on mobile/tablet */
     }
     .project-info {
         width: 45vw;
         height: 40vh;
+        display: inline-block;
+        vertical-align: top;
+        white-space: normal; /* Restore normal wrapping inside card */
     }
 }
 

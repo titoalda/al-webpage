@@ -346,26 +346,28 @@
         const ticker = document.getElementById("showcase-ticker");
         const pinContainer = document.getElementById("showcase-pin-container");
 
-        gsap.to(ticker, {
-            x: () => -(ticker.scrollWidth - window.innerWidth + 120),
-            ease: "none",
-            scrollTrigger: {
-                trigger: pinContainer,
-                pin: true,
-                scrub: 1,
-                start: "top top",
-                end: () => "+=" + (ticker.scrollWidth - window.innerWidth),
-                invalidateOnRefresh: true
-            }
-        });
-        // Flechas: avanza/retrocede un proyecto por click
-        const scrollStep = () => (ticker.scrollWidth - window.innerWidth) / ticker.children.length;
-        document.getElementById('arrow-left').addEventListener('click', () => {
-            window.scrollBy({ top: -scrollStep(), behavior: 'smooth' });
-        });
-        document.getElementById('arrow-right').addEventListener('click', () => {
-            window.scrollBy({ top: scrollStep(), behavior: 'smooth' });
-        });
+        if (window.innerWidth > 1024) {
+            gsap.to(ticker, {
+                x: () => -(ticker.scrollWidth - window.innerWidth + 120),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: pinContainer,
+                    pin: true,
+                    scrub: 1,
+                    start: "top top",
+                    end: () => "+=" + (ticker.scrollWidth - window.innerWidth),
+                    invalidateOnRefresh: true
+                }
+            });
+            // Flechas: avanza/retrocede un proyecto por click
+            const scrollStep = () => (ticker.scrollWidth - window.innerWidth) / ticker.children.length;
+            document.getElementById('arrow-left').addEventListener('click', () => {
+                window.scrollBy({ top: -scrollStep(), behavior: 'smooth' });
+            });
+            document.getElementById('arrow-right').addEventListener('click', () => {
+                window.scrollBy({ top: scrollStep(), behavior: 'smooth' });
+            });
+        }
     </script>
 
     <!-- Typing animation script for hero subtitle -->
