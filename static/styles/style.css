@@ -765,7 +765,7 @@ footer {
 
 .footer-grid .footer-col:first-child .footer-logo {
     /* logo height (28px) + margin = h4 height (~24px) + h4 margin-bottom (24px) = 48px total */
-    margin-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 .footer-col h4 {
