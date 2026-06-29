@@ -4,7 +4,7 @@
 
 :root {
     --bg-color: #111111;
-    --text-color: currentColor;
+    --text-color: #f2f2f2;
     --gray-muted: #b6b5b5;
     --gray-dark: #838282;
     --border-color: rgba(255, 255, 255, 0.08);
@@ -111,12 +111,12 @@ header nav a:hover {
     border: 1.5px solid #f2f2f2;
     border-radius: 9999px;
     background-color: transparent;
-    color: currentColor;
+    color: #f2f2f2;
     transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .btn-contact:hover {
-    background-color: currentColor;
+    background-color: #f2f2f2;
     color: #111111;
 }
 
@@ -299,7 +299,7 @@ header nav a:hover {
 
 .hero-subtitle strong {
     font-weight: 900;
-    color: #f2f2f2;
+    color: #ffffff;
 }
 
 @keyframes blinkCursor {
@@ -400,7 +400,7 @@ section {
     gap: 16px;
     margin-right: 40px;
     flex-shrink: 0;
-    color: currentColor;
+    color: #f2f2f2;
 }
 
 .ticker-intro-text h2 {
@@ -551,7 +551,7 @@ section {
 
 .service-card:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border-color: currentColor;
+    border-color: #f2f2f2;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
@@ -567,7 +567,7 @@ section {
 
 .service-card:hover .icon-container {
     transform: rotate(12deg);
-    background-color: currentColor;
+    background-color: #f2f2f2;
     color: #111111;
 }
 
@@ -659,7 +659,7 @@ section {
     background-color: rgba(255, 255, 255, 0.05);
     border: 1.5px solid transparent;
     border-radius: 4px;
-    color: currentColor;
+    color: #f2f2f2;
     font-family: var(--font-sans);
     font-weight: 300;
     font-size: 15px;
@@ -673,7 +673,7 @@ section {
 
 .contact-form .form-group input:focus,
 .contact-form .form-group textarea:focus {
-    border-color: currentColor;
+    border-color: #ffffff;
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
@@ -689,7 +689,7 @@ section {
     border: 1.5px solid #f2f2f2;
     border-radius: 9999px;
     background-color: transparent;
-    color: currentColor;
+    color: #f2f2f2;
     font-family: var(--font-sans);
     font-weight: 700;
     text-transform: uppercase;
@@ -701,7 +701,7 @@ section {
 
 .button-circle:hover,
 .button-circle:focus-visible {
-    background-color: currentColor;
+    background-color: #f2f2f2;
     color: #111111;
     transform: translateY(-2px);
     outline: 2px solid #ffffff;
@@ -759,7 +759,7 @@ footer {
     font-size: 20px;
     text-transform: uppercase;
     margin-bottom: 24px;
-    color: currentColor;
+    color: #ffffff;
 }
 
 .footer-col p {
@@ -904,7 +904,7 @@ footer {
     display: block;
     width: 20px;
     height: 1.5px;
-    background-color: currentColor;
+    background-color: #ffffff;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     transform-origin: center;
 }
@@ -1485,7 +1485,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: currentColor;
+    color: #f2f2f2;
     height: 100%;
     aspect-ratio: 1; /* Always a perfect circle matching the magnified height */
     border-radius: 50%;
@@ -1533,7 +1533,7 @@ footer {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: currentColor;
+    color: #f2f2f2;
     font-family: var(--font-sans);
     
     background: rgba(8, 8, 8, 0.88);
@@ -1589,7 +1589,7 @@ footer {
 }
 
 .contact-page-section.centered .contact-page-desc a {
-    color: currentColor;
+    color: #ffffff;
     text-decoration: underline;
     transition: color 0.2s ease;
 }
@@ -1815,7 +1815,7 @@ footer {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: currentColor;
+    color: #ffffff;
     animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -1841,7 +1841,7 @@ footer {
 
 .progress-bar-fill {
     height: 100%;
-    background-color: currentColor;
+    background-color: #ffffff;
     width: 40%;
     animation: progressBarAnim 2.5s ease-in-out infinite;
 }
@@ -1871,7 +1871,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: currentColor;
+    color: #ffffff;
     margin-bottom: 24px;
 }
 
@@ -1885,7 +1885,7 @@ footer {
     font-size: 44px;
     font-weight: 300;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin-bottom: 8px;
     line-height: 1.1;
 }
@@ -1928,7 +1928,7 @@ footer {
     font-size: 48px;
     font-weight: 300;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin: 0 0 10px 0;
 }
 
@@ -1984,7 +1984,7 @@ footer {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    color: currentColor;
+    color: #ffffff;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -2098,7 +2098,7 @@ footer {
     font-size: 24px;
     font-weight: 300;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin: 0 0 8px 0;
     letter-spacing: 0.02em;
 }
@@ -2222,7 +2222,7 @@ footer {
     font-size: 36px; /* Compact title size */
     font-weight: 300;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin: 0 0 8px 0;
 }
 
@@ -2230,7 +2230,7 @@ footer {
 .about-card-info .about-intro {
     font-family: var(--font-sans);
     font-size: 15px; /* Compact quote size */
-    color: currentColor;
+    color: #ffffff;
     line-height: 1.5;
     margin: 0 0 20px 0;
     font-weight: 300;
@@ -2258,7 +2258,7 @@ footer {
     font-size: 12px; /* Compact heading */
     font-weight: 500;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin: 0 0 4px 0;
     letter-spacing: 0.05em;
 }
@@ -2288,7 +2288,7 @@ footer {
 }
 
 .philosophy-grid-compact .philosophy-col li strong {
-    color: currentColor;
+    color: #ffffff;
     font-weight: 500;
 }
 
@@ -2328,7 +2328,7 @@ footer {
     font-size: 72px;
     font-weight: 300;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin: 0 0 16px 0;
 }
 
@@ -2395,7 +2395,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    color: currentColor;
+    color: #f2f2f2;
 }
 
 .project-stack-card .card-num {
@@ -2411,7 +2411,7 @@ footer {
     font-size: 36px;
     font-weight: 300;
     text-transform: uppercase;
-    color: currentColor;
+    color: #ffffff;
     margin: 0 0 10px 0;
     line-height: 1.1;
 }
