@@ -285,16 +285,21 @@ header nav a:hover {
     letter-spacing: 0.15em;
     color: var(--gray-dark);
     min-height: 28px;
-    border-right: 2px solid #f2f2f2;
+    border-right: none !important;
     white-space: nowrap;
+    width: fit-content;
+}
+
+.hero-subtitle::after {
+    content: '|';
+    animation: blinkCursor 0.75s step-end infinite;
+    color: #f2f2f2;
+    margin-left: 4px;
 }
 
 .hero-subtitle strong {
     font-weight: 900;
     color: #ffffff;
-}
-    width: fit-content;
-    animation: blinkCursor 0.75s step-end infinite;
 }
 
 @keyframes blinkCursor {
@@ -887,6 +892,12 @@ footer {
 }
 
 /* Hamburger animations when open */
+.hamburger-menu.open {
+    position: absolute !important;
+    top: 13px !important;
+    right: 20px !important;
+}
+
 .hamburger-menu.open span:nth-child(1) {
     transform: translateY(5.5px) rotate(45deg);
 }
@@ -949,13 +960,13 @@ footer {
         right: -100vw;
         width: 100vw;
         height: 100vh;
-        background: rgba(11, 11, 11, 0.98);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        background: #0b0b0b !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 60px !important;
         transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 1000 !important;
         padding: 0;
@@ -1077,15 +1088,29 @@ footer {
     }
     
     .hero-subtitle {
-        font-size: 12px; /* Increased from 11px */
-        letter-spacing: 0.08em;
-        white-space: normal; /* Allow wrapping */
-        word-break: keep-all; /* Prevent breaking mid-word */
+        font-size: 11px !important;
+        letter-spacing: 0.05em;
+        white-space: pre-wrap !important;
+        word-break: keep-all; 
         text-align: center;
-        line-height: 1.6;
-        max-width: 280px; /* Force it to wrap nicely at logical points */
+        line-height: 1.4 !important;
+        max-width: 100%;
         margin: 16px auto 0;
-        display: inline-block; /* Ensure width constraints apply */
+        display: inline;
+        border-right: none !important;
+    }
+    
+    .hero-subtitle::after {
+        content: '|';
+        animation: blinkCursor 0.75s step-end infinite;
+        margin-left: 2px;
+        font-weight: 300;
+        color: #ffffff;
+    }
+
+    .projects-section-header .section-subtitle,
+    .contact-section p.intro {
+        line-height: 1.35 !important;
     }
 
     .mobile-only {
