@@ -144,7 +144,18 @@
                     </a>
                 </div>
                 
-                <!-- Project 6: Casa Decor -->
+                <!-- Project 6: La boca del lobo -->
+                <div class="project-info">
+                    <a href="projects/labocadellobo">
+                        <img src="static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size">
+                        <div class="image-text">
+                            <p class="titulo-text">LA BOCA DEL LOBO</p>
+                            <p class="proyecto-text">DISEÑO DE LETTERING</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 7: Casa Decor -->
                 <div class="project-info">
                     <a href="projects/casadecor">
                         <img src="static/images/pr_casadecor_cover.jpg" alt="Proyecto Casa Decor" class="image-size">
@@ -155,7 +166,7 @@
                     </a>
                 </div>
                 
-                <!-- Project 7: Diez Negritos -->
+                <!-- Project 8: Diez Negritos -->
                 <div class="project-info">
                     <a href="projects/dieznegritos">
                         <img src="static/images/pr_dieznegritos_cover.jpg" alt="Proyecto Diez Negritos" class="image-size">
@@ -376,12 +387,15 @@
                 subtitleEl.innerHTML = "";
                 let i = 0;
                 function type() {
-                    if (i < text.length) {
-                        if (i < 10) {
-                            subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
-                        } else {
-                            subtitleEl.innerHTML = `<strong>diseñadora</strong>${text.substring(10, i + 1)}`;
-                        }
+                    let htmlContent = "";
+                    if (i < 10) {
+                        htmlContent = `<strong>${text.substring(0, i + 1)}</strong>`;
+                    } else {
+                        htmlContent = `<strong>diseñadora</strong>${text.substring(10, i + 1)}`;
+                    }
+                    subtitleEl.innerHTML = htmlContent + '<span class="typing-cursor"></span>';
+                    
+                    if (i < text.length - 1) {
                         i++;
                         setTimeout(type, 40);
                     }
