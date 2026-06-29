@@ -70,9 +70,14 @@ header {
 }
 
 header .logo {
-    font-size: 24px;
-    font-family: var(--font-display);
-    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 header nav {
