@@ -521,3 +521,15 @@ body {
         font-size: 10px;
     }
 }
+
+.briefing-popup .popup-body p strong {
+    font-weight: 700;
+    color: var(--white);
+}
+
+@media (max-width: 768px) {
+    .more_projects .rectangle .button-circle.left,
+    .more_projects .rectangle .button-circle.right {
+        display: none !important;
+    }
+}
