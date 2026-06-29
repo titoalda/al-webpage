@@ -130,3 +130,36 @@ document.addEventListener("DOMContentLoaded", function() {
         revealObserver.observe(target);
     });
 });
+
+// --- Mobile Hamburger Menu Handler ---
+document.addEventListener("DOMContentLoaded", function() {
+    const header = document.querySelector("header");
+    if (!header) return;
+
+    // Create hamburger button
+    const hamburger = document.createElement("button");
+    hamburger.className = "hamburger-menu";
+    hamburger.id = "hamburger-btn";
+    hamburger.setAttribute("aria-label", "Abrir menú");
+    hamburger.innerHTML = "<span></span><span></span><span></span>";
+    
+    header.appendChild(hamburger);
+
+    const dock = document.querySelector(".magnification-dock");
+    
+    hamburger.addEventListener("click", function(e) {
+        e.stopPropagation();
+        hamburger.classList.toggle("open");
+        if (dock) {
+            dock.classList.toggle("nav-active");
+        }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", function(e) {
+        if (dock && dock.classList.contains("nav-active") && !dock.contains(e.target) && e.target !== hamburger) {
+            hamburger.classList.remove("open");
+            dock.classList.remove("nav-active");
+        }
+    });
+});

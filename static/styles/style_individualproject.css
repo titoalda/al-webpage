@@ -490,3 +490,34 @@ body {
     border-top: 1px solid var(--border-color);
     padding-top: 12px;
 }
+
+@media (max-width: 768px) {
+    .more_projects .rectangle {
+        gap: 8px;
+        justify-content: center;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .more_projects .rectangle .button-circle {
+        padding: 8px 12px;
+        font-size: 0 !important; /* Hide full desktop text on mobile */
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+    }
+
+    .more_projects .rectangle .button-circle.left::after {
+        content: "◀ ANTERIOR";
+        font-size: 10px;
+    }
+
+    .more_projects .rectangle .button-circle.center::after {
+        content: "VER TODOS";
+        font-size: 10px;
+    }
+
+    .more_projects .rectangle .button-circle.right::after {
+        content: "SIGUIENTE ▶";
+        font-size: 10px;
+    }
+}

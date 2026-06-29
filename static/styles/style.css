@@ -817,9 +817,119 @@ footer {
     }
 }
 
+/* Mobile Hamburger Button (Desktop Hidden) */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001; /* Above mobile overlay */
+}
+
+.hamburger-menu span {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hamburger animations when open */
+.hamburger-menu.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-menu.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
 @media (max-width: 768px) {
-    header nav {
-        display: none;
+    .hamburger-menu {
+        display: flex;
+    }
+
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5vw;
+        background: rgba(17, 17, 17, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .magnification-dock {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        right: -100vw;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(11, 11, 11, 0.98);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 998;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .magnification-dock.nav-active {
+        right: 0;
+    }
+
+    .magnification-dock .dock-item {
+        width: auto !important;
+        height: auto !important;
+        font-family: var(--font-sans);
+        font-size: 28px;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #ffffff !important;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease;
+    }
+
+    .magnification-dock .dock-item:hover {
+        color: var(--gray-muted) !important;
+    }
+
+    .magnification-dock .dock-icon {
+        display: none !important;
+    }
+
+    .magnification-dock .dock-tooltip {
+        display: none !important;
+    }
+
+    .magnification-dock .dock-item::after {
+        content: attr(data-label);
+        display: block;
     }
     
     .echo-text {
@@ -833,14 +943,43 @@ footer {
     }
     
     .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: 1fr 1fr; /* 2 columns: brand & links / contact */
+        gap: 24px;
+        padding: 40px 0;
+    }
+    
+    .footer-grid .footer-col:nth-child(1) p {
+        display: none; /* Hide brand description on mobile */
+    }
+    
+    .footer-grid .footer-col:nth-child(3) {
+        display: none; /* Hide featured projects column on mobile */
+    }
+    
+    .footer-grid .footer-col:nth-child(1) {
+        grid-column: span 2;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 12px;
+        margin-bottom: 0;
     }
     
     .footer-bottom {
         flex-direction: column;
-        gap: 16px;
+        gap: 12px;
         text-align: center;
+        padding-top: 20px;
+    }
+    
+    .hero-subtitle {
+        font-size: 12px; /* Increased from 11px */
+        letter-spacing: 0.08em;
+        white-space: normal; /* Allow wrapping */
+        word-break: keep-all; /* Prevent breaking mid-word */
+        text-align: center;
+        line-height: 1.6;
+        max-width: 280px; /* Force it to wrap nicely at logical points */
+        margin: 16px auto 0;
+        display: inline-block; /* Ensure width constraints apply */
     }
 }
 
@@ -1142,11 +1281,7 @@ footer {
     margin-right: -0.8rem; /* negative margin slips the flat right end behind the circle */
 }
 
-@media (max-width: 768px) {
-    .magnification-dock {
-        display: none; /* Hide header dock on mobile */
-    }
-}
+/* Magnification dock mobile display:none removed to allow hamburger drawer style */
 
 /* Centered contact page styles */
 .contact-page-section.centered {
