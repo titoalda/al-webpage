@@ -6,15 +6,286 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Mí | Aldara Álvarez - Diseñadora Gráfica</title>
     <meta name="description" content="Conoce a Aldara Álvarez, diseñadora gráfica de Galicia graduada por la UCM. Especialista en diseño editorial, maquetación e identidad visual corporativa.">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aldaraalvarez.es/about">
-    <meta property="og:title" content="Sobre Mí | Aldara Álvarez - Diseñadora Gráfica">
-    <meta property="og:description" content="Conoce a Aldara Álvarez, diseñadora gráfica de Galicia graduada por la UCM. Especialista en diseño editorial, maquetación e identidad visual corporativa.">
-    <meta property="og:image" content="https://aldaraalvarez.es/static/images/author2.jpg">
 
-    <link rel="stylesheet" href="static/styles/style.css?v=12">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@300,400,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/styles/style.css">
+
+    <style>
+        /* ── Hero ───────────────────────────────────────────────── */
+        .journey-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 4vw 80px;
+        }
+
+        .journey-hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* Photo on LEFT, text on RIGHT */
+        .journey-hero-photo {
+            order: 1;
+            height: 500px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .journey-hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%);
+        }
+
+        .journey-hero-text {
+            order: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .journey-hero-label {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-muted);
+        }
+
+        .journey-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .journey-hero-sub {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--gray-muted);
+            line-height: 1.7;
+            max-width: 420px;
+            margin: 0;
+        }
+
+        .journey-scroll-hint {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray-dark);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: bounce-down 2s ease-in-out infinite;
+        }
+
+        .journey-scroll-hint svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        @keyframes bounce-down {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(6px); }
+        }
+
+        /* ── Journey Wrapper ────────────────────────────────────── */
+        .journey-wrapper {
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        /* SVG fills the wrapper absolutely */
+        .journey-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: visible;
+            z-index: 0;
+        }
+
+        .journey-path-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.06);
+            stroke-width: 1.5;
+        }
+
+        .journey-path-progress {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.28);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+        }
+
+        /* Dots — positioned absolutely in wrapper via JS */
+        .journey-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 1px solid var(--gray-dark);
+            z-index: 2;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .journey-dot.active {
+            background: var(--text-color);
+            border-color: var(--text-color);
+            box-shadow: 0 0 0 5px rgba(242, 242, 242, 0.09);
+        }
+
+        /* ── Journey Sections ───────────────────────────────────── */
+        .journey-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 80px 4vw;
+            z-index: 1;
+        }
+
+        .journey-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .journey-spacer { /* empty column */ }
+
+        .journey-text {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .journey-text.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .journey-text.left-text  { text-align: right; }
+        .journey-text.right-text { text-align: left; }
+
+        .step-number {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gray-dark);
+        }
+
+        .journey-text h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .journey-text p {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--gray-muted);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        /* ── CTA final ──────────────────────────────────────────── */
+        .journey-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 4vw 120px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .journey-cta-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+            max-width: 480px;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .journey-cta-inner.visible { opacity: 1; transform: none; }
+
+        .journey-cta-inner h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .journey-cta-inner p {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--gray-muted);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ── Responsive ─────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .journey-hero-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .journey-hero-photo {
+                order: 1;
+                height: 320px;
+            }
+            .journey-hero-text { order: 2; }
+
+            .journey-content {
+                grid-template-columns: 1fr;
+                padding-left: 36px;
+            }
+            .journey-spacer { display: none; }
+            .journey-text.left-text,
+            .journey-text.right-text { text-align: left; }
+
+            /* On mobile, straighten the line to left edge */
+            .journey-svg { display: none; }
+        }
+    </style>
 </head>
 <body>
 
@@ -42,37 +313,90 @@
         </nav>
     </header>
 
-    <!-- Compact About Section (Split Screen Card) -->
-    <section class="about-compact-section">
-        <div class="about-card-container">
-            <div class="about-card-photo">
+
+    <!-- ── Hero: foto izq, texto der ────────────────────────────── -->
+    <section class="journey-hero">
+        <div class="journey-hero-inner">
+            <div class="journey-hero-photo">
                 <img src="static/images/author2.jpg" alt="Fotografía de Aldara Álvarez">
             </div>
-            <div class="about-card-info">
-                <h1 class="about-title">Sobre Mí</h1>
-                <p class="about-intro">
-                    Soy una diseñadora gráfica especializada en identidad de marca y diseño editorial, enfocada en crear proyectos con un propósito claro y un diseño cuidado.
-                </p>
-                
-                <div class="philosophy-grid-compact">
-                    <div class="philosophy-col">
-                        <h3>Origen</h3>
-                        <p>Nací en&nbsp;Baiona, una villa de&nbsp;Galicia rodeada de&nbsp;mar y&nbsp;naturaleza que, sin&nbsp;duda, ha&nbsp;moldeado mi&nbsp;forma de&nbsp;observar el&nbsp;mundo. Esa sensibilidad por&nbsp;el entorno me&nbsp;llevó a&nbsp;explorar la&nbsp;comunicación visual y&nbsp;a&nbsp;entender la&nbsp;importancia del&nbsp;detalle. Hoy en&nbsp;día, disfruto conectando el&nbsp;mundo tangible del&nbsp;papel con&nbsp;las infinitas posibilidades de&nbsp;la pantalla, buscando siempre que&nbsp;cada proyecto tenga raíces fuertes y&nbsp;una narrativa propia.</p>
-                    </div>
-                    <div class="philosophy-col">
-                        <h3>Filosofía</h3>
-                        <p>Para mí, la&nbsp;creatividad y&nbsp;la resolución de&nbsp;problemas van siempre de&nbsp;la mano. Entiendo el&nbsp;diseño como un&nbsp;puente entre la&nbsp;estrategia y&nbsp;la estética, y&nbsp;me apasiona mantenerlo en&nbsp;constante evolución. Me motiva estar al&nbsp;tanto de&nbsp;las nuevas tecnologías y&nbsp;las herramientas digitales, integrando las&nbsp;últimas tendencias para&nbsp;transformar conceptos complejos en&nbsp;soluciones visuales frescas, actuales y&nbsp;con propósito.</p>
-                    </div>
-                    <div class="philosophy-col">
-                        <h3>Formación y habilidades</h3>
-                        <p>Graduada en&nbsp;Diseño por&nbsp;la UCM y&nbsp;con un&nbsp;Máster en&nbsp;Diseño Gráfico Digital por&nbsp;la UNIR. Mi enfoque principal es el&nbsp;diseño editorial y&nbsp;la identidad corporativa, herramientas que&nbsp;potencio a&nbsp;través de&nbsp;la ilustración, el&nbsp;trabajo vectorial y&nbsp;el retoque fotográfico.</p>
-                    </div>
+            <div class="journey-hero-text">
+                <span class="journey-hero-label">Sobre mí</span>
+                <h1 class="journey-hero-title">Mi<br>historia</h1>
+                <p class="journey-hero-sub">Diseñadora gráfica nacida en&nbsp;Galicia, formada en&nbsp;Madrid y apasionada por&nbsp;el diseño que conecta forma con&nbsp;propósito.</p>
+                <div class="journey-scroll-hint">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                    Desplázate para&nbsp;continuar
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+
+    <!-- ── Journey: línea SVG + secciones ───────────────────────── -->
+    <div class="journey-wrapper" id="journey-wrapper">
+
+        <!-- SVG line — filled by JS -->
+        <svg id="journey-svg" class="journey-svg" aria-hidden="true">
+            <path id="journey-path-bg"       class="journey-path-bg"/>
+            <path id="journey-path-progress" class="journey-path-progress"/>
+        </svg>
+
+        <!-- Dots — positioned by JS -->
+        <div class="journey-dot" id="dot-0" data-dot></div>
+        <div class="journey-dot" id="dot-1" data-dot></div>
+        <div class="journey-dot" id="dot-2" data-dot></div>
+
+        <!-- 01 — Origen: texto izquierda -->
+        <section class="journey-section" id="step-01">
+            <div class="journey-content">
+                <div class="journey-text left-text" data-animate>
+                    <span class="step-number">01</span>
+                    <h2>Origen</h2>
+                    <p>Nací en&nbsp;Baiona, una villa de&nbsp;Galicia rodeada de&nbsp;mar y&nbsp;naturaleza que, sin&nbsp;duda, ha&nbsp;moldeado mi&nbsp;forma de&nbsp;observar el&nbsp;mundo. Esa sensibilidad por&nbsp;el entorno me&nbsp;llevó a&nbsp;explorar la&nbsp;comunicación visual y&nbsp;a entender la&nbsp;importancia del&nbsp;detalle. Hoy disfruto conectando el&nbsp;mundo tangible del&nbsp;papel con&nbsp;las infinitas posibilidades de&nbsp;la pantalla.</p>
+                </div>
+                <div class="journey-spacer"></div>
+            </div>
+        </section>
+
+        <!-- 02 — Formación: texto derecha -->
+        <section class="journey-section" id="step-02">
+            <div class="journey-content">
+                <div class="journey-spacer"></div>
+                <div class="journey-text right-text" data-animate>
+                    <span class="step-number">02</span>
+                    <h2>Formación</h2>
+                    <p>Graduada en&nbsp;Diseño por&nbsp;la UCM y&nbsp;con un&nbsp;Máster en&nbsp;Diseño Gráfico Digital por&nbsp;la UNIR. Mi enfoque principal es el&nbsp;diseño editorial y&nbsp;la identidad corporativa, disciplinas que&nbsp;potencio a&nbsp;través de&nbsp;la ilustración, el&nbsp;trabajo vectorial y&nbsp;el retoque fotográfico.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 — Filosofía: texto izquierda -->
+        <section class="journey-section" id="step-03">
+            <div class="journey-content">
+                <div class="journey-text left-text" data-animate>
+                    <span class="step-number">03</span>
+                    <h2>Filosofía</h2>
+                    <p>Para mí, la&nbsp;creatividad y&nbsp;la resolución de&nbsp;problemas van siempre de&nbsp;la mano. Entiendo el&nbsp;diseño como un&nbsp;puente entre la&nbsp;estrategia y&nbsp;la estética, y&nbsp;me apasiona mantenerlo en&nbsp;constante evolución. Me&nbsp;motiva integrar las últimas tendencias para&nbsp;transformar conceptos complejos en&nbsp;soluciones visuales frescas y&nbsp;con propósito.</p>
+                </div>
+                <div class="journey-spacer"></div>
+            </div>
+        </section>
+
+    </div>
+
+
+    <!-- ── CTA ──────────────────────────────────────────────────── -->
+    <section class="journey-cta">
+        <div class="journey-cta-inner" data-animate>
+            <h2>¿Trabajamos juntos?</h2>
+            <p>Siempre es un placer conectar con&nbsp;nuevos proyectos y&nbsp;personas.</p>
+            <a href="contact" class="button-circle">Enviar mensaje</a>
+        </div>
+    </section>
+
+
+    <!-- ── Footer ───────────────────────────────────────────────── -->
     <footer id="footer">
         <div class="footer-grid">
             <div class="footer-col">
@@ -109,7 +433,115 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+
     <script src="static/scripts/dock.js"></script>
+
+    <script>
+    (function () {
+        const wrapper    = document.getElementById('journey-wrapper');
+        const svg        = document.getElementById('journey-svg');
+        const pathBg     = document.getElementById('journey-path-bg');
+        const pathProg   = document.getElementById('journey-path-progress');
+        const dots       = [...document.querySelectorAll('[data-dot]')];
+        const sections   = [...wrapper.querySelectorAll('.journey-section')];
+        const reveals    = [...document.querySelectorAll('[data-animate]')];
+
+        // X positions (% of width) where each dot sits — right, left, right-ish
+        const xRatios = [0.74, 0.26, 0.70];
+
+        let totalLen = 0;
+        let dotPoints = [];
+
+        // ── Build SVG path from real DOM positions ───────────────
+        function build() {
+            const W = wrapper.offsetWidth;
+            const H = wrapper.offsetHeight;
+            const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
+
+            svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+            svg.setAttribute('width',  W);
+            svg.setAttribute('height', H);
+
+            // Compute each section's vertical midpoint relative to wrapper
+            const mids = sections.map(s => {
+                const sTop = s.getBoundingClientRect().top + window.scrollY - wrapperTop;
+                return sTop + s.offsetHeight / 2;
+            });
+
+            // Key points: start (top center) → dots → end (bottom center)
+            const pts = [
+                { x: W * 0.5, y: 0 },
+                ...mids.map((y, i) => ({ x: W * xRatios[i], y })),
+                { x: W * 0.5, y: H }
+            ];
+
+            // Build smooth cubic bezier through all points
+            let d = `M ${pts[0].x},${pts[0].y}`;
+            for (let i = 1; i < pts.length; i++) {
+                const p0 = pts[i - 1];
+                const p1 = pts[i];
+                const midY = (p0.y + p1.y) / 2;
+                // Control points pull horizontally toward each anchor
+                d += ` C ${p0.x},${midY} ${p1.x},${midY} ${p1.x},${p1.y}`;
+            }
+
+            pathBg.setAttribute('d',   d);
+            pathProg.setAttribute('d', d);
+
+            totalLen = pathBg.getTotalLength();
+            pathProg.style.strokeDasharray  = totalLen;
+            pathProg.style.strokeDashoffset = totalLen;
+
+            // Store dot coordinates (skip first and last pts — those are top/bottom)
+            dotPoints = pts.slice(1, pts.length - 1);
+            dots.forEach((dot, i) => {
+                dot.style.left = dotPoints[i].x + 'px';
+                dot.style.top  = dotPoints[i].y + 'px';
+            });
+        }
+
+        // ── Scroll: advance line + activate dots ─────────────────
+        function onScroll() {
+            const rect     = wrapper.getBoundingClientRect();
+            const scrolled = -rect.top + window.innerHeight * 0.55;
+            const progress = Math.max(0, Math.min(scrolled / wrapper.offsetHeight, 1));
+            pathProg.style.strokeDashoffset = totalLen * (1 - progress);
+
+            // Activate a dot when the drawn line reaches it
+            const drawn = totalLen * progress;
+            // Approximate arc-length position of each dot
+            dots.forEach((dot, i) => {
+                // section i sits at roughly (i+1)/(sections.length+1) of the path
+                const dotFrac = (i + 1) / (sections.length + 1);
+                dot.classList.toggle('active', progress >= dotFrac - 0.05);
+            });
+        }
+
+        // ── Fade-in on scroll ────────────────────────────────────
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    revealObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        reveals.forEach(el => revealObs.observe(el));
+
+        // ── Init ─────────────────────────────────────────────────
+        function init() {
+            build();
+            onScroll();
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => { build(); onScroll(); });
+        // Wait for fonts + layout to settle
+        if (document.readyState === 'complete') { init(); }
+        else { window.addEventListener('load', init); }
+    })();
+    </script>
+
 </body>
 </html>
