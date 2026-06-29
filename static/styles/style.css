@@ -275,7 +275,7 @@ header nav a:hover {
     display: block;
     margin: 24px 0 0 4px; /* Align to the left (aligned with name) on desktop */
     font-family: var(--font-sans);
-    font-size: 15px; /* Reduced from 20px to fit on a single line */
+    font-size: 17px; /* Increased from 15px for readability */
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -294,7 +294,8 @@ header nav a:hover {
 
 @media (max-width: 768px) {
     .hero-subtitle {
-        font-size: 11px; /* Reduced from 14px for mobile screen widths */
+        font-size: 12px; /* Increased from 11px */
+        letter-spacing: 0.11em; /* Slightly condensed to prevent mobile overflow */
         margin: 16px auto 0; /* Keep centered on mobile */
     }
 }
