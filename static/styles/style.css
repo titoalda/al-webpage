@@ -769,6 +769,14 @@ footer {
 
 /* Mobile responsive */
 @media (max-width: 1024px) {
+    .ticker-wrapper {
+        height: auto;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+        padding: 80px 0;
+    }
+
     .philosophy-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -1008,6 +1016,58 @@ footer {
         height: auto;
         min-height: 280px;
         box-sizing: border-box;
+    }
+
+    /* Clean Swiss-Brutalist mobile labeling (rendered below the image) */
+    .project-info {
+        height: auto !important;
+        overflow: visible !important;
+        display: flex;
+        flex-direction: column;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .project-info a {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        height: auto !important;
+    }
+
+    .project-info .image-size {
+        height: 38vh !important;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .project-info .image-text {
+        position: static !important;
+        opacity: 1 !important;
+        background-color: transparent !important;
+        padding: 4px 0 0 0 !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        height: auto !important;
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .project-info .titulo-text {
+        font-size: 16px !important;
+        font-family: var(--font-display);
+        color: #ffffff !important;
+        margin: 0 !important;
+        letter-spacing: 0.02em;
+    }
+
+    .project-info .proyecto-text {
+        font-size: 10px !important;
+        color: var(--gray-muted) !important;
+        margin: 0 !important;
+        letter-spacing: 0.05em;
     }
 }
 
