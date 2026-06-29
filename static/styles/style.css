@@ -4,7 +4,7 @@
 
 :root {
     --bg-color: #111111;
-    --text-color: #f2f2f2;
+    --text-color: currentColor;
     --gray-muted: #b6b5b5;
     --gray-dark: #838282;
     --border-color: rgba(255, 255, 255, 0.08);
@@ -111,12 +111,12 @@ header nav a:hover {
     border: 1.5px solid #f2f2f2;
     border-radius: 9999px;
     background-color: transparent;
-    color: #f2f2f2;
+    color: currentColor;
     transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .btn-contact:hover {
-    background-color: #f2f2f2;
+    background-color: currentColor;
     color: #111111;
 }
 
@@ -293,13 +293,13 @@ header nav a:hover {
 .hero-subtitle::after {
     content: '|';
     animation: blinkCursor 0.75s step-end infinite;
-    color: #f2f2f2;
+    color: currentColor;
     margin-left: 4px;
 }
 
 .hero-subtitle strong {
     font-weight: 900;
-    color: #ffffff;
+    color: currentColor;
 }
 
 @keyframes blinkCursor {
@@ -400,7 +400,7 @@ section {
     gap: 16px;
     margin-right: 40px;
     flex-shrink: 0;
-    color: #f2f2f2;
+    color: currentColor;
 }
 
 .ticker-intro-text h2 {
@@ -551,7 +551,7 @@ section {
 
 .service-card:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border-color: #f2f2f2;
+    border-color: currentColor;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
@@ -567,7 +567,7 @@ section {
 
 .service-card:hover .icon-container {
     transform: rotate(12deg);
-    background-color: #f2f2f2;
+    background-color: currentColor;
     color: #111111;
 }
 
@@ -659,7 +659,7 @@ section {
     background-color: rgba(255, 255, 255, 0.05);
     border: 1.5px solid transparent;
     border-radius: 4px;
-    color: #f2f2f2;
+    color: currentColor;
     font-family: var(--font-sans);
     font-weight: 300;
     font-size: 15px;
@@ -673,7 +673,7 @@ section {
 
 .contact-form .form-group input:focus,
 .contact-form .form-group textarea:focus {
-    border-color: #ffffff;
+    border-color: currentColor;
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
@@ -689,7 +689,7 @@ section {
     border: 1.5px solid #f2f2f2;
     border-radius: 9999px;
     background-color: transparent;
-    color: #f2f2f2;
+    color: currentColor;
     font-family: var(--font-sans);
     font-weight: 700;
     text-transform: uppercase;
@@ -701,7 +701,7 @@ section {
 
 .button-circle:hover,
 .button-circle:focus-visible {
-    background-color: #f2f2f2;
+    background-color: currentColor;
     color: #111111;
     transform: translateY(-2px);
     outline: 2px solid #ffffff;
@@ -759,7 +759,7 @@ footer {
     font-size: 20px;
     text-transform: uppercase;
     margin-bottom: 24px;
-    color: #ffffff;
+    color: currentColor;
 }
 
 .footer-col p {
@@ -904,7 +904,7 @@ footer {
     display: block;
     width: 20px;
     height: 1.5px;
-    background-color: #ffffff;
+    background-color: currentColor;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     transform-origin: center;
 }
@@ -1143,7 +1143,7 @@ footer {
         animation: blinkCursor 0.75s step-end infinite;
         margin-left: 2px;
         font-weight: 300;
-        color: #ffffff;
+        color: currentColor;
     }
 
     .projects-section-header .section-subtitle,
@@ -1485,7 +1485,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f2f2f2;
+    color: currentColor;
     height: 100%;
     aspect-ratio: 1; /* Always a perfect circle matching the magnified height */
     border-radius: 50%;
@@ -1533,7 +1533,7 @@ footer {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #f2f2f2;
+    color: currentColor;
     font-family: var(--font-sans);
     
     background: rgba(8, 8, 8, 0.88);
@@ -1589,7 +1589,7 @@ footer {
 }
 
 .contact-page-section.centered .contact-page-desc a {
-    color: #ffffff;
+    color: currentColor;
     text-decoration: underline;
     transition: color 0.2s ease;
 }
@@ -1815,7 +1815,7 @@ footer {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #ffffff;
+    color: currentColor;
     animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -1841,7 +1841,7 @@ footer {
 
 .progress-bar-fill {
     height: 100%;
-    background-color: #ffffff;
+    background-color: currentColor;
     width: 40%;
     animation: progressBarAnim 2.5s ease-in-out infinite;
 }
@@ -1871,7 +1871,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
+    color: currentColor;
     margin-bottom: 24px;
 }
 
@@ -1885,7 +1885,7 @@ footer {
     font-size: 44px;
     font-weight: 300;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin-bottom: 8px;
     line-height: 1.1;
 }
@@ -1928,7 +1928,7 @@ footer {
     font-size: 48px;
     font-weight: 300;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin: 0 0 10px 0;
 }
 
@@ -1984,7 +1984,7 @@ footer {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #ffffff;
+    color: currentColor;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -2098,7 +2098,7 @@ footer {
     font-size: 24px;
     font-weight: 300;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin: 0 0 8px 0;
     letter-spacing: 0.02em;
 }
@@ -2222,7 +2222,7 @@ footer {
     font-size: 36px; /* Compact title size */
     font-weight: 300;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin: 0 0 8px 0;
 }
 
@@ -2230,7 +2230,7 @@ footer {
 .about-card-info .about-intro {
     font-family: var(--font-sans);
     font-size: 15px; /* Compact quote size */
-    color: #ffffff;
+    color: currentColor;
     line-height: 1.5;
     margin: 0 0 20px 0;
     font-weight: 300;
@@ -2258,7 +2258,7 @@ footer {
     font-size: 12px; /* Compact heading */
     font-weight: 500;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin: 0 0 4px 0;
     letter-spacing: 0.05em;
 }
@@ -2288,7 +2288,7 @@ footer {
 }
 
 .philosophy-grid-compact .philosophy-col li strong {
-    color: #ffffff;
+    color: currentColor;
     font-weight: 500;
 }
 
@@ -2328,7 +2328,7 @@ footer {
     font-size: 72px;
     font-weight: 300;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin: 0 0 16px 0;
 }
 
@@ -2395,7 +2395,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    color: #f2f2f2;
+    color: currentColor;
 }
 
 .project-stack-card .card-num {
@@ -2411,7 +2411,7 @@ footer {
     font-size: 36px;
     font-weight: 300;
     text-transform: uppercase;
-    color: #ffffff;
+    color: currentColor;
     margin: 0 0 10px 0;
     line-height: 1.1;
 }
@@ -2477,20 +2477,4 @@ footer {
 .left-column:hover img {
     filter: grayscale(0%);
     transform: scale(1.03);
-}
-
-
-/* Cursor parpadeante para el efecto typewriter */
-.typing-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.1em;
-    background-color: currentColor;
-    vertical-align: middle;
-    margin-left: 3px;
-    animation: blinkCursor 1s step-end infinite;
-}
-@keyframes blinkCursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
 }

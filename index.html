@@ -387,15 +387,12 @@
                 subtitleEl.innerHTML = "";
                 let i = 0;
                 function type() {
-                    let htmlContent = "";
-                    if (i < 10) {
-                        htmlContent = `<strong>${text.substring(0, i + 1)}</strong>`;
-                    } else {
-                        htmlContent = `<strong>diseñadora</strong>${text.substring(10, i + 1)}`;
-                    }
-                    subtitleEl.innerHTML = htmlContent + '<span class="typing-cursor"></span>';
-                    
-                    if (i < text.length - 1) {
+                    if (i < text.length) {
+                        if (i < 10) {
+                            subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
+                        } else {
+                            subtitleEl.innerHTML = `<strong>diseñadora</strong>${text.substring(10, i + 1)}`;
+                        }
                         i++;
                         setTimeout(type, 40);
                     }
