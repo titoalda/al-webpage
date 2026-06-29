@@ -624,6 +624,7 @@ section {
     color: var(--gray-muted);
     max-width: 600px;
     margin-bottom: 48px;
+    line-height: 1.25;
 }
 
 .contact-form {
@@ -705,6 +706,23 @@ section {
     transform: translateY(-2px);
     outline: 2px solid #ffffff;
     outline-offset: 4px;
+}
+
+/* Project Navigation */
+.more_projects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 4vw;
+}
+
+.more_projects .rectangle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
 }
 
 /* Footer */
@@ -1293,7 +1311,7 @@ footer {
 .contact-page-desc {
     font-size: 18px;
     color: var(--gray-muted);
-    line-height: 1.6;
+    line-height: 1.25;
     margin-bottom: 48px;
     font-weight: 300;
 }

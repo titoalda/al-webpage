@@ -138,6 +138,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const header = document.querySelector("header");
     if (!header) return;
 
+    // Move dock to body level so position:fixed is relative to viewport
+    // (avoids backdrop-filter on header creating a new containing block)
+    const dock = document.querySelector(".magnification-dock");
+    if (dock) document.body.appendChild(dock);
+
     // Create hamburger button
     const hamburger = document.createElement("button");
     hamburger.className = "hamburger-menu";
@@ -147,8 +152,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     header.appendChild(hamburger);
 
-    const dock = document.querySelector(".magnification-dock");
-    
     hamburger.addEventListener("click", function(e) {
         e.stopPropagation();
         const isOpen = hamburger.classList.toggle("open");
