@@ -48,6 +48,10 @@ p, .font-sans {
     line-height: 1.6;
 }
 
+.mobile-only {
+    display: none;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -980,6 +984,10 @@ footer {
         max-width: 280px; /* Force it to wrap nicely at logical points */
         margin: 16px auto 0;
         display: inline-block; /* Ensure width constraints apply */
+    }
+
+    .mobile-only {
+        display: inline;
     }
 
     /* Mobile Service Cards */
