@@ -143,6 +143,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const dock = document.querySelector(".magnification-dock");
     if (dock) document.body.appendChild(dock);
 
+    // Create overlay
+    const overlay = document.createElement("div");
+    overlay.className = "mobile-menu-overlay";
+    document.body.appendChild(overlay);
+
     // Create hamburger button
     const hamburger = document.createElement("button");
     hamburger.className = "hamburger-menu";
@@ -156,25 +161,24 @@ document.addEventListener("DOMContentLoaded", function() {
         e.stopPropagation();
         const isOpen = hamburger.classList.toggle("open");
         header.classList.toggle("nav-active", isOpen);
+        overlay.classList.toggle("active", isOpen);
         if (dock) {
+            dock.classList.toggle("nav-active", isOpen);
             if (isOpen) {
-                dock.classList.add("nav-active");
                 document.body.style.overflow = "hidden";
             } else {
-                dock.classList.remove("nav-active");
                 document.body.style.overflow = "";
             }
         }
     });
 
-    // Close menu when clicking outside
-    document.addEventListener("click", function(e) {
-        if (dock && dock.classList.contains("nav-active") && !dock.contains(e.target) && e.target !== hamburger) {
-            hamburger.classList.remove("open");
-            header.classList.remove("nav-active");
-            dock.classList.remove("nav-active");
-            document.body.style.overflow = "";
-        }
+    // Close menu when clicking on the overlay
+    overlay.addEventListener("click", function() {
+        hamburger.classList.remove("open");
+        header.classList.remove("nav-active");
+        overlay.classList.remove("active");
+        if (dock) dock.classList.remove("nav-active");
+        document.body.style.overflow = "";
     });
 
     // Close menu when clicking a dock item
@@ -183,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
         item.addEventListener("click", () => {
             hamburger.classList.remove("open");
             header.classList.remove("nav-active");
+            overlay.classList.remove("active");
             if (dock) dock.classList.remove("nav-active");
             document.body.style.overflow = "";
         });
