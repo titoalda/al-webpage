@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
     hamburger.addEventListener("click", function(e) {
         e.stopPropagation();
         const isOpen = hamburger.classList.toggle("open");
+        header.classList.toggle("nav-active", isOpen);
         if (dock) {
             if (isOpen) {
                 dock.classList.add("nav-active");
@@ -167,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("click", function(e) {
         if (dock && dock.classList.contains("nav-active") && !dock.contains(e.target) && e.target !== hamburger) {
             hamburger.classList.remove("open");
+            header.classList.remove("nav-active");
             dock.classList.remove("nav-active");
             document.body.style.overflow = "";
         }
@@ -177,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
     dockItems.forEach(item => {
         item.addEventListener("click", () => {
             hamburger.classList.remove("open");
+            header.classList.remove("nav-active");
             if (dock) dock.classList.remove("nav-active");
             document.body.style.overflow = "";
         });

@@ -857,6 +857,7 @@ footer {
 }
 
 .hamburger-menu span {
+    display: block;
     width: 20px;
     height: 1.5px;
     background-color: #ffffff;
@@ -879,6 +880,11 @@ footer {
 }
 
 @media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
     .hamburger-menu {
         display: flex;
     }
@@ -886,17 +892,33 @@ footer {
     header {
         position: fixed;
         width: 100%;
+        height: 70px !important;
         top: 0;
         left: 0;
-        z-index: 999;
+        z-index: 1001 !important; /* Higher than drawer overlay stacking context */
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 5vw;
+        padding: 0 20px !important;
         background: rgba(17, 17, 17, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        box-sizing: border-box;
+        transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    header.nav-active {
+        background: transparent !important;
+        border-bottom-color: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    header.nav-active .logo {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
     }
 
     .magnification-dock {
@@ -1027,18 +1049,37 @@ footer {
     }
     
     .service-card {
-        padding: 24px;
-        height: auto;
-        min-height: 280px;
+        padding: 32px 24px; /* More padding for mobile breathing room */
+        height: auto !important;
+        min-height: 320px !important;
         box-sizing: border-box;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+    }
+
+    .service-card .icon-container {
+        margin-bottom: 28px !important; /* Force space between icon and text */
     }
 
     .service-card .service-content {
-        margin-top: 20px;
+        margin-top: 0 !important;
+        margin-bottom: 24px !important;
+    }
+
+    .service-card .service-content h3 {
+        font-size: 22px !important;
+        margin-bottom: 12px !important;
     }
 
     .service-card .service-content p {
-        line-height: 1.3 !important;
+        font-size: 14px !important;
+        line-height: 1.35 !important;
+    }
+
+    .service-card .service-cta {
+        margin-top: auto !important; /* Align button to bottom */
     }
 
     /* Clean Swiss-Brutalist mobile labeling (rendered below the image) */
@@ -1084,7 +1125,7 @@ footer {
         color: #ffffff !important;
         margin: 0 !important;
         letter-spacing: 0.02em;
-        line-height: 1.1 !important;
+        line-height: 1.0 !important; /* Made even more compact on mobile */
     }
 
     .project-info .proyecto-text {
