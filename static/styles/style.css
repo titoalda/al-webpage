@@ -1797,12 +1797,13 @@ footer {
     margin: 0 0 8px 0;
 }
 
-.about-card-info .philosophy-quote {
+.about-card-info .philosophy-quote,
+.about-card-info .about-intro {
     font-family: var(--font-sans);
     font-size: 15px; /* Compact quote size */
     color: #ffffff;
     line-height: 1.5;
-    margin: 0 0 16px 0;
+    margin: 0 0 20px 0;
     font-weight: 300;
     max-width: 600px;
 }
@@ -1840,6 +1841,26 @@ footer {
     line-height: 1.5;
     margin: 0;
     font-weight: 300;
+}
+
+.philosophy-grid-compact .philosophy-col ul {
+    margin: 12px 0 0 0;
+    padding-left: 16px;
+    list-style-type: disc;
+}
+
+.philosophy-grid-compact .philosophy-col li {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-muted);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
+.philosophy-grid-compact .philosophy-col li strong {
+    color: #ffffff;
+    font-weight: 500;
 }
 
 @media (max-width: 1024px) {
