@@ -1,114 +1,108 @@
 @import url('style.css');
 
-/* Custom 404 Styles */
+/* Custom 404 Page Styles - Clean & Fullscreen (No Scroll) */
 
-.notfound {
-    height: calc(100vh - 100px);
+html, body {
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling entirely on this page */
+}
+
+/* Center main content */
+.notfound-container {
+    height: calc(100vh - 80px); /* Fill screen minus header */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 70px;
-    padding-top: 0;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
 }
 
-.notfound .num404 {
+.notfound-container .num404 {
     font-family: var(--font-display);
-    font-size: 110px;
-    line-height: 1;
+    font-size: 15vw; /* Scale nicely with screen width */
+    line-height: 0.8;
     margin: 0;
-    margin-left: 20px;
-    padding: 0.5vh 0;
-    color: rgba(255, 255, 255, 0.15);
-    letter-spacing: -2px;
+    color: rgba(255, 255, 255, 0.05); /* Very subtle echo effect */
+    letter-spacing: -0.05em;
+    font-weight: 300;
 }
 
-.notfound .title {
+.notfound-container .title {
     font-family: var(--font-display);
-    font-size: 110px;
-    line-height: 1;
-    margin: 0;
-    margin-left: 20px;
-    padding: 0.5vh 0;
-    color: rgb(255, 255, 255);
-    letter-spacing: -2px;
-    text-shadow: 2px 2px 4px rgba(29, 29, 29, 0.9);
+    font-size: 5vw;
+    font-weight: 300;
     text-transform: uppercase;
+    color: #ffffff;
+    margin: -4vw 0 20px 0; /* overlap slightly with the giant 404 background */
+    letter-spacing: 0.02em;
 }
 
-.notfound .subtitle {
+.notfound-container .subtitle {
     font-family: var(--font-sans);
-    font-size: 0.9em;
-    line-height: 2;
-    margin-top: 2vh;
-    margin-left: 22px;
-    color: rgba(255, 255, 255, 0.87);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--gray-muted);
+    max-width: 480px;
+    margin: 0 auto 40px auto;
 }
 
-.notfound form {
-    margin-left: 22px;
-    margin-top: 30px;
-}
-
-.notfound .button-circle {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    color: var(--text-color);
-    background-color: rgba(255, 255, 255, 0.05);
+.notfound-container .btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
     border: 1px solid var(--border-color);
     border-radius: 50%;
-    text-align: center;
-    transition: all 0.3s ease;
-    font-size: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
     font-family: var(--font-sans);
+    font-size: 11px;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.notfound .button-circle:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+.notfound-container .btn-back:hover,
+.notfound-container .btn-back:focus-visible {
+    background-color: #ffffff;
+    color: #111111;
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+    outline: none;
 }
 
-@media screen and (max-width: 768px) {
-    .notfound {
-        height: auto;
-        min-height: calc(100vh - 8vh);
-        padding: 5vw;
-        margin-top: 8vh;
-        justify-content: center;
+/* Adjustments for tablets & mobile */
+@media (max-width: 768px) {
+    .notfound-container {
+        height: calc(100vh - 70px); /* Account for mobile header height */
     }
 
-    .notfound .num404 {
-        font-size: 3.5rem;
-        margin-left: 5px;
-        padding: 0;
+    .notfound-container .num404 {
+        font-size: 32vw;
     }
 
-    .notfound .title {
-        font-size: 3.5rem;
-        letter-spacing: -1px;
-        margin-left: 5px;
-        padding: 0.3vh 0;
+    .notfound-container .title {
+        font-size: 10vw;
+        margin: -8vw 0 16px 0;
     }
 
-    .notfound .subtitle {
-        font-size: 0.8rem;
-        line-height: 1.6;
-        margin-left: 7px;
-        margin-top: 2vh;
+    .notfound-container .subtitle {
+        font-size: 14px;
+        padding: 0 15px;
+        margin-bottom: 30px;
     }
 
-    .notfound form {
-        margin-left: 7px;
-        margin-top: 20px;
-    }
-
-    .notfound .button-circle {
-        width: 80px;
-        height: 80px;
-        font-size: 9px;
+    .notfound-container .btn-back {
+        width: 90px;
+        height: 90px;
+        font-size: 10px;
     }
 }
