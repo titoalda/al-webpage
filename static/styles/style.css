@@ -74,7 +74,8 @@ header .logo {
     align-items: center;
 }
 
-header .logo img {
+header .logo img,
+.logo img {
     height: 40px;
     width: auto;
     object-fit: contain;
