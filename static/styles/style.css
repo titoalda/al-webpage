@@ -293,13 +293,13 @@ header nav a:hover {
 .hero-subtitle::after {
     content: '|';
     animation: blinkCursor 0.75s step-end infinite;
-    color: currentColor;
+    color: #f2f2f2;
     margin-left: 4px;
 }
 
 .hero-subtitle strong {
     font-weight: 900;
-    color: currentColor;
+    color: #f2f2f2;
 }
 
 @keyframes blinkCursor {
@@ -1143,7 +1143,7 @@ footer {
         animation: blinkCursor 0.75s step-end infinite;
         margin-left: 2px;
         font-weight: 300;
-        color: currentColor;
+        color: #ffffff;
     }
 
     .projects-section-header .section-subtitle,
