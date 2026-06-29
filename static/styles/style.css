@@ -738,7 +738,7 @@ footer {
     height: 28px;
     width: auto;
     object-fit: contain;
-    margin-bottom: 24px;
+    margin-bottom: 0;
     filter: brightness(0.95);
     opacity: 0.95;
     transition: opacity 0.3s ease;
@@ -752,7 +752,19 @@ footer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 48px;
-    margin-bottom: 50px; /* Reduced vertical space */
+    margin-bottom: 50px;
+    align-items: start;
+}
+
+/* First col: logo sits at top, description aligns with first list item of siblings */
+.footer-grid .footer-col:first-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-grid .footer-col:first-child .footer-logo {
+    /* Matches h4 height (20px font * ~1.2 line-height) + h4 margin-bottom (24px) = ~48px */
+    margin-bottom: 48px;
 }
 
 .footer-col h4 {
