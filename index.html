@@ -66,7 +66,7 @@
                 <div class="echo-container">
                     <h1 class="echo-text echo-front">Aldara Álvarez</h1>
                 </div>
-                <div id="hero-subtitle" class="hero-subtitle">diseñadora | especialista en identidad de marca y diseño editorial</div>
+                <div id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong> | especialista en identidad de marca y diseño editorial</div>
             </div>
         </div>
     </section>
@@ -375,12 +375,16 @@
         document.addEventListener("DOMContentLoaded", function() {
             const subtitleEl = document.getElementById("hero-subtitle");
             if (subtitleEl) {
-                const text = subtitleEl.innerText.trim();
-                subtitleEl.innerText = "";
+                const text = "diseñadora | especialista en identidad de marca y diseño editorial";
+                subtitleEl.innerHTML = "";
                 let i = 0;
                 function type() {
                     if (i < text.length) {
-                        subtitleEl.innerHTML += text.charAt(i);
+                        if (i < 10) {
+                            subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
+                        } else {
+                            subtitleEl.innerHTML = `<strong>diseñadora</strong>${text.substring(10, i + 1)}`;
+                        }
                         i++;
                         setTimeout(type, 40);
                     }

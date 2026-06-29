@@ -151,9 +151,15 @@ document.addEventListener("DOMContentLoaded", function() {
     
     hamburger.addEventListener("click", function(e) {
         e.stopPropagation();
-        hamburger.classList.toggle("open");
+        const isOpen = hamburger.classList.toggle("open");
         if (dock) {
-            dock.classList.toggle("nav-active");
+            if (isOpen) {
+                dock.classList.add("nav-active");
+                document.body.style.overflow = "hidden";
+            } else {
+                dock.classList.remove("nav-active");
+                document.body.style.overflow = "";
+            }
         }
     });
 
@@ -162,6 +168,17 @@ document.addEventListener("DOMContentLoaded", function() {
         if (dock && dock.classList.contains("nav-active") && !dock.contains(e.target) && e.target !== hamburger) {
             hamburger.classList.remove("open");
             dock.classList.remove("nav-active");
+            document.body.style.overflow = "";
         }
+    });
+
+    // Close menu when clicking a dock item
+    const dockItems = document.querySelectorAll(".magnification-dock .dock-item");
+    dockItems.forEach(item => {
+        item.addEventListener("click", () => {
+            hamburger.classList.remove("open");
+            if (dock) dock.classList.remove("nav-active");
+            document.body.style.overflow = "";
+        });
     });
 });
