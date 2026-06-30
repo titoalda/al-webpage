@@ -70,7 +70,7 @@
                 <div class="echo-container">
                     <h1 class="echo-text echo-front">Aldara Álvarez</h1>
                 </div>
-                <div id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong> | especialista en identidad de marca y diseño editorial</div>
+                <div id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial</div>
             </div>
         </div>
     </section>
@@ -402,6 +402,8 @@
                         }
                         i++;
                         setTimeout(type, 40);
+                    } else {
+                        subtitleEl.innerHTML = '<strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial';
                     }
                 }
                 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

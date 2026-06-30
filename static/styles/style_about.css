@@ -243,6 +243,7 @@
     color: var(--gray-muted);
     line-height: 1.7;
     margin: 0;
+    text-transform: capitalize;
 }
 
 /* ── Formación list ────────────────────────────────────── */
@@ -283,7 +284,11 @@
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-    .journey-hero-inner {
+    .journey-section {
+        min-height: auto;
+        padding: 48px 4vw;
+    }
+        .journey-hero-inner {
         grid-template-columns: 1fr;
         gap: 40px;
     }
