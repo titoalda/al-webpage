@@ -22,6 +22,10 @@
     <meta property="twitter:description" content="Explora el portafolio de diseño de Aldara Álvarez. Soluciones visuales en diseño editorial, branding, modelado 3D y packaging.">
     <meta property="twitter:image" content="https://aldaraalvarez.es/static/images/author2.jpg">
 
+    <link rel="canonical" href="https://aldaraalvarez.es/">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="static/styles/style.css">
 </head>
 <body>
@@ -92,7 +96,7 @@
                 <!-- Project 1: El viejo y el mar -->
                 <div class="project-info">
                     <a href="projects/elviejoyelmar">
-                        <img src="static/images/pr_viejomar_cover.jpg" alt="Proyecto El viejo y el mar" class="image-size">
+                        <img src="static/images/pr_viejomar_cover.jpg" alt="Proyecto El viejo y el mar" class="image-size" loading="lazy" width="1637" height="1500">
                         <div class="image-text">
                             <p class="titulo-text">EL VIEJO Y EL MAR</p>
                             <p class="proyecto-text">DISEÑO DE CUBIERTA E ILUSTRACIÓN</p>
@@ -103,7 +107,7 @@
                 <!-- Project 2: Namasté -->
                 <div class="project-info">
                     <a href="projects/namaste">
-                        <img src="static/images/pr_namaste_cover.jpg" alt="Proyecto Namasté" class="image-size">
+                        <img src="static/images/pr_namaste_cover.jpg" alt="Proyecto Namasté" class="image-size" loading="lazy" width="2146" height="2084">
                         <div class="image-text">
                             <p class="titulo-text">NAMASTÉ</p>
                             <p class="proyecto-text">DISEÑO DE PACKAGING</p>
@@ -114,7 +118,7 @@
                 <!-- Project 3: Casa de Cuentos -->
                 <div class="project-info">
                     <a href="projects/casacuentos">
-                        <img src="static/images/pr_casacuentos_cover.jpg" alt="Proyecto Casa de cuentos" class="image-size">
+                        <img src="static/images/pr_casacuentos_cover.jpg" alt="Proyecto Casa de cuentos" class="image-size" loading="lazy" width="1621" height="1578">
                         <div class="image-text">
                             <p class="titulo-text">CASA DE CUENTOS</p>
                             <p class="proyecto-text">DISEÑO DE MODELO 3D</p>
@@ -125,7 +129,7 @@
                 <!-- Project 4: Forma y Función -->
                 <div class="project-info">
                     <a href="projects/formayfuncion">
-                        <img src="static/images/pr_formayfuncion_cover.jpg" alt="Proyecto Forma y Función" class="image-size">
+                        <img src="static/images/pr_formayfuncion_cover.jpg" alt="Proyecto Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
                         <div class="image-text">
                             <p class="titulo-text">FORMA Y FUNCIÓN</p>
                             <p class="proyecto-text">DISEÑO EDITORIAL</p>
@@ -136,7 +140,7 @@
                 <!-- Project 5: Deporte en Señales -->
                 <div class="project-info">
                     <a href="projects/deporteenseñales">
-                        <img src="static/images/pr_deporteenseñales_cover.png" alt="Proyecto Deporte en Señales" class="image-size">
+                        <img src="static/images/pr_deporteenseñales_cover.png" alt="Proyecto Deporte en Señales" class="image-size" loading="lazy" width="3685" height="3550">
                         <div class="image-text">
                             <p class="titulo-text">DEPORTE EN SEÑALES</p>
                             <p class="proyecto-text">DISEÑO DE SEÑALÉTICA</p>
@@ -147,7 +151,7 @@
                 <!-- Project 6: La boca del lobo -->
                 <div class="project-info">
                     <a href="projects/labocadellobo">
-                        <img src="static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size">
+                        <img src="static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size" loading="lazy" width="1131" height="1131">
                         <div class="image-text">
                             <p class="titulo-text">LA BOCA DEL LOBO</p>
                             <p class="proyecto-text">DISEÑO DE LETTERING</p>
@@ -158,7 +162,7 @@
                 <!-- Project 7: Casa Decor -->
                 <div class="project-info">
                     <a href="projects/casadecor">
-                        <img src="static/images/pr_casadecor_cover.jpg" alt="Proyecto Casa Decor" class="image-size">
+                        <img src="static/images/pr_casadecor_cover.jpg" alt="Proyecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
                         <div class="image-text">
                             <p class="titulo-text">CASA DECOR</p>
                             <p class="proyecto-text">DISEÑO DE SEÑALÉTICA</p>
@@ -169,7 +173,7 @@
                 <!-- Project 8: Diez Negritos -->
                 <div class="project-info">
                     <a href="projects/dieznegritos">
-                        <img src="static/images/pr_dieznegritos_cover.jpg" alt="Proyecto Diez Negritos" class="image-size">
+                        <img src="static/images/pr_dieznegritos_cover.jpg" alt="Proyecto Diez Negritos" class="image-size" loading="lazy" width="1940" height="1885">
                         <div class="image-text">
                             <p class="titulo-text">DIEZ NEGRITOS</p>
                             <p class="proyecto-text">DISEÑO DE CUBIERTA</p>
@@ -400,7 +404,9 @@
                         setTimeout(type, 40);
                     }
                 }
-                setTimeout(type, 1000);
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    setTimeout(type, 1000);
+                }
             }
         });
     </script>

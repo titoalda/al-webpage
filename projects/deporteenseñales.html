@@ -9,17 +9,26 @@
         <link href="https://api.fontshare.com/v2/css?f[]=clash-display@300,400,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
 
-        <!-- efecto deslizamiento suave extraido de https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_smooth_scroll_jquery para navegadores como safari -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="../static/scripts/smooth-scrolling.js"></script>
-
-        <!-- efecto de desaparicion de cabecera extraido de https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp -->
-        <script src="../static/scripts/script-scroll.js"></script>
+        <script src="../static/scripts/script-scroll.js" defer></script>
 
         <title>Deporte en Señales | Sistema de Señalética - Aldara Álvarez</title>
         <meta name="description" content="Diseño de sistema señalético y creación de pictogramas a medida para un complejo deportivo, realizado por Aldara Álvarez.">
 
+        <link rel="canonical" href="https://aldaraalvarez.es/projects/deporteense%C3%B1ales">
         <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- para que sea responsive -->
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://aldaraalvarez.es/projects/deporteense%C3%B1ales">
+        <meta property="og:title" content="Deporte en Señales | Sistema de Señalética - Aldara Álvarez">
+        <meta property="og:description" content="Diseño de sistema señalético y creación de pictogramas a medida para un complejo deportivo, realizado por Aldara Álvarez.">
+        <meta property="og:image" content="https://aldaraalvarez.es/static/images/pr_deporteenseñales_cover.png">
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://aldaraalvarez.es/projects/deporteense%C3%B1ales">
+        <meta property="twitter:title" content="Deporte en Señales | Sistema de Señalética - Aldara Álvarez">
+        <meta property="twitter:description" content="Diseño de sistema señalético y creación de pictogramas a medida para un complejo deportivo, realizado por Aldara Álvarez.">
+        <meta property="twitter:image" content="https://aldaraalvarez.es/static/images/pr_deporteenseñales_cover.png">
     </head>
 
     <body>
@@ -129,7 +138,7 @@
             </div>
             <div class="right-column">
                 <div class="image-container">
-                    <img src="../static/images/pr_deporteenseñales_description.jpg" alt="Desarrollo del Deporte en Señales">
+                    <img src="../static/images/pr_deporteenseñales_description.jpg" loading="lazy" alt="Desarrollo del Deporte en Señales">
                 </div>
             </div>
                         <div class="left-column"  id="description-responsive">

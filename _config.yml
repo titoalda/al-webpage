@@ -2,4 +2,7 @@ exclude:
   - .old/v1/
   - .old/v2/
   - URL.txt
-
+  - COMO_TRABAJAR.md
+  - rules_gemini.md
+  - estilo_visual.md
+  - about.old.html
