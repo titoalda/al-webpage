@@ -2695,9 +2695,76 @@ footer {
     filter: grayscale(0%);
     transform: scale(1.03);
 }
-    50%       { opacity: 0; }
+
+
+/* == LightBeam Submit Button ================================ */
+@keyframes lb-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
 
+.btn-lightbeam {
+    position: relative;
+    overflow: hidden;
+    border: none !important;
+    isolation: isolate;
+}
+
+.btn-lightbeam span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Square spinner clipped to pill shape by overflow:hidden */
+.btn-lightbeam::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -150px;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(255, 255, 255, 0.9) 30deg,
+        rgba(220, 220, 220, 0.45) 60deg,
+        transparent 90deg,
+        transparent 360deg
+    );
+    animation: lb-spin 3s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Inner cover — shows only the ~1.5px border ring */
+.btn-lightbeam::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    border-radius: 9999px;
+    background: var(--bg-color);
+    z-index: 1;
+    pointer-events: none;
+    transition: background 0.3s ease;
+}
+
+.btn-lightbeam:hover {
+    background-color: transparent !important;
+    color: #f2f2f2 !important;
+    outline: none !important;
+    transform: translateY(-1px) scale(1.02) !important;
+}
+
+.btn-lightbeam:hover::after {
+    background: #1c1c1c;
+}
+
+.btn-lightbeam:active {
+    transform: scale(0.98) !important;
+}
+/* =========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
