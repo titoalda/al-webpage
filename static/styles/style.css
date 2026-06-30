@@ -773,6 +773,7 @@ footer {
     text-transform: uppercase;
     margin-bottom: 24px;
     color: #ffffff;
+    word-spacing: 0.12em;
 }
 
 .footer-col p {

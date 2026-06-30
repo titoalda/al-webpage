@@ -301,7 +301,13 @@
     .journey-text.left-text,
     .journey-text.right-text { text-align: left; }
 
+
+    .journey-hero-sub { line-height: 1.5; }
+    .journey-text p { line-height: 1.55; }
+    .formation-list li { line-height: 1.45; }
+
     /* On mobile, straighten the line to left edge */
     .journey-svg { display: none; }
+    .journey-dot { display: none; }
     .journey-scroll-hint { display: none; }
 }

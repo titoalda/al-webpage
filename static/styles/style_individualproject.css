@@ -512,7 +512,7 @@ body {
     }
 
     .more_projects .rectangle .button-circle.center::after {
-        content: "VER TODOS";
+        content: "VER TODOS LOS PROYECTOS";
         font-size: 10px;
     }
 
@@ -527,9 +527,4 @@ body {
     color: var(--white);
 }
 
-@media (max-width: 768px) {
-    .more_projects .rectangle .button-circle.left,
-    .more_projects .rectangle .button-circle.right {
-        display: none !important;
-    }
-}
+
