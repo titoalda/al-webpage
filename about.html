@@ -262,6 +262,42 @@
             margin: 0;
         }
 
+        /* ── Formación list ────────────────────────────────────── */
+        .formation-list {
+            margin-top: 16px;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0;
+        }
+
+        .formation-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--gray-muted);
+            line-height: 1.7;
+        }
+
+        .formation-list li::before {
+            content: '';
+            flex-shrink: 0;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--gray-dark);
+            margin-top: 0.58em; /* alinea verticalmente con la primera línea del texto */
+        }
+
+        .formation-list li strong {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
         /* ── Responsive ─────────────────────────────────────────── */
         @media (max-width: 768px) {
             .journey-hero-inner {
@@ -367,10 +403,10 @@
                     <span class="step-number">02</span>
                     <h2>Formación</h2>
                     <p>Graduada en&nbsp;Diseño por&nbsp;la UCM y&nbsp;con un&nbsp;Máster en&nbsp;Diseño Gráfico Digital por&nbsp;la UNIR. Mi enfoque principal es&nbsp;el diseño editorial y&nbsp;la identidad corporativa, herramientas que&nbsp;potencio a&nbsp;través de&nbsp;la ilustración, el&nbsp;trabajo vectorial y&nbsp;el retoque fotográfico.</p>
-                    <ul style="margin-top: 16px; list-style: none; display: flex; flex-direction: column; gap: 8px;">
-                        <li><strong>Herramientas esenciales:</strong> Adobe InDesign, Illustrator, Photoshop.</li>
-                        <li><strong>Arte final:</strong> Preparación de&nbsp;archivos para&nbsp;imprenta, gestión de&nbsp;color y&nbsp;soportes digitales.</li>
-                        <li><strong>Metodología:</strong> Investigación de&nbsp;marca, conceptualización y&nbsp;creación de&nbsp;sistemas visuales adaptables.</li>
+                    <ul class="formation-list">
+                        <li><strong>Herramientas esenciales:</strong>&nbsp;Adobe InDesign, Illustrator, Photoshop.</li>
+                        <li><strong>Arte final:</strong>&nbsp;Preparación de&nbsp;archivos para&nbsp;imprenta, gestión de&nbsp;color y&nbsp;soportes digitales.</li>
+                        <li><strong>Metodología:</strong>&nbsp;Investigación de&nbsp;marca, conceptualización y&nbsp;creación de&nbsp;sistemas visuales adaptables.</li>
                     </ul>
                 </div>
             </div>

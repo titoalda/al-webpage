@@ -133,7 +133,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // --- Mobile Hamburger Menu Handler ---
 document.addEventListener("DOMContentLoaded", function() {
-    if (window.innerWidth > 768) return; // Only execute on mobile screens
+    const isMobile = window.innerWidth <= 768;
+    const isTabletTouch = window.innerWidth <= 1024 && window.matchMedia('(pointer: coarse)').matches;
+    if (!isMobile && !isTabletTouch) return; // Solo móvil o tablet táctil
 
     const header = document.querySelector("header");
     if (!header) return;
