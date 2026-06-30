@@ -247,38 +247,38 @@
 
 /* ── Formación list ────────────────────────────────────── */
 .formation-list {
-    margin-top: 16px;
+    margin-top: 20px;
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     padding: 0;
+    border-top: 1px solid var(--border-color);
 }
 
 .formation-list li {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-color);
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 300;
     color: var(--gray-muted);
-    line-height: 1.7;
+    line-height: 1.65;
 }
 
 .formation-list li::before {
-    content: '';
-    flex-shrink: 0;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: var(--gray-dark);
-    margin-top: 0.58em; /* alinea verticalmente con la primera línea del texto */
+    display: none;
 }
 
 .formation-list li strong {
-    color: var(--text-color);
-    font-weight: 500;
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--gray-dark);
 }
 
 /* ── Responsive ─────────────────────────────────────────── */
@@ -303,4 +303,5 @@
 
     /* On mobile, straighten the line to left edge */
     .journey-svg { display: none; }
+    .journey-scroll-hint { display: none; }
 }
