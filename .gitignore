@@ -7,7 +7,6 @@ cgi-bin/
 .old/
 
 # Archivos internos / documentación
-URL.txt
 COMO_TRABAJAR.md
 estilo_visual.md
 rules_gemini.md
