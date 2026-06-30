@@ -1,0 +1,21 @@
+# Servidor / Docker
+Dockerfile
+.htaccess
+cgi-bin/
+
+# Versiones antiguas
+.old/
+
+# Archivos internos / documentación
+URL.txt
+COMO_TRABAJAR.md
+estilo_visual.md
+rules_gemini.md
+
+# Borradores
+about.old.html
+about2.html
+
+# Configs de agentes IA
+.agents/
+.gemini/
