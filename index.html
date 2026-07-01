@@ -73,12 +73,15 @@
             padding: 0 4vw;
             box-sizing: border-box;
             width: 100%;
+            perspective: 1000px; /* Enable 3D perspective */
         }
 
         .projects-desktop-grid .project-info {
             width: 100%;
             height: 52vh; /* Same height as original project-info in desktop */
             flex: unset;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
 
         /* Button Wrapper & Centering */
@@ -86,7 +89,7 @@
             display: flex;
             justify-content: center;
             width: 100%;
-            margin-top: 50px;
+            margin-top: 40px;
             z-index: 5;
         }
 
@@ -133,7 +136,7 @@
         /* Hover general transition override to avoid outline reset conflicts */
         .projects-cta-btn:hover,
         .projects-cta-btn:focus-visible {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background-color: transparent !important;
             color: #ffffff !important;
             transform: translateY(-2px) scale(1.02) !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
@@ -141,27 +144,24 @@
             outline-offset: 4px !important;
         }
 
-        /* Mouse Move Glow Effect */
-        .projects-cta-btn::before {
+        /* Override the solid inner background mask of .btn-lightbeam to support mouse glow */
+        .projects-cta-btn::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(
-                120px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(255, 255, 255, 0.15),
-                transparent 80%
-            );
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            inset: 1.5px;
+            border-radius: 9999px;
+            background: #1a1a1a;
             z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
         }
 
-        .projects-cta-btn:hover::before {
-            opacity: 1;
+        .projects-cta-btn:hover::after {
+            background: radial-gradient(
+                120px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 255, 255, 0.1),
+                #1c1c1c 80%
+            ) !important;
         }
 
         .btn-text-wrapper {
@@ -326,9 +326,9 @@
         </div>
 
         <div class="projects-cta-btn-wrapper">
-            <a href="projects" id="projects-cta-btn" class="button-circle projects-cta-btn">
+            <a href="projects" id="projects-cta-btn" class="button-circle projects-cta-btn btn-lightbeam">
                 <span class="btn-text-wrapper">
-                    ver mas proyectos
+                    ver&nbsp;más proyectos
                     <span class="btn-arrow">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -672,9 +672,12 @@
 <script src="static/scripts/dock.js"></script>
     <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-    <!-- Mouse Move Glow Event Listener for Projects CTA Button -->
+    <!-- Interactive Effects: Mouse Glow, Tilted Cards, and TextPressure -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // 1. Mouse Move Glow for CTA Button
             const glowBtn = document.getElementById("projects-cta-btn");
             if (glowBtn) {
                 glowBtn.addEventListener("mousemove", (e) => {
@@ -684,6 +687,138 @@
                     glowBtn.style.setProperty("--mouse-x", `${x}px`);
                     glowBtn.style.setProperty("--mouse-y", `${y}px`);
                 });
+            }
+
+            // 2. Tilted Card effect for Projects Desktop Grid
+            const cards = document.querySelectorAll("#showcase-desktop-container .project-info");
+            if (cards.length > 0 && !prefersReducedMotion) {
+                cards.forEach(card => {
+                    let reqId = null;
+                    let targetRotateX = 0;
+                    let targetRotateY = 0;
+                    let targetScale = 1;
+                    let currentRotateX = 0;
+                    let currentRotateY = 0;
+                    let currentScale = 1;
+                    let isHovered = false;
+
+                    card.addEventListener("mouseenter", () => {
+                        isHovered = true;
+                        targetScale = 1.06; // subtle scale up
+                        if (!reqId) {
+                            reqId = requestAnimationFrame(updateCardTransform);
+                        }
+                    });
+
+                    card.addEventListener("mousemove", (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const width = rect.width;
+                        const height = rect.height;
+                        const x = e.clientX - rect.left - width / 2;
+                        const y = e.clientY - rect.top - height / 2;
+                        
+                        // Normalize between -1 and 1
+                        const normX = x / (width / 2);
+                        const normY = y / (height / 2);
+
+                        // Max 8 degrees tilt
+                        targetRotateY = normX * 8;
+                        targetRotateX = -normY * 8;
+                    });
+
+                    card.addEventListener("mouseleave", () => {
+                        isHovered = false;
+                        targetRotateX = 0;
+                        targetRotateY = 0;
+                        targetScale = 1;
+                    });
+
+                    function updateCardTransform() {
+                        // Spring interpolation (lerp factor 0.1)
+                        currentRotateX += (targetRotateX - currentRotateX) * 0.1;
+                        currentRotateY += (targetRotateY - currentRotateY) * 0.1;
+                        currentScale += (targetScale - currentScale) * 0.1;
+
+                        card.style.transform = `rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg) scale(${currentScale.toFixed(3)})`;
+
+                        const diffX = Math.abs(targetRotateX - currentRotateX);
+                        const diffY = Math.abs(targetRotateY - currentRotateY);
+                        const diffScale = Math.abs(targetScale - currentScale);
+
+                        if (!isHovered && diffX < 0.01 && diffY < 0.01 && diffScale < 0.001) {
+                            card.style.transform = 'none';
+                            reqId = null;
+                        } else {
+                            reqId = requestAnimationFrame(updateCardTransform);
+                        }
+                    }
+                });
+            }
+
+            // 3. TextPressure variable font-weight effect for Hero Title
+            const nameEl = document.querySelector(".echo-text.echo-front");
+            if (nameEl && !prefersReducedMotion) {
+                const text = nameEl.textContent.trim();
+                nameEl.setAttribute("aria-label", text);
+                nameEl.innerHTML = "";
+                
+                // Split text into spans for each character (preserving spacing and accents)
+                const spans = Array.from(text).map(char => {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    span.setAttribute("aria-hidden", "true");
+                    span.style.display = "inline-block";
+                    span.style.fontWeight = "300"; // base font-weight
+                    span.style.transition = "font-weight 0.15s ease, font-variation-settings 0.15s ease";
+                    if (char === " ") {
+                        span.style.whiteSpace = "pre";
+                    }
+                    nameEl.appendChild(span);
+                    return span;
+                });
+
+                let mouseX = -1000;
+                let mouseY = -1000;
+                let reqId = null;
+
+                document.addEventListener("mousemove", (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (!reqId) {
+                        reqId = requestAnimationFrame(updateTextWeight);
+                    }
+                });
+
+                document.addEventListener("mouseleave", () => {
+                    mouseX = -1000;
+                    mouseY = -1000;
+                    if (!reqId) {
+                        reqId = requestAnimationFrame(updateTextWeight);
+                    }
+                });
+
+                function updateTextWeight() {
+                    spans.forEach(span => {
+                        const rect = span.getBoundingClientRect();
+                        const charX = rect.left + rect.width / 2;
+                        const charY = rect.top + rect.height / 2;
+                        const dist = Math.hypot(mouseX - charX, mouseY - charY);
+                        
+                        const maxRadius = 180; // area of influence
+                        let weight = 300; // base weight
+
+                        if (dist < maxRadius) {
+                            const factor = 1 - (dist / maxRadius);
+                            const easeFactor = factor * factor; // quadratic curve for visual appeal
+                            // Clash Display variable weight range is 200 to 700. Max out weight at 700.
+                            weight = 300 + Math.round(easeFactor * 400); 
+                        }
+
+                        span.style.fontWeight = weight.toString();
+                        span.style.fontVariationSettings = `'wght' ${weight}`;
+                    });
+                    reqId = null;
+                }
             }
         });
     </script>
