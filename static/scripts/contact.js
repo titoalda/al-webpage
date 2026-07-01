@@ -99,18 +99,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     })
                 })
                 .then(response => response.json())
-                .then(data => {
-                    console.log("Form submission success:", data);
-                })
-                .catch(error => {
-                    console.error("Form submission error:", error);
-                });
+                .then(data => {})
+                .catch(() => {});
             } else {
-                console.log("Form submitted locally (Access Key not configured yet):", {
-                    name: cleanName,
-                    email: cleanEmail,
-                    message: cleanMessage
-                });
             }
 
             // 7. Run loading state for 3 seconds, then transition to success page

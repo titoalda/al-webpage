@@ -3,66 +3,79 @@
     <!-- ES URLs -->
     <url>
         <loc>https://aldaraalvarez.es/</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/about</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/contact</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/formayfuncion</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/casadecor</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/dieznegritos</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/namaste</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/casacuentos</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/elviejoyelmar</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://aldaraalvarez.es/projects/deporteenseñales</loc>
+        <loc>https://aldaraalvarez.es/projects/deporteense%C3%B1ales</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/labocadellobo</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/legal</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
@@ -70,66 +83,79 @@
     <!-- EN URLs -->
     <url>
         <loc>https://aldaraalvarez.es/en/</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/about</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/contact</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/formayfuncion</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/casadecor</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/dieznegritos</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/namaste</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/casacuentos</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/elviejoyelmar</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://aldaraalvarez.es/en/projects/deporteenseñales</loc>
+        <loc>https://aldaraalvarez.es/en/projects/deporteense%C3%B1ales</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/labocadellobo</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/legal</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
@@ -137,66 +163,79 @@
     <!-- GL URLs -->
     <url>
         <loc>https://aldaraalvarez.es/gl/</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/about</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/contact</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/formayfuncion</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/casadecor</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/dieznegritos</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/namaste</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/casacuentos</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/elviejoyelmar</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://aldaraalvarez.es/gl/projects/deporteenseñales</loc>
+        <loc>https://aldaraalvarez.es/gl/projects/deporteense%C3%B1ales</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/labocadellobo</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/legal</loc>
+        <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
