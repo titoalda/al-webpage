@@ -926,6 +926,14 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 40px;
     }
+
+    /* Disable the desktop subgrid alignment at this breakpoint too;
+       otherwise header cells (h5) and the logo don't share a row height
+       with their sibling column, breaking top alignment. */
+    .footer-col {
+        display: block;
+        grid-row: auto;
+    }
 }
 
 /* Mobile Hamburger Button (Desktop Hidden) */
