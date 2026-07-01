@@ -717,7 +717,7 @@ section {
     background-color: transparent;
     color: #f2f2f2;
     font-family: var(--font-sans);
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
     font-size: 13px;
     letter-spacing: 0.05em;
@@ -799,6 +799,7 @@ footer {
     text-transform: uppercase;
     color: #ffffff;
     word-spacing: 0.12em;
+    font-weight: 300;
 }
 
 .footer-col p {

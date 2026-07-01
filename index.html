@@ -68,7 +68,7 @@
 
         .projects-desktop-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
             gap: 24px;
             padding: 0 4vw;
             box-sizing: border-box;
@@ -78,7 +78,7 @@
 
         .projects-desktop-grid .project-info {
             width: 100%;
-            height: 52vh; /* Same height as original project-info in desktop */
+            aspect-ratio: 1 / 1; /* Square cards */
             flex: unset;
             transform-style: preserve-3d;
             will-change: transform;
@@ -93,27 +93,9 @@
             z-index: 5;
         }
 
-        /* Call-To-Action Button with Slide-In Blur & Glow */
+        /* Call-To-Action Button with Slide-In Blur */
         .projects-cta-btn {
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            padding: 14px 28px;
-            border: 1.5px solid #f2f2f2;
-            border-radius: 9999px;
-            background-color: rgba(17, 17, 17, 0.4);
-            color: #f2f2f2;
-            font-family: var(--font-sans);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            
+            font-weight: 500;
             /* Slide-in blur entrance */
             opacity: 0;
             animation: slideInBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -131,76 +113,6 @@
                 transform: translateY(0);
                 filter: blur(0);
             }
-        }
-
-        /* Hover general transition override to avoid outline reset conflicts */
-        .projects-cta-btn:hover,
-        .projects-cta-btn:focus-visible {
-            background-color: transparent !important;
-            color: #ffffff !important;
-            transform: translateY(-2px) scale(1.02) !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
-            outline: 2px solid #ffffff !important;
-            outline-offset: 4px !important;
-        }
-
-        /* Override the solid inner background mask of .btn-lightbeam to support mouse glow */
-        .projects-cta-btn::after {
-            content: '';
-            position: absolute;
-            inset: 1.5px;
-            border-radius: 9999px;
-            background: #1a1a1a;
-            z-index: 1;
-            pointer-events: none;
-            transition: background 0.3s ease;
-        }
-
-        .projects-cta-btn:hover::after {
-            background: radial-gradient(
-                120px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(255, 255, 255, 0.1),
-                #1c1c1c 80%
-            ) !important;
-        }
-
-        .btn-text-wrapper {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* Underline expansion on hover */
-        .btn-text-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1.5px;
-            background-color: currentColor;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .projects-cta-btn:hover .btn-text-wrapper::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        /* Arrow Shift */
-        .btn-arrow {
-            display: inline-flex;
-            align-items: center;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .projects-cta-btn:hover .btn-arrow {
-            transform: translateX(6px);
         }
     </style>
 
@@ -313,29 +225,11 @@
                 </a>
             </div>
             
-            <!-- Project 4: La boca del lobo -->
-            <div class="project-info">
-                <a href="projects/labocadellobo">
-                    <img src="static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size" loading="lazy" width="1131" height="1131">
-                    <div class="image-text">
-                        <h3 class="titulo-text">LA BOCA DEL LOBO</h3>
-                        <h4 class="proyecto-text">DISEÑO DE <em>LETTERING</em></h4>
-                    </div>
-                </a>
-            </div>
         </div>
 
         <div class="projects-cta-btn-wrapper">
             <a href="projects" id="projects-cta-btn" class="button-circle projects-cta-btn btn-lightbeam">
-                <span class="btn-text-wrapper">
-                    ver&nbsp;más proyectos
-                    <span class="btn-arrow">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </span>
-                </span>
+                <span>ver&nbsp;más proyectos</span>
             </a>
         </div>
     </section>
@@ -677,17 +571,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            // 1. Mouse Move Glow for CTA Button
-            const glowBtn = document.getElementById("projects-cta-btn");
-            if (glowBtn) {
-                glowBtn.addEventListener("mousemove", (e) => {
-                    const rect = glowBtn.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    glowBtn.style.setProperty("--mouse-x", `${x}px`);
-                    glowBtn.style.setProperty("--mouse-y", `${y}px`);
-                });
-            }
 
             // 2. Tilted Card effect for Projects Desktop Grid
             const cards = document.querySelectorAll("#showcase-desktop-container .project-info");
