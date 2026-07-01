@@ -28,6 +28,183 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="static/styles/style.css">
 
+    <style>
+        /* Responsive visibility */
+        @media (min-width: 1025px) {
+            .showcase-mobile-only {
+                display: none !important;
+            }
+            .showcase-desktop-only {
+                display: flex !important;
+            }
+        }
+        @media (max-width: 1024px) {
+            .showcase-mobile-only {
+                display: flex !important;
+            }
+            .showcase-desktop-only {
+                display: none !important;
+            }
+        }
+
+        /* Desktop Grid Styles */
+        .showcase-desktop-only {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #111111;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding: 60px 0;
+            box-sizing: border-box;
+        }
+
+        .showcase-desktop-only .projects-section-header {
+            text-align: center;
+        }
+
+
+        .projects-desktop-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            padding: 0 4vw;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .projects-desktop-grid .project-info {
+            width: 100%;
+            height: 52vh; /* Same height as original project-info in desktop */
+            flex: unset;
+        }
+
+        /* Button Wrapper & Centering */
+        .projects-cta-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 50px;
+            z-index: 5;
+        }
+
+        /* Call-To-Action Button with Slide-In Blur & Glow */
+        .projects-cta-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 14px 28px;
+            border: 1.5px solid #f2f2f2;
+            border-radius: 9999px;
+            background-color: rgba(17, 17, 17, 0.4);
+            color: #f2f2f2;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Slide-in blur entrance */
+            opacity: 0;
+            animation: slideInBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideInBlur {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+                filter: blur(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Hover general transition override to avoid outline reset conflicts */
+        .projects-cta-btn:hover,
+        .projects-cta-btn:focus-visible {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+            transform: translateY(-2px) scale(1.02) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+            outline: 2px solid #ffffff !important;
+            outline-offset: 4px !important;
+        }
+
+        /* Mouse Move Glow Effect */
+        .projects-cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                120px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 255, 255, 0.15),
+                transparent 80%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .projects-cta-btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-text-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Underline expansion on hover */
+        .btn-text-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1.5px;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .projects-cta-btn:hover .btn-text-wrapper::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Arrow Shift */
+        .btn-arrow {
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .projects-cta-btn:hover .btn-arrow {
+            transform: translateX(6px);
+        }
+    </style>
+
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -86,18 +263,84 @@
             <!-- Right Column: Name and Tagline -->
             <div class="hero-right-col">
                 <h1 class="hero-heading-group">
-                    <div class="echo-container">
+                    <span class="echo-container">
                         <span class="echo-text echo-front">Aldara Álvarez</span>
-                    </div>
-                    <div id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial</div>
+                    </span>
+                    <span id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial</span>
                 </h1>
             </div>
         </div>
     </section>
 
-        <!-- Seccion Proyectos (Horizontal Scroller similar a V1) -->
-        <!-- Seccion Proyectos (Horizontal Scroller similar a V1 con Pin de GSAP) -->
-    <section id="showcase-pin-container" class="showcase-pin-container">
+    <!-- Seccion Proyectos para Ordenador (4 proyectos en una fila, sin carrusel) -->
+    <section id="showcase-desktop-container" class="showcase-desktop-only">
+        <div class="projects-section-header">
+            <h2 class="section-title">PROYECTOS</h2>
+            <p class="section-subtitle">Aquí te dejo una selección de&nbsp;proyectos que&nbsp;espero que&nbsp;te transmitan mi dedicación y&nbsp;pasión por&nbsp;el diseño.</p>
+        </div>
+        
+        <div class="projects-desktop-grid">
+            <!-- Project 1: El viejo y el mar -->
+            <div class="project-info">
+                <a href="projects/elviejoyelmar">
+                    <img src="static/images/pr_viejomar_cover.jpg" alt="Proyecto El viejo y el mar" class="image-size" loading="lazy" width="1637" height="1500">
+                    <div class="image-text">
+                        <h3 class="titulo-text">EL VIEJO Y EL MAR</h3>
+                        <h4 class="proyecto-text">DISEÑO DE CUBIERTA E ILUSTRACIÓN</h4>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Project 2: Forma y Función -->
+            <div class="project-info">
+                <a href="projects/formayfuncion">
+                    <img src="static/images/pr_formayfuncion_cover.jpg" alt="Proyecto Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
+                    <div class="image-text">
+                        <h3 class="titulo-text">FORMA Y FUNCIÓN</h3>
+                        <h4 class="proyecto-text">DISEÑO EDITORIAL</h4>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Project 3: Casa Decor -->
+            <div class="project-info">
+                <a href="projects/casadecor">
+                    <img src="static/images/pr_casadecor_cover.jpg" alt="Proyecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
+                    <div class="image-text">
+                        <h3 class="titulo-text">CASA DECOR</h3>
+                        <h4 class="proyecto-text">DISEÑO DE SEÑALÉTICA</h4>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Project 4: La boca del lobo -->
+            <div class="project-info">
+                <a href="projects/labocadellobo">
+                    <img src="static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size" loading="lazy" width="1131" height="1131">
+                    <div class="image-text">
+                        <h3 class="titulo-text">LA BOCA DEL LOBO</h3>
+                        <h4 class="proyecto-text">DISEÑO DE <em>LETTERING</em></h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="projects-cta-btn-wrapper">
+            <a href="projects" id="projects-cta-btn" class="button-circle projects-cta-btn">
+                <span class="btn-text-wrapper">
+                    ver mas proyectos
+                    <span class="btn-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
+                </span>
+            </a>
+        </div>
+    </section>
+
+    <section id="showcase-pin-container" class="showcase-pin-container showcase-mobile-only">
         <div class="projects-section-header">
             <h2 class="section-title">PROYECTOS</h2>
             <p class="section-subtitle">Aquí te dejo una selección de&nbsp;proyectos que&nbsp;espero que&nbsp;te transmitan mi dedicación y&nbsp;pasión por&nbsp;el diseño.</p>
@@ -428,5 +671,21 @@
 <script src="static/scripts/contact.js"></script>
 <script src="static/scripts/dock.js"></script>
     <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <!-- Mouse Move Glow Event Listener for Projects CTA Button -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const glowBtn = document.getElementById("projects-cta-btn");
+            if (glowBtn) {
+                glowBtn.addEventListener("mousemove", (e) => {
+                    const rect = glowBtn.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    glowBtn.style.setProperty("--mouse-x", `${x}px`);
+                    glowBtn.style.setProperty("--mouse-y", `${y}px`);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
