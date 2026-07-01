@@ -787,7 +787,7 @@ footer {
 /* Pull "Secciones" closer to "Proyectos Destacados" and further from the
    bio column, instead of the uniform column-gap above. */
 .footer-grid .footer-col:nth-child(2) {
-    margin-left: 32px;
+    margin-left: 56px;
 }
 
 /* Each column shares the same two row-tracks as its siblings (subgrid),
