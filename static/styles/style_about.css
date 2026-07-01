@@ -241,9 +241,8 @@
     font-size: 0.95rem;
     font-weight: 300;
     color: var(--gray-muted);
-    line-height: 1.7;
+    line-height: 1.3;
     margin: 0;
-    text-transform: capitalize;
 }
 
 /* ── Formación list ────────────────────────────────────── */

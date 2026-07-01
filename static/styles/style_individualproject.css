@@ -264,7 +264,7 @@ body {
     background-color: transparent;
     color: #f2f2f2;
     font-family: var(--font-sans);
-    font-weight: 300;
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 13px;
     letter-spacing: 0.05em;
@@ -272,10 +272,13 @@ body {
     transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.button-circle:hover {
+.button-circle:hover,
+.button-circle:focus-visible {
     background-color: #f2f2f2;
     color: #111111;
     transform: translateY(-2px);
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
 }
 
 /* Contact block inside project pages */
@@ -309,7 +312,7 @@ body {
     font-size: 16px;
     color: var(--gray-muted);
     max-width: 600px;
-    line-height: 1.6;
+    line-height: 1.3;
     font-weight: 300;
 }
 
@@ -449,7 +452,7 @@ body {
     right: 28px;
     background: none;
     border: none;
-    color: #888888;
+    color: var(--gray-dark);
     font-size: 32px;
     font-weight: 200;
     cursor: pointer;
@@ -500,41 +503,41 @@ body {
     }
 
     .more_projects .rectangle .button-circle {
-        padding: 8px 12px;
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        padding: 0;
         font-size: 0 !important; /* Hide full desktop text on mobile */
         letter-spacing: 0.02em;
-        white-space: nowrap;
+        white-space: normal;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-shrink: 0;
     }
 
     .more_projects .rectangle .button-circle.left::after {
         content: "ANTERIOR";
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .more_projects .rectangle .button-circle.center {
         width: 88px;
         height: 88px;
-        border-radius: 50%;
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        white-space: normal;
-        flex-shrink: 0;
     }
     .more_projects .rectangle .button-circle.center::after {
         content: "VER TODOS LOS PROYECTOS";
-        font-size: 8.5px;
+        font-size: 9px;
         white-space: normal;
         line-height: 1.4;
         display: block;
-        padding: 0 6px;
+        padding: 0 8px;
     }
 
     .more_projects .rectangle .button-circle.right::after {
         content: "SIGUIENTE";
-        font-size: 10px;
+        font-size: 11px;
     }
 }
 
