@@ -508,6 +508,7 @@ body {
         border-radius: 50%;
         padding: 0;
         font-size: 0 !important; /* Hide full desktop text on mobile */
+        font-weight: 400;
         letter-spacing: 0.02em;
         white-space: normal;
         display: inline-flex;
@@ -519,25 +520,25 @@ body {
 
     .more_projects .rectangle .button-circle.left::after {
         content: "ANTERIOR";
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .more_projects .rectangle .button-circle.center {
-        width: 88px;
-        height: 88px;
+        width: 104px;
+        height: 104px;
     }
     .more_projects .rectangle .button-circle.center::after {
         content: "VER TODOS LOS PROYECTOS";
-        font-size: 9px;
+        font-size: 10px;
         white-space: normal;
         line-height: 1.4;
         display: block;
-        padding: 0 8px;
+        padding: 0 10px;
     }
 
     .more_projects .rectangle .button-circle.right::after {
         content: "SIGUIENTE";
-        font-size: 11px;
+        font-size: 10px;
     }
 }
 
