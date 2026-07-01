@@ -800,6 +800,10 @@ footer {
     line-height: 1.35;
 }
 
+.footer-col p strong {
+    font-weight: 700;
+}
+
 .footer-col ul {
     list-style: none;
 }
