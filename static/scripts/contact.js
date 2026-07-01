@@ -37,7 +37,14 @@ document.addEventListener("DOMContentLoaded", function() {
             // 3. Email validation regex (Threat sanitization)
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(emailVal)) {
-                statusDiv.innerText = "Por favor, introduce un email válido.";
+                const currentLang = document.documentElement.lang || 'es';
+                if (currentLang === 'en') {
+                    statusDiv.innerText = "Please enter a valid email address.";
+                } else if (currentLang === 'gl') {
+                    statusDiv.innerText = "Por favor, introduce un correo electrónico válido.";
+                } else {
+                    statusDiv.innerText = "Por favor, introduce un email válido.";
+                }
                 statusDiv.style.color = "#ff4d4d";
                 statusDiv.style.display = "block";
                 return;
@@ -114,7 +121,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 const successTitle = document.getElementById("success-title-text");
                 
                 if (successTitle) {
-                    successTitle.innerText = `¡Gracias, ${cleanName}!`;
+                    const currentLang = document.documentElement.lang || 'es';
+                    if (currentLang === 'en') {
+                        successTitle.innerText = `Thank you, ${cleanName}!`;
+                    } else if (currentLang === 'gl') {
+                        successTitle.innerText = `Grazas, ${cleanName}!`;
+                    } else {
+                        successTitle.innerText = `¡Gracias, ${cleanName}!`;
+                    }
                 }
                 
                 if (successOverlay) {

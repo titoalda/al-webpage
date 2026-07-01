@@ -306,7 +306,7 @@ header nav a:hover {
 }
 
 .hero-subtitle strong {
-    font-weight: 900;
+    font-weight: 500;
     color: #ffffff;
 }
 
@@ -776,9 +776,9 @@ footer {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
-    column-gap: 48px;
+    column-gap: 32px;
     row-gap: 12px;
     margin-bottom: 50px;
     align-items: start;
@@ -2846,3 +2846,135 @@ footer {
     margin-top: 40px;
 }
 
+/* Volver Atras (Back Button) */
+.back-btn-wrapper {
+    padding: 30px 4vw 0 4vw;
+    box-sizing: border-box;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #b6b5b5;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-btn .back-arrow {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-btn:hover,
+.back-btn:focus-visible {
+    color: #ffffff;
+    outline: none;
+}
+
+.back-btn:hover .back-arrow,
+.back-btn:focus-visible .back-arrow {
+    transform: translateX(-4px);
+}
+
+/* Language Selector Dropdown */
+.lang-selector {
+    position: relative;
+}
+
+.lang-dropdown {
+    position: absolute;
+    left: 50%;
+    background: rgba(15, 15, 15, 0.95);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+    z-index: 10000;
+    min-width: 60px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.lang-dropdown.open-up {
+    top: auto;
+    bottom: 110%;
+    transform: translate(-50%, 10px);
+}
+
+.lang-dropdown.open-down {
+    bottom: auto;
+    top: 110%;
+    transform: translate(-50%, -10px);
+}
+
+.lang-selector:hover .lang-dropdown.open-up,
+.lang-selector:focus-within .lang-dropdown.open-up {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+.lang-selector:hover .lang-dropdown.open-down,
+.lang-selector:focus-within .lang-dropdown.open-down {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+/* Adjust dropdown position for mobile sidebar */
+@media (max-width: 768px) {
+    .lang-dropdown {
+        flex-direction: column;
+        gap: 4px;
+        min-width: 60px;
+    }
+}
+
+.lang-option {
+    display: block;
+    color: #b6b5b5;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lang-option:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-option.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+}
+
+﻿
+/* Black & white filter on homepage project photos (desktop grid only), color on hover */
+#showcase-desktop-container .project-info .image-size {
+    filter: grayscale(1);
+    transition: filter 0.4s ease;
+}
+
+#showcase-desktop-container .project-info:hover .image-size {
+    filter: grayscale(0);
+}

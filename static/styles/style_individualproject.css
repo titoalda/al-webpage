@@ -552,4 +552,44 @@ body {
     color: var(--white);
 }
 
+/* Volver Atras (Back Button) */
+.back-btn-wrapper {
+    padding: 30px 4vw 0 4vw;
+    box-sizing: border-box;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #b6b5b5;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-btn .back-arrow {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-btn:hover,
+.back-btn:focus-visible {
+    color: #ffffff;
+    outline: none;
+}
+
+.back-btn:hover .back-arrow,
+.back-btn:focus-visible .back-arrow {
+    transform: translateX(-4px);
+}
+
 

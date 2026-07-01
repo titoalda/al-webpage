@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const magnification = 46; // Max magnification size
     const distance = 100;     // Magnification range radius
 
-    // Spring constants matching Framer Motion config (mass = 0.1, stiffness = 150, damping = 12)
+    // Spring constants (mass = 0.1, stiffness = 90, damping = 15 for smoother interaction)
     const mass = 0.1;
-    const stiffness = 150;
-    const damping = 12;
+    const stiffness = 90;
+    const damping = 15;
 
     // Track spring state for each item
     const states = Array.from(items).map(item => ({
@@ -23,6 +23,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let mouseX = Infinity;
     let isHovered = false;
+
+    // Language selector dropdown orientation helper and animation freeze state
+    const langSelector = dock.querySelector(".lang-selector");
+    const langDropdown = dock.querySelector(".lang-dropdown");
+    let isLangOpen = false;
+
+    if (langSelector && langDropdown) {
+        const updateDropdownDirection = () => {
+            isLangOpen = true;
+            const rect = langSelector.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            if (spaceBelow < 150) {
+                langDropdown.classList.add("open-up");
+                langDropdown.classList.remove("open-down");
+            } else {
+                langDropdown.classList.add("open-down");
+                langDropdown.classList.remove("open-up");
+            }
+        };
+
+        langSelector.addEventListener("mouseenter", updateDropdownDirection);
+        langSelector.addEventListener("focusin", updateDropdownDirection);
+        langSelector.addEventListener("mouseleave", () => { isLangOpen = false; });
+        langSelector.addEventListener("focusout", () => { isLangOpen = false; });
+    }
 
     // Listen to mouse events on dock
     dock.addEventListener("mousemove", (e) => {
@@ -54,6 +79,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 2. Solve spring physics for each item with stable sub-stepping
         states.forEach(state => {
+            // Freeze sizes if language menu is open to prevent cursor shifting
+            if (isLangOpen) {
+                state.velocity = 0;
+                state.element.style.width = `${state.size}px`;
+                state.element.style.height = `${state.size}px`;
+                return;
+            }
+
             let target = baseSize;
 
             if (isHovered && mouseX !== Infinity) {
@@ -186,6 +219,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Close menu when clicking a dock item
     const dockItems = document.querySelectorAll(".magnification-dock .dock-item");
     dockItems.forEach(item => {
+        if (item.classList.contains("lang-selector")) return;
         item.addEventListener("click", () => {
             hamburger.classList.remove("open");
             header.classList.remove("nav-active");
