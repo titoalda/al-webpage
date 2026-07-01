@@ -13,3 +13,6 @@ about2.html
 .agents/
 .gemini/
 chat.md
+
+# Sandbox local de pruebas (no debe llegar a produccion)
+test.html

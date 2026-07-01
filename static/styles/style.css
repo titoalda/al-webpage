@@ -778,10 +778,16 @@ footer {
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
-    column-gap: 32px;
+    column-gap: 20px;
     row-gap: 12px;
     margin-bottom: 50px;
     align-items: start;
+}
+
+/* Pull "Secciones" closer to "Proyectos Destacados" and further from the
+   bio column, instead of the uniform column-gap above. */
+.footer-grid .footer-col:nth-child(2) {
+    margin-left: 32px;
 }
 
 /* Each column shares the same two row-tracks as its siblings (subgrid),
@@ -2886,7 +2892,7 @@ footer {
     transform: translateX(-4px);
 }
 
-/* Language Selector Dropdown */
+/* Language Selector Dropdown (inside Magnification Dock) */
 .lang-selector {
     position: relative;
 }
@@ -2907,6 +2913,20 @@ footer {
     z-index: 10000;
     min-width: 60px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+}
+
+/* Expanded invisible hover area (25px in all directions) to prevent accidental closing */
+.lang-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -25px;
+    bottom: -25px;
+    left: -25px;
+    right: -25px;
+    z-index: -1;
+    pointer-events: auto;
+    background: transparent;
 }
 
 .lang-dropdown.open-up {
@@ -2921,15 +2941,13 @@ footer {
     transform: translate(-50%, -10px);
 }
 
-.lang-selector:hover .lang-dropdown.open-up,
-.lang-selector:focus-within .lang-dropdown.open-up {
+.lang-selector.is-open .lang-dropdown.open-up {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
 }
 
-.lang-selector:hover .lang-dropdown.open-down,
-.lang-selector:focus-within .lang-dropdown.open-down {
+.lang-selector.is-open .lang-dropdown.open-down {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
@@ -2969,12 +2987,3 @@ footer {
 }
 
 ﻿
-/* Black & white filter on homepage project photos (desktop grid only), color on hover */
-#showcase-desktop-container .project-info .image-size {
-    filter: grayscale(1);
-    transition: filter 0.4s ease;
-}
-
-#showcase-desktop-container .project-info:hover .image-size {
-    filter: grayscale(0);
-}

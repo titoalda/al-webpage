@@ -84,7 +84,6 @@
             width: 100%;
             aspect-ratio: 1 / 1; /* Square cards */
             flex: unset;
-            transform-style: preserve-3d;
             will-change: transform;
         }
 
@@ -95,15 +94,16 @@
             width: 100%;
             margin-top: 40px;
             z-index: 5;
-        }
-
-        /* Call-To-Action Button with Slide-In Blur */
-        .projects-cta-btn {
-            font-weight: 500;
-            /* Slide-in blur entrance */
+            /* Slide-in blur entrance lives on the wrapper (not the button)
+               so Safari doesn't keep the button's transform pinned to the
+               animation's forwards-fill state and block the hover scale. */
             opacity: 0;
             animation: slideInBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
+        }
+
+        .projects-cta-btn {
+            font-weight: 500;
         }
 
         @keyframes slideInBlur {
@@ -131,7 +131,7 @@
         "url": "https://aldaraalvarez.es/",
         "image": "https://aldaraalvarez.es/static/logo/logo_inverted.png",
         "email": "mailto:aldaraalvarezglez@gmail.com",
-        "knowsAbout": ["Diseño Editorial", "Identidad de Marca", "Diseño de Packaging", "Modelado 3D", "Diseño UX/UI"],
+        "knowsAbout": ["Deseño Editorial", "Identidade de Marca", "Deseño de Packaging", "Modelado 3D", "Deseño UX/UI"],
         "alumniOf": [
             { "@type": "CollegeOrUniversity", "name": "Universidad Complutense de Madrid" },
             { "@type": "CollegeOrUniversity", "name": "UNIR - Universidad Internacional de La Rioja" }
@@ -170,10 +170,10 @@
                 <div class="lang-dropdown">
                     <a href="../index.html" class="lang-option">ES</a>
                     <a href="../en/index.html" class="lang-option">EN</a>
-                    <a href="index.html" class="lang-option active">GL</a>
+                    <a href="index.html" class="lang-option active">GAL</a>
                 </div>
             </div>
-        </nav>
+            </nav>
     </header>
 
     <!-- Hero Section with Typographic Echo Stack & Split Layout -->
@@ -193,7 +193,7 @@
                     <span class="echo-container">
                         <span class="echo-text echo-front">Aldara Álvarez</span>
                     </span>
-                    <span id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial</span>
+                    <span id="hero-subtitle" class="hero-subtitle"><strong>deseñadora</strong><span class="hero-pipe"> | </span>especialista en identidade de marca e deseño editorial</span>
                 </h1>
             </div>
         </div>
@@ -292,7 +292,7 @@
                     <a href="projects/casacuentos">
                         <img src="../static/images/pr_casacuentos_cover.jpg" alt="Proyecto Casa de cuentos" class="image-size" loading="lazy" width="1621" height="1578">
                         <div class="image-text">
-                            <h3 class="titulo-text">CASA DE CUENTOS</h3>
+                            <h3 class="titulo-text">CASA DE CONTOS</h3>
                             <h4 class="proyecto-text">DESEÑO DE MODELO 3D</h4>
                         </div>
                     </a>
@@ -312,7 +312,7 @@
                 <!-- Project 5: Deporte en Señales -->
                 <div class="project-info">
                     <a href="projects/deporteenseñales">
-                        <img src="../static/images/pr_deporteenseñales_cover.png" alt="Proyecto Deporte en Señales" class="image-size" loading="lazy" width="3685" height="3550">
+                        <img src="../static/images/pr_deporteenseñales_cover.png" alt="Proxecto Deporte en Señales" class="image-size" loading="lazy" width="3685" height="3550">
                         <div class="image-text">
                             <h3 class="titulo-text">DEPORTE EN SEÑALES</h3>
                             <h4 class="proyecto-text">DESEÑO DE SINALÉCTICA</h4>
@@ -323,10 +323,10 @@
                 <!-- Project 6: La boca del lobo -->
                 <div class="project-info">
                     <a href="projects/labocadellobo">
-                        <img src="../static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size" loading="lazy" width="1131" height="1131">
+                        <img src="../static/images/pr_labocadellobo_cover.png" alt="Proxecto A boca do lobo" class="image-size" loading="lazy" width="1131" height="1131">
                         <div class="image-text">
                             <h3 class="titulo-text">LA BOCA DEL LOBO</h3>
-                            <h4 class="proyecto-text">DISEÑO DE <em>LETTERING</em></h4>
+                            <h4 class="proyecto-text">DESEÑO DE <em>LETTERING</em></h4>
                         </div>
                     </a>
                 </div>
@@ -345,10 +345,10 @@
                 <!-- Project 8: Diez Negritos -->
                 <div class="project-info">
                     <a href="projects/dieznegritos">
-                        <img src="../static/images/pr_dieznegritos_cover.jpg" alt="Proyecto Diez Negritos" class="image-size" loading="lazy" width="1940" height="1885">
+                        <img src="../static/images/pr_dieznegritos_cover.jpg" alt="Proxecto Diez Negritos" class="image-size" loading="lazy" width="1940" height="1885">
                         <div class="image-text">
                             <h3 class="titulo-text">DIEZ NEGRITOS</h3>
-                            <h4 class="proyecto-text">DISEÑO DE CUBIERTA</h4>
+                            <h4 class="proyecto-text">DESEÑO DE CUBIERTA</h4>
                         </div>
                     </a>
                 </div>
@@ -368,11 +368,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                 </div>
                 <div class="service-content">
-                    <h3>Diseño Editorial</h3>
-                    <p>Maquetación de&nbsp;publicaciones, dirección tipográfica y&nbsp;diseño de&nbsp;libros, revistas y&nbsp;catálogos con&nbsp;criterio y&nbsp;detalle.</p>
+                    <h3>Deseño Editorial</h3>
+                    <p>Maquetación de&nbsp;publicacións, dirección tipográfica e&nbsp;deseño de&nbsp;libros, revistas e&nbsp;catálogos con&nbsp;criterio e&nbsp;detalle.</p>
                 </div>
                 <a href="projects" class="service-cta" style="display:none;">
-                    Explorar proyectos
+                    Explorar proxectos
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
             </div>
@@ -382,11 +382,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
                 </div>
                 <div class="service-content">
-                    <h3>Identidad de&nbsp;Marca</h3>
-                    <p>Creación de&nbsp;identidades visuales coherentes y&nbsp;duraderas: logotipo, paleta, tipografía y&nbsp;sistema de&nbsp;marca completo.</p>
+                    <h3>Identidade de&nbsp;Marca</h3>
+                    <p>Creación de&nbsp;identidades visuais coherentes e&nbsp;duradeiras: logotipo, paleta, tipografía e&nbsp;sistema de&nbsp;marca completo.</p>
                 </div>
                 <a href="projects" class="service-cta" style="display:none;">
-                    Explorar proyectos
+                    Explorar proxectos
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
             </div>
@@ -396,11 +396,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polygon points="2 17 12 22 22 17"/><polygon points="2 12 12 17 22 12"/></svg>
                 </div>
                 <div class="service-content">
-                    <h3>Diseño UX·UI</h3>
-                    <p>Interfaces digitales centradas en&nbsp;el usuario: wireframes, prototipos y&nbsp;diseño visual de&nbsp;productos web y&nbsp;app.</p>
+                    <h3>Deseño UX·UI</h3>
+                    <p>Interfaces dixitais centradas no&nbsp;usuario: wireframes, prototipos e&nbsp;deseño visual de&nbsp;produtos web e&nbsp;app.</p>
                 </div>
                 <a href="projects" class="service-cta" style="display:none;">
-                    Explorar proyectos
+                    Explorar proxectos
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
             </div>
@@ -412,7 +412,7 @@
         <!-- Secure Sanitized Contact Section -->
     <section id="contact" class="contact-section">
         <h2>Contacto</h2>
-        <p class="intro">¿Tienes algún proyecto en&nbsp;mente o&nbsp;quieres preguntarme algo?<br><span style="display:inline-block; margin-top:12px;">Hablemos de&nbsp;forma segura.</span></p>
+        <p class="intro">¿Tes algún proxecto en&nbsp;mente ou&nbsp;queres preguntarme algo?<br><span style="display:inline-block; margin-top:12px;">Falemos de&nbsp;forma segura.</span></p>
         
         <div class="contact-form-wrapper" style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
             <!-- Hidden Loading State Overlay -->
@@ -441,8 +441,8 @@
                 </div>
 
                 <div class="loading-content">
-                    <h2 class="loading-title">ENVIANDO MENSAJE</h2>
-                    <p class="loading-subtitle">Estableciendo conexión segura...</p>
+                    <h2 class="loading-title">ENVIANDO MENSAXE</h2>
+                    <p class="loading-subtitle">Establecendo conexión segura...</p>
                     <div class="progress-bar-container">
                         <div class="progress-bar-fill"></div>
                     </div>
@@ -490,7 +490,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <img src="../static/logo/logo.png" alt="Logo Aldara Álvarez" class="footer-logo" height="30">
-                <p><strong>Aldara Álvarez</strong> — Deseñadora Gráfica.<br>Graduada en Deseño pola UCM e en Deseño Gráfico Dixital pola UNIR.<br>Especializada en solucións visuais conceptuais, deseño editorial e identidade corporativa.</p>
+                <p><strong>Aldara Álvarez</strong> — Deseñadora Gráfica.<br>Graduada en Deseño pola UCM e en Deseño Gráfico Dixital pola UNIR. Especializada en solucións visuais conceptuais, deseño editorial e identidade corporativa.</p>
             </div>
             <div class="footer-col">
                 <h5>Seccións</h5>
@@ -513,7 +513,7 @@
                 <h5>Contacto</h5>
                 <div class="footer-contact-item">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <span>aldaraalvarezglez@gmail.com</span>
+                    <a href="mailto:aldaraalvarezglez@gmail.com">aldaraalvarezglez@gmail.com</a>
                 </div>
             </div>
         </div>

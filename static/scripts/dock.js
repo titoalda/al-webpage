@@ -23,31 +23,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let mouseX = Infinity;
     let isHovered = false;
-
-    // Language selector dropdown orientation helper and animation freeze state
-    const langSelector = dock.querySelector(".lang-selector");
-    const langDropdown = dock.querySelector(".lang-dropdown");
     let isLangOpen = false;
-
-    if (langSelector && langDropdown) {
-        const updateDropdownDirection = () => {
-            isLangOpen = true;
-            const rect = langSelector.getBoundingClientRect();
-            const spaceBelow = window.innerHeight - rect.bottom;
-            if (spaceBelow < 150) {
-                langDropdown.classList.add("open-up");
-                langDropdown.classList.remove("open-down");
-            } else {
-                langDropdown.classList.add("open-down");
-                langDropdown.classList.remove("open-up");
-            }
-        };
-
-        langSelector.addEventListener("mouseenter", updateDropdownDirection);
-        langSelector.addEventListener("focusin", updateDropdownDirection);
-        langSelector.addEventListener("mouseleave", () => { isLangOpen = false; });
-        langSelector.addEventListener("focusout", () => { isLangOpen = false; });
-    }
+    let langTimeout = null;
 
     // Listen to mouse events on dock
     dock.addEventListener("mousemove", (e) => {
@@ -133,6 +110,80 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Loop animation
         requestAnimationFrame(animate);
+    }
+
+    const langSelector = dock.querySelector(".lang-selector");
+    const langDropdown = dock.querySelector(".lang-dropdown");
+    if (langSelector && langDropdown) {
+        const openLang = () => {
+            if (langTimeout) {
+                clearTimeout(langTimeout);
+                langTimeout = null;
+            }
+            isLangOpen = true;
+            langSelector.classList.add("is-open");
+            
+            // Dynamically adjust dropdown direction based on screen space
+            const rect = langSelector.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            if (spaceBelow < 150) {
+                langDropdown.classList.add("open-up");
+                langDropdown.classList.remove("open-down");
+            } else {
+                langDropdown.classList.add("open-down");
+                langDropdown.classList.remove("open-up");
+            }
+        };
+
+        const closeLang = () => {
+            if (langTimeout) clearTimeout(langTimeout);
+            langTimeout = setTimeout(() => {
+                isLangOpen = false;
+                langSelector.classList.remove("is-open");
+            }, 300); // 300ms debounce delay before closing
+        };
+
+        // Hover listeners
+        langSelector.addEventListener("mouseenter", openLang);
+        langSelector.addEventListener("mouseleave", closeLang);
+
+        // Keyboard/focus listeners
+        langSelector.addEventListener("focusin", openLang);
+        langSelector.addEventListener("focusout", (e) => {
+            if (!langSelector.contains(e.relatedTarget)) {
+                closeLang();
+            }
+        });
+
+        // Touch/click listener
+        langSelector.addEventListener("click", (e) => {
+            if (e.target.closest(".lang-option")) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            if (isLangOpen) {
+                isLangOpen = false;
+                langSelector.classList.remove("is-open");
+            } else {
+                openLang();
+            }
+        });
+
+        // Click outside to close
+        document.addEventListener("click", (e) => {
+            if (!langSelector.contains(e.target)) {
+                isLangOpen = false;
+                langSelector.classList.remove("is-open");
+            }
+        });
+
+        // Escape key to close
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                isLangOpen = false;
+                langSelector.classList.remove("is-open");
+            }
+        });
     }
 
     // Start requestAnimationFrame loop
@@ -229,3 +280,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+
