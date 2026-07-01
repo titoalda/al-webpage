@@ -786,7 +786,7 @@ footer {
     margin-bottom: 17px;
 }
 
-.footer-col h4 {
+.footer-col h3 {
     font-size: 20px;
     text-transform: uppercase;
     margin-bottom: 24px;
@@ -1342,7 +1342,7 @@ footer {
         margin-bottom: 0;
     }
 
-    .footer-col h4 {
+    .footer-col h3 {
         font-size: 13px !important;
         letter-spacing: 0.08em;
         margin-bottom: 12px !important;
