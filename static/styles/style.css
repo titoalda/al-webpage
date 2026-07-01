@@ -223,8 +223,15 @@ header nav a:hover {
     }
 }
 
+/* h1 wraps name + tagline as one semantic unit, but contributes no box of
+   its own so the existing flex layout of .hero-right-col is unaffected. */
+.hero-heading-group {
+    display: contents;
+}
+
 /* Typographic Echo Stack (Dark themes) */
 .echo-text {
+    display: block;
     font-family: var(--font-display);
     font-weight: 300;
     letter-spacing: -0.02em;
@@ -769,27 +776,26 @@ footer {
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 48px;
+    grid-template-rows: auto auto;
+    column-gap: 48px;
+    row-gap: 12px;
     margin-bottom: 50px;
     align-items: start;
 }
 
-/* First col: logo sits at top, description aligns with first list item of siblings */
-.footer-grid .footer-col:first-child {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+/* Each column shares the same two row-tracks as its siblings (subgrid),
+   so the logo/h3 "header" row and the p/ul "body" row line up exactly
+   across all four columns regardless of their individual content height. */
+.footer-col {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    align-items: start;
 }
 
-.footer-grid .footer-col:first-child .footer-logo {
-    /* logo height (28px) + margin = h4 height (~24px) + h4 margin-bottom (24px) = 48px total */
-    margin-bottom: 17px;
-}
-
-.footer-col h3 {
+.footer-col h5 {
     font-size: 20px;
     text-transform: uppercase;
-    margin-bottom: 24px;
     color: #ffffff;
     word-spacing: 0.12em;
 }
@@ -1322,11 +1328,18 @@ footer {
 
     .footer-grid {
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: none;
         gap: 16px 16px;
         padding: 8px 0 !important;
         margin-bottom: 16px !important;
     }
-    
+
+    /* Disable the desktop subgrid alignment; stack each column normally */
+    .footer-col {
+        display: block;
+        grid-row: auto;
+    }
+
     .footer-grid .footer-col:nth-child(1) p {
         display: none; /* Hide brand description on mobile */
     }
@@ -1342,7 +1355,7 @@ footer {
         margin-bottom: 0;
     }
 
-    .footer-col h3 {
+    .footer-col h5 {
         font-size: 13px !important;
         letter-spacing: 0.08em;
         margin-bottom: 12px !important;
@@ -2159,7 +2172,7 @@ footer {
 /* V3 Pinned Horizontal Scroller Section (Styled Swiss-brutalist Dark Mode) */
 .showcase-pin-container {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -2167,7 +2180,8 @@ footer {
     background-color: #111111;
     border-bottom: 1px solid var(--border-color);
     position: relative;
-    padding: 0;
+    padding: 60px 0;
+    box-sizing: border-box;
 }
 
 .projects-section-header {
@@ -2200,7 +2214,14 @@ footer {
     width: 100%;
     padding: 0 4vw;
     box-sizing: border-box;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.scroller-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .scroller-wrapper::before,
@@ -2288,7 +2309,6 @@ footer {
     display: flex;
     gap: 32px;
     width: max-content;
-    will-change: transform;
 }
 
 .project-info {
@@ -2389,7 +2409,6 @@ footer {
         display: flex !important;
         flex-direction: row;
         width: max-content !important;
-        transform: none !important; /* Disable GSAP translation on mobile/tablet */
     }
     .project-info {
         width: 45vw;

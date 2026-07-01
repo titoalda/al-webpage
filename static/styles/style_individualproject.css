@@ -71,6 +71,10 @@ body {
 
 #title {
     display: block;
+    /* Moved earlier in the DOM (before .subtitles) so it's the first
+       heading a screen reader/crawler meets; `order` keeps the visual
+       stacking (subtitle above, title below) unchanged. */
+    order: 1;
 }
 
 .cover .subtitles {
@@ -79,13 +83,14 @@ body {
     gap: 32px;
 }
 
-.cover .subtitles p.left {
+.cover .subtitles .light.left {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 300;
     color: var(--gray-muted);
     line-height: 1.4;
     letter-spacing: 0.05em;
+    margin: 0;
 }
 
 .cover .subtitles ul.left {
@@ -101,13 +106,13 @@ body {
     margin-bottom: 12px;
 }
 
-.cover .subtitles p.left-list-title {
+.cover .subtitles .light.left-list-title {
     font-size: 11px;
     text-transform: uppercase;
     font-weight: 300;
     color: var(--gray-dark);
     letter-spacing: 0.1em;
-    margin-bottom: 6px;
+    margin: 0 0 6px;
 }
 
 .cover .subtitles li.left-list-item p {
