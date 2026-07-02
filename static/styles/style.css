@@ -800,7 +800,7 @@ footer {
     align-items: start;
 }
 
-.footer-col h5 {
+.footer-col h3 {
     font-size: 20px;
     text-transform: uppercase;
     color: #ffffff;
@@ -1356,6 +1356,12 @@ footer {
         grid-row: auto;
     }
 
+    /* Undo the desktop-only offset that aligns "Secciones" with "Proyectos
+       Destacados"; on mobile it should sit flush left like the other column. */
+    .footer-grid .footer-col:nth-child(2) {
+        margin-left: 0;
+    }
+
     .footer-grid .footer-col:nth-child(1) p {
         display: none; /* Hide brand description on mobile */
     }
@@ -1371,7 +1377,7 @@ footer {
         margin-bottom: 0;
     }
 
-    .footer-col h5 {
+    .footer-col h3 {
         font-size: 13px !important;
         letter-spacing: 0.08em;
         margin-bottom: 12px !important;
