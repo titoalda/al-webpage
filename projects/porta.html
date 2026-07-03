@@ -1074,11 +1074,14 @@
             })();
         }
 
-        // Flipbook de prueba: pasa las páginas simulando el giro real de una
-        // hoja de libro (rotateY sobre el lomo, con sombreado dinámico),
-        // controlado tanto por scroll vertical como horizontal (algunos
-        // trackpads generan deltaX al deslizar con dos dedos hacia los
-        // lados) y por arrastre táctil/ratón en cualquiera de los dos ejes.
+        // Flipbook: pasa las páginas simulando el giro real de una hoja de
+        // libro (rotateY sobre el lomo, con sombreado dinámico). Se controla
+        // con rueda/trackpad (vertical u horizontal), arrastre táctil o de
+        // ratón con detección de "flick" (un gesto rápido pasa página aunque
+        // el recorrido sea corto), toque/click simple (mitad derecha avanza,
+        // mitad izquierda retrocede), botones y flechas del teclado. El
+        // suavizado es independiente del frame-rate y el bucle de render
+        // solo corre mientras queda movimiento pendiente.
         (function () {
             var flipbookEl = document.getElementById("porta-flipbook");
             if (!flipbookEl) return;
@@ -1092,22 +1095,22 @@
             var leftBase = flipbookEl.querySelector(".porta-flipbook-leftbase");
             if (!total || !counterEl || !prevBtn || !nextBtn) return;
 
-            var target = 0; // 0..total, con decimales mientras se arrastra o se hace scroll
-            var current = 0; // valor interpolado que se pinta cada frame
+            var target = 0;   // 0..total, con decimales durante el gesto
+            var current = 0;  // valor interpolado que se pinta cada frame
+            var dragging = false;
             var settleTimer = null;
-            var EASE = prefersReducedMotion ? 1 : 0.18;
+            var rafId = null;
+            var lastTs = 0;
+
+            // Constantes de tiempo del suavizado exponencial (por segundo):
+            // arrastrando, la hoja va pegada al dedo; al soltar, se asienta
+            // con una caída más suave y natural.
+            var FOLLOW_RATE = prefersReducedMotion ? 1000 : 16;
+            var SETTLE_RATE = prefersReducedMotion ? 1000 : 9;
 
             function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
-            function scheduleSettle() {
-                clearTimeout(settleTimer);
-                settleTimer = setTimeout(function () { target = Math.round(target); }, 220);
-            }
-
-            function render() {
-                current += (target - current) * EASE;
-                if (Math.abs(target - current) < 0.001) current = target;
-
+            function paint() {
                 pageEls.forEach(function (page, i) {
                     var progress = clamp(current - i, 0, 1);
                     var angle = progress * -180;
@@ -1134,24 +1137,60 @@
                 counterEl.textContent = pageNum + " / " + total;
                 prevBtn.disabled = target <= 0;
                 nextBtn.disabled = target >= total;
-                if (rightBase) {
-                    rightBase.classList.toggle("is-visible", current >= total - 0.02);
-                }
-                if (leftBase) {
-                    leftBase.classList.toggle("is-visible", current > 0.02);
-                }
-
-                requestAnimationFrame(render);
+                if (rightBase) rightBase.classList.toggle("is-visible", current >= total - 0.02);
+                if (leftBase) leftBase.classList.toggle("is-visible", current > 0.02);
             }
-            requestAnimationFrame(render);
+
+            function render(ts) {
+                rafId = null;
+                // dt acotado: si la pestaña estuvo en segundo plano no
+                // queremos un salto brusco al volver.
+                var dt = Math.min(Math.max((ts - lastTs) / 1000, 0.001), 0.05);
+                lastTs = ts;
+                var rate = dragging ? FOLLOW_RATE : SETTLE_RATE;
+                current += (target - current) * (1 - Math.exp(-rate * dt));
+                var settled = Math.abs(target - current) < 0.0006;
+                if (settled) current = target;
+                paint();
+                if (!settled || dragging) {
+                    rafId = requestAnimationFrame(render);
+                }
+            }
+
+            // Arranca el bucle de render solo si no está ya corriendo: el
+            // resto del tiempo el flipbook no consume ni un frame.
+            function kick() {
+                if (rafId === null) {
+                    lastTs = performance.now();
+                    rafId = requestAnimationFrame(render);
+                }
+            }
+
+            function scheduleSettle(ms) {
+                clearTimeout(settleTimer);
+                settleTimer = setTimeout(function () {
+                    target = Math.round(target);
+                    kick();
+                }, ms);
+            }
 
             function goTo(v) {
-                target = clamp(v, 0, total);
-                scheduleSettle();
+                target = clamp(Math.round(v), 0, total);
+                clearTimeout(settleTimer);
+                kick();
             }
 
             prevBtn.addEventListener("click", function () { goTo(Math.round(target) - 1); });
             nextBtn.addEventListener("click", function () { goTo(Math.round(target) + 1); });
+
+            // Flechas del teclado cuando el flipbook tiene el foco.
+            flipbookEl.setAttribute("tabindex", "0");
+            flipbookEl.setAttribute("role", "region");
+            flipbookEl.setAttribute("aria-label", "Flipbook del mook PORTA: usa las flechas para pasar página");
+            flipbookEl.addEventListener("keydown", function (e) {
+                if (e.key === "ArrowRight") { goTo(Math.round(target) + 1); e.preventDefault(); }
+                else if (e.key === "ArrowLeft") { goTo(Math.round(target) - 1); e.preventDefault(); }
+            });
 
             flipbookEl.addEventListener("wheel", function (e) {
                 var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
@@ -1160,16 +1199,26 @@
                 if (!atStart && !atEnd) {
                     e.preventDefault();
                     target = clamp(target + delta * 0.006, 0, total);
-                    scheduleSettle();
+                    kick();
+                    scheduleSettle(140);
                 }
             }, { passive: false });
 
-            var dragging = false;
             var startX = 0, startY = 0, startTarget = 0;
+            var velocity = 0;       // páginas por milisegundo, suavizada
+            var lastMoveT = 0;
+            var lastMoveTarget = 0;
+            var travelled = 0;      // píxeles recorridos, para distinguir tap de arrastre
+
             function dragStart(x, y) {
                 dragging = true;
                 startX = x; startY = y; startTarget = target;
+                velocity = 0;
+                travelled = 0;
+                lastMoveT = performance.now();
+                lastMoveTarget = target;
                 clearTimeout(settleTimer);
+                kick();
             }
             // Devuelve si el arrastre puede seguir moviendo el flipbook en la
             // dirección indicada por delta, o si ya se llegó a un extremo
@@ -1185,15 +1234,44 @@
                 if (!dragging) return null;
                 var dx = startX - x;
                 var dy = startY - y;
+                travelled = Math.max(travelled, Math.abs(dx), Math.abs(dy));
                 var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
                 if (!canDrag(delta)) return false;
                 target = clamp(startTarget + delta * 0.012, 0, total);
+                // Velocidad instantánea suavizada (media exponencial) para
+                // decidir el "flick" al soltar.
+                var now = performance.now();
+                var dtms = now - lastMoveT;
+                if (dtms > 0) {
+                    var inst = (target - lastMoveTarget) / dtms;
+                    velocity = velocity * 0.75 + inst * 0.25;
+                    lastMoveT = now;
+                    lastMoveTarget = target;
+                }
+                kick();
                 return true;
             }
-            function dragEnd() {
+            function dragEnd(x) {
                 if (!dragging) return;
                 dragging = false;
-                scheduleSettle();
+                var FLICK = 0.0018; // umbral de páginas/ms para considerar flick
+                var TAP_PX = 6;
+                if (travelled < TAP_PX && typeof x === "number") {
+                    // Toque simple sin arrastre: avanza o retrocede según la
+                    // mitad del libro donde se ha tocado.
+                    var rect = flipbookEl.getBoundingClientRect();
+                    var forward = x > rect.left + rect.width / 2;
+                    goTo(Math.round(target) + (forward ? 1 : -1));
+                    return;
+                }
+                if (Math.abs(velocity) > FLICK) {
+                    // Gesto rápido: pasa a la página siguiente/anterior en la
+                    // dirección del gesto, aunque el recorrido fuese corto.
+                    target = clamp(velocity > 0 ? Math.floor(current) + 1 : Math.ceil(current) - 1, 0, total);
+                } else {
+                    target = Math.round(target);
+                }
+                kick();
             }
 
             // Pointer Events + setPointerCapture unifica ratón/táctil/lápiz
@@ -1210,8 +1288,12 @@
                 var moved = dragMove(e.clientX, e.clientY);
                 if (moved) e.preventDefault();
             });
-            flipbookEl.addEventListener("pointerup", dragEnd);
-            flipbookEl.addEventListener("pointercancel", dragEnd);
+            flipbookEl.addEventListener("pointerup", function (e) { dragEnd(e.clientX); });
+            flipbookEl.addEventListener("pointercancel", function () { dragEnd(); });
+
+            // Pintado inicial (contador, sombras y estado de los botones)
+            // sin esperar a la primera interacción.
+            paint();
         })();
 
         // Fundido de carga para la imagen sticky de la intro
