@@ -13,6 +13,7 @@
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="btlxaaof0wmCUsqybOUHnUKYGFLHdww5OdvdoZFqh44" />
     <meta name="theme-color" content="#111111">
     <title>Aldara Álvarez | Diseñadora</title>
     <meta name="description" content="Portafolio de diseño de Aldara Álvarez, diseñadora gráfica. Especializada en diseño editorial e identidad de marca, con proyectos de dirección de arte y maquetación.">
@@ -255,6 +256,7 @@
            empujado casi al borde mientras el texto deja un hueco muerto
            en el centro. */
         .porta-carousel-layout {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 3vw;
@@ -269,9 +271,8 @@
             text-align: left;
         }
 
-        /* Cabecera de texto tomada de test_explosion.html: mismo título,
-           descripción y botón "Ver proyecto" (sin el antetítulo de
-           edición), alineados a la izquierda en la mitad de la sección. */
+        /* Cabecera de texto: título, descripción y botón "Ver proyecto",
+           alineados a la izquierda en la mitad de la sección. */
         .porta-carousel-copy .section-title {
             font-size: clamp(40px, 5vw, 72px);
             line-height: 0.98;
@@ -345,6 +346,7 @@
            fotos se curven hacia atrás como en un tiovivo/carrusel de
            feria en vez de deslizarse en línea recta. */
         .porta-carousel-visual {
+            position: relative;
             flex: 1 1 auto;
             min-width: 0;
             padding-right: 6vw;
@@ -435,27 +437,36 @@
             pointer-events: none;
         }
 
-        /* Pista de que el carrusel se puede deslizar; desaparece en cuanto
-           el usuario interactúa una vez (wheel o drag), vía JS. */
+        /* Pista de que el carrusel se puede deslizar: pegada literalmente
+           a la derecha de la palabra "MI" en el título, en el hueco que
+           deja el salto de línea. Ancla invisible (.hint-inline-anchor)
+           justo tras "MI" en el HTML; el JS mide su posición real y
+           coloca el hint ahí, relativo a .porta-carousel-layout. */
         .porta-carousel-hint {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translateY(-50%);
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            margin: 14px 6vw 0 0;
+            margin: 0;
             font-family: var(--font-sans);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 300;
-            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            white-space: nowrap;
             color: var(--gray-muted);
-            opacity: 0.7;
+            opacity: 0.65;
             transition: opacity 0.5s ease;
             pointer-events: none;
+            z-index: 5;
         }
 
         .porta-carousel-hint svg {
-            width: 15px;
-            height: 15px;
+            width: 14px;
+            height: 14px;
             flex-shrink: 0;
             animation: carousel-hint-nudge 1.8s ease-in-out infinite;
         }
@@ -488,6 +499,9 @@
             }
             .porta-carousel-item {
                 width: min(46vw, 260px);
+            }
+            .porta-carousel-hint {
+                display: none;
             }
         }
     </style>
@@ -587,10 +601,14 @@
     <section class="porta-carousel-section">
         <div class="porta-carousel-layout">
             <div class="porta-carousel-copy">
-                <h2 class="section-title">MI ÚLTIMO PROYECTO</h2>
+                <h2 class="section-title">MI<span class="hint-inline-anchor" id="hint-inline-anchor"></span> ÚLTIMO <span id="hint-right-anchor">PROYECTO</span></h2>
                 <p class="explode-desc">Un vistazo a&nbsp;mi última aventura creativa: la&nbsp;creación de&nbsp;la&nbsp;marca y&nbsp;el diseño integral de&nbsp;un <em>mook</em>.</p>
                 <a href="projects/porta.html" class="explode-link"><span>Ver proyecto</span></a>
             </div>
+            <p class="porta-carousel-hint" id="porta-carousel-hint">
+                Desliza para explorar
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </p>
             <div class="porta-carousel-visual">
                 <div class="porta-carousel-viewport" id="porta-carousel-viewport">
                     <div class="porta-carousel-track" id="porta-carousel-track">
@@ -606,10 +624,6 @@
                         <div class="porta-carousel-item"><img src="static/images/porta/carousel/porta-carousel-10.jpg" alt="Porta, página interior 10" loading="lazy"></div>
                     </div>
                 </div>
-                <p class="porta-carousel-hint" id="porta-carousel-hint">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 7 3 12 8 17"></polyline><polyline points="16 7 21 12 16 17"></polyline></svg>
-                    Desliza para explorar
-                </p>
             </div>
         </div>
     </section>
@@ -1170,8 +1184,26 @@
             if (!viewport || !track) return;
 
             const hint = document.getElementById("porta-carousel-hint");
+            const hintAnchor = document.getElementById("hint-inline-anchor");
+            const hintRightAnchor = document.getElementById("hint-right-anchor");
+            const hintParent = document.querySelector(".porta-carousel-layout");
             function hideHint() {
                 if (hint) hint.classList.add("is-hidden");
+            }
+            // Vertical: a la altura de "MI" (mide el ancla invisible justo
+            // tras esa palabra en el título). Horizontal: el hint termina
+            // (su borde derecho) donde termina "PROYECTO", así no invade el
+            // carrusel ni queda pegado a él, pero tampoco se acerca tanto
+            // al texto como para tocar "MI".
+            function positionHint() {
+                if (!hint || !hintAnchor || !hintRightAnchor || !hintParent) return;
+                const anchorRect = hintAnchor.getBoundingClientRect();
+                const rightAnchorRect = hintRightAnchor.getBoundingClientRect();
+                const parentRect = hintParent.getBoundingClientRect();
+                const left = rightAnchorRect.right - parentRect.left - hint.offsetWidth;
+                const top = anchorRect.top + anchorRect.height / 2 - parentRect.top;
+                hint.style.left = left + "px";
+                hint.style.top = top + "px";
             }
 
             const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1340,6 +1372,7 @@
                 targetX = setWidth;
                 viewport.scrollLeft = currentX;
                 updateScales();
+                positionHint();
             }
 
             init();
@@ -1348,7 +1381,11 @@
                 measure();
                 wrap();
                 updateScales();
+                positionHint();
             });
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(positionHint);
+            }
 
             requestAnimationFrame(renderLoop);
         })();
