@@ -4,6 +4,14 @@
     <link rel="shortcut icon" href="static/logo/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="static/logo/apple-touch-icon.png">
     <meta charset="UTF-8">
+    <script>
+        // Evita el parpadeo del intro (barrido + hero) en visitas repetidas
+        // dentro de la misma sesion: si ya se reprodujo, marca <html> antes
+        // de que se pinte nada para que el CSS arranque ya en su estado final.
+        if (sessionStorage.getItem("heroIntroPlayed")) {
+            document.documentElement.classList.add("no-intro");
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#111111">
     <title>Aldara Álvarez | Diseñadora</title>
@@ -119,6 +127,106 @@
                 filter: blur(0);
             }
         }
+
+        /* --- Intro: barrido horizontal de inversion + entrada del hero --- */
+        .viewport-wiper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 10000; /* Por encima de todo, incluyendo el header */
+            mix-blend-mode: difference; /* Invierte los colores dinamicamente */
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+
+        .viewport-wiper.animate {
+            animation: viewportWipe 2.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+        }
+
+        @keyframes viewportWipe {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        body.loading-active {
+            overflow: hidden;
+        }
+
+        /* Ocultar divisoria al inicio */
+        .hero-divider {
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body.loaded .hero-divider {
+            transform: scaleY(1);
+        }
+
+        /* Ocultar suavemente el subtitulo al inicio (opacidad + desplazamiento) */
+        .hero-subtitle {
+            display: inline-block !important;
+            opacity: 0;
+            transform: translateY(-15px);
+            margin-top: 15px !important;
+            transition: opacity 1.2s cubic-bezier(0.76, 0, 0.24, 1),
+                        transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        body.loaded .hero-subtitle {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nombre ligeramente mas grande al inicio, se reduce al cargar */
+        .hero-right-col .echo-text {
+            font-size: 7.5vw;
+            line-height: 1;
+            transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        body.loaded .hero-right-col .echo-text {
+            font-size: 6.5vw;
+        }
+
+        @media (max-width: 768px) {
+            .hero-right-col .echo-text {
+                font-size: 12.5vw;
+                transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+            }
+            body.loaded .hero-right-col .echo-text {
+                font-size: 11vw;
+            }
+        }
+
+        /* Visitas repetidas en la misma sesion: sin barrido, hero ya abierto */
+        html.no-intro .viewport-wiper {
+            display: none;
+        }
+        html.no-intro body.loading-active {
+            overflow: visible;
+        }
+        html.no-intro .hero-divider {
+            transform: scaleY(1);
+            transition: none;
+        }
+        html.no-intro .hero-subtitle {
+            opacity: 1;
+            transform: translateY(0);
+            transition: none;
+        }
+        html.no-intro .hero-right-col .echo-text {
+            font-size: 6.5vw;
+            transition: none;
+        }
+        @media (max-width: 768px) {
+            html.no-intro .hero-right-col .echo-text {
+                font-size: 11vw;
+            }
+        }
     </style>
 
 
@@ -140,7 +248,9 @@
     }
     </script>
 </head>
-<body>
+<body class="loading-active">
+
+    <div id="viewport-wiper" class="viewport-wiper"></div>
 
     <header>
         <a href="./" class="logo"><img src="static/logo/logo.png" alt="Logo Aldara Álvarez" width="53" height="40"></a>
@@ -560,31 +670,59 @@
         });
     </script>
 
-    <!-- Typing animation script for hero subtitle -->
+    <!-- Intro: barrido horizontal + entrada del hero (una vez por sesion) -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const introAlreadyPlayed = document.documentElement.classList.contains("no-intro");
+            const wiper = document.getElementById("viewport-wiper");
             const subtitleEl = document.getElementById("hero-subtitle");
-            if (subtitleEl) {
-                const text = "diseñadora | especialista en identidad de marca y diseño editorial";
-                subtitleEl.innerHTML = "";
-                let i = 0;
-                function type() {
-                    if (i < text.length) {
-                        if (i < 10) {
-                            subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
-                        } else {
-                            subtitleEl.innerHTML = `<strong>diseñadora</strong><span class="hero-pipe"> | </span>${text.substring(13, i + 1)}`;
-                        }
-                        i++;
-                        setTimeout(type, 40);
-                    } else {
-                        subtitleEl.innerHTML = '<strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial';
-                    }
-                }
-                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    setTimeout(type, 1000);
+            const text = "diseñadora | especialista en identidad de marca y diseño editorial";
+
+            function showSubtitleFinal() {
+                if (subtitleEl) {
+                    subtitleEl.innerHTML = '<strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial';
                 }
             }
+
+            function type(i = 0) {
+                if (!subtitleEl) return;
+                if (i < text.length) {
+                    if (i < 10) {
+                        subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
+                    } else {
+                        subtitleEl.innerHTML = `<strong>diseñadora</strong><span class="hero-pipe"> | </span>${text.substring(13, i + 1)}`;
+                    }
+                    setTimeout(() => type(i + 1), 40);
+                } else {
+                    showSubtitleFinal();
+                }
+            }
+
+            if (introAlreadyPlayed) {
+                // Ya se vio el intro en esta sesion: mostrar directamente el
+                // estado final, sin barrido ni transiciones.
+                document.body.classList.remove("loading-active");
+                document.body.classList.add("loaded");
+                showSubtitleFinal();
+                return;
+            }
+
+            sessionStorage.setItem("heroIntroPlayed", "1");
+
+            if (subtitleEl) subtitleEl.innerHTML = "";
+            if (wiper) wiper.classList.add("animate");
+
+            // Esperar a que finalice el barrido (2.4s) antes de abrir el hero
+            setTimeout(() => {
+                document.body.classList.remove("loading-active");
+                document.body.classList.add("loaded");
+
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    setTimeout(() => type(0), 500);
+                } else {
+                    showSubtitleFinal();
+                }
+            }, 2400);
         });
     </script>
 
