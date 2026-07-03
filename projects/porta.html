@@ -393,7 +393,6 @@
                 user-select: none;
                 cursor: grab;
                 touch-action: none;
-                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.55);
             }
             .porta-flipbook:active {
                 cursor: grabbing;
@@ -403,8 +402,8 @@
                 content: "";
                 position: absolute;
                 left: 50%;
-                top: 2%;
-                bottom: 2%;
+                top: 0;
+                bottom: 0;
                 width: 34px;
                 margin-left: -17px;
                 background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
@@ -419,6 +418,10 @@
             /* Página base a la izquierda: lo que se ve antes de pasar ninguna
                hoja (el "hueco" del libro abierto) y lo que queda por debajo
                de la pila de páginas ya leídas. */
+            /* Cada lado lleva su propia sombra de profundidad (en vez de una
+               sombra unica para todo el contenedor), para que se apague junto
+               con la opacidad cuando ese lado esta vacio y no queden "bordes
+               de libro" flotando donde todavia no hay pagina. */
             .porta-flipbook-leftbase,
             .porta-flipbook-rightbase {
                 position: absolute;
@@ -426,6 +429,7 @@
                 width: 50%;
                 height: 100%;
                 background: #111111;
+                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.55);
                 z-index: 0;
                 display: flex;
                 align-items: center;
@@ -521,6 +525,17 @@
             .porta-flipbook-btn:disabled {
                 opacity: 0.3;
                 cursor: default;
+            }
+            .porta-flipbook-cta {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            .porta-flipbook-cta-text {
+                font-size: 15px;
+                color: var(--text-color);
+                margin: 0;
             }
         </style>
     </head>
@@ -706,7 +721,10 @@
                 <button type="button" class="porta-flipbook-btn" id="porta-flipbook-prev" aria-label="Página anterior">←</button>
                 <button type="button" class="porta-flipbook-btn" id="porta-flipbook-next" aria-label="Página siguiente">→</button>
             </div>
-            <a href="https://portamook.com" target="_blank" rel="noopener noreferrer" class="button-circle">Compra aquí</a>
+            <div class="porta-flipbook-cta">
+                <p class="porta-flipbook-cta-text">Compra tu&nbsp;ejemplar aquí</p>
+                <a href="https://portamook.com" target="_blank" rel="noopener noreferrer" class="button-circle">Ir a&nbsp;la&nbsp;tienda</a>
+            </div>
         </section>
 
 
