@@ -1,258 +1,422 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <!-- ES URLs -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://aldaraalvarez.es/</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/about</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/about"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/about"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/about"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/contact</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/contact"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/contact"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/contact"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/contact"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/formayfuncion</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/formayfuncion"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/casadecor</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casadecor"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/dieznegritos</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/dieznegritos"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/namaste</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/namaste"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/casacuentos</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casacuentos"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/casacuentos/visor3D</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casacuentos/visor3D"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/elviejoyelmar</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/elviejoyelmar"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/deporteensenales</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/deporteensenales"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/projects/labocadellobo</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/labocadellobo"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/legal</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/legal"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/legal"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/legal"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/legal"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
-
-    <!-- EN URLs -->
     <url>
         <loc>https://aldaraalvarez.es/en/</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/about</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/about"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/about"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/about"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/contact</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/contact"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/contact"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/contact"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/contact"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/formayfuncion</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/formayfuncion"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/casadecor</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casadecor"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/dieznegritos</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/dieznegritos"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/namaste</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/namaste"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/casacuentos</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casacuentos"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/casacuentos/visor3D</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casacuentos/visor3D"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/elviejoyelmar</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/elviejoyelmar"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/deporteensenales</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/deporteensenales"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/labocadellobo</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/labocadellobo"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/legal</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/legal"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/legal"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/legal"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/legal"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
-
-    <!-- GL URLs -->
     <url>
         <loc>https://aldaraalvarez.es/gl/</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/about</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/about"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/about"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/about"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/contact</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/contact"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/contact"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/contact"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/contact"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/formayfuncion</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/formayfuncion"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/formayfuncion"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/casadecor</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casadecor"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casadecor"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/dieznegritos</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/dieznegritos"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/dieznegritos"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/namaste</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/namaste"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/namaste"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/casacuentos</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casacuentos"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casacuentos"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/casacuentos/visor3D</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/casacuentos/visor3D"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/casacuentos/visor3D"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/elviejoyelmar</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/elviejoyelmar"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/elviejoyelmar"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/deporteensenales</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/deporteensenales"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/deporteensenales"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/labocadellobo</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/labocadellobo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/labocadellobo"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/legal</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/legal"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/legal"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/legal"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/legal"/>
         <lastmod>2026-07-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
