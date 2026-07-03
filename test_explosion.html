@@ -1,0 +1,1135 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script>
+        // Evita que el navegador restaure el scroll a mitad de la sección
+        // "Porta" en un reload: si ScrollTrigger arranca ya dentro de la
+        // zona de pin, tiene que fijar el layout de golpe y la página
+        // se ve rota/saltada. Recargar siempre desde arriba lo evita.
+        if ("scrollRestoration" in history) {
+            history.scrollRestoration = "manual";
+        }
+    </script>
+    <link rel="shortcut icon" href="static/logo/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="static/logo/apple-touch-icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <title>Aldara Álvarez | Diseñadora</title>
+    <meta name="description" content="Portafolio de diseño de Aldara Álvarez, diseñadora gráfica. Especializada en diseño editorial e identidad de marca, con proyectos de dirección de arte y maquetación.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aldaraalvarez.es/">
+    <meta property="og:title" content="Aldara Álvarez | Diseñadora Gráfica, Editorial y de Marca">
+    <meta property="og:description" content="Explora el portafolio de diseño de Aldara Álvarez. Soluciones visuales en diseño editorial, identidad de marca y dirección de arte.">
+    <meta property="og:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://aldaraalvarez.es/">
+    <meta property="twitter:title" content="Aldara Álvarez | Diseñadora Gráfica, Editorial y de Marca">
+    <meta property="twitter:description" content="Explora el portafolio de diseño de Aldara Álvarez. Soluciones visuales en diseño editorial, identidad de marca y dirección de arte.">
+    <meta property="twitter:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+
+    <link rel="canonical" href="https://aldaraalvarez.es/">
+    <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/" />
+    <link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/" />
+    <link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/" />
+    <link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/" />
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="static/styles/style.css">
+
+    <style>
+        /* Responsive visibility */
+        @media (min-width: 1025px) {
+            .showcase-mobile-only {
+                display: none !important;
+            }
+            .showcase-desktop-only {
+                display: flex !important;
+            }
+        }
+        @media (max-width: 1024px) {
+            .showcase-mobile-only {
+                display: flex !important;
+            }
+            .showcase-desktop-only {
+                display: none !important;
+            }
+        }
+
+        /* Desktop Grid Styles */
+        .showcase-desktop-only {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #111111;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding: 60px 0;
+            box-sizing: border-box;
+        }
+
+        .showcase-desktop-only .projects-section-header {
+            text-align: center;
+        }
+
+
+        .projects-desktop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 24px;
+            padding: 0 4vw;
+            box-sizing: border-box;
+            width: 100%;
+            perspective: 1000px; /* Enable 3D perspective */
+        }
+
+        .projects-desktop-grid .project-info {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Square cards */
+            flex: unset;
+            will-change: transform;
+        }
+
+        /* Button Wrapper & Centering */
+        .projects-cta-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 40px;
+            z-index: 5;
+            /* Slide-in blur entrance lives on the wrapper (not the button)
+               so Safari doesn't keep the button's transform pinned to the
+               animation's forwards-fill state and block the hover scale. */
+            opacity: 0;
+            animation: slideInBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        .projects-cta-btn {
+            font-weight: 500;
+        }
+
+        @keyframes slideInBlur {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+                filter: blur(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* --- Mi proyecto más reciente: Exploded View Assembly --- */
+        .recent-project-section {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 0 20px;
+        }
+
+        .explode-pin-wrapper {
+            position: relative;
+            height: 160vh;
+        }
+
+        .explode-stage {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            box-sizing: border-box;
+            /* La cabecera es sticky y queda por encima (z-index) del stage
+               fijado por ScrollTrigger, así que necesita este hueco arriba
+               para no tapar las fotos superiores. Se ajusta por JS con la
+               altura real del header (cambia en breakpoints táctiles). */
+            padding-top: 80px;
+        }
+
+        /* Columna editorial: vive en su propio carril a la izquierda,
+           así las piezas que explotan nunca pueden invadirla. Se acota
+           el ancho máximo para dejar más sitio al carril visual de la
+           derecha, donde vive la animación. */
+        .explode-copy {
+            position: relative;
+            z-index: 6;
+            flex: 0 0 auto;
+            width: min(28vw, 380px);
+            padding: 0 2vw 0 4vw;
+            box-sizing: border-box;
+        }
+
+        .explode-eyebrow {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--gray-muted);
+            margin: 0 0 18px 0;
+        }
+
+        .explode-copy .section-title {
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 0.98;
+            margin: 0 0 20px 0;
+        }
+
+        .explode-desc {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--gray-muted);
+            font-weight: 300;
+            max-width: 34ch;
+            margin: 0 0 28px 0;
+        }
+
+        .explode-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            padding-bottom: 4px;
+            transition: border-color 0.3s ease, gap 0.3s ease;
+        }
+
+        .explode-link:hover {
+            border-color: #ffffff;
+            gap: 14px;
+        }
+
+        /* Zona visual: ocupa todo el ancho restante de la pantalla,
+           las piezas se centran y explotan dentro de este carril. */
+        .explode-visual {
+            position: relative;
+            flex: 1 1 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .explode-central {
+            position: relative;
+            z-index: 5;
+            display: block;
+            height: min(42vh, 460px);
+            width: auto;
+            aspect-ratio: 1 / 1;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #17232b;
+            background-image: url('static/images/porta/porta-mook-coleccion.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .explode-central:hover {
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.65);
+        }
+
+        .explode-item {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #17232b;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            will-change: transform, opacity;
+        }
+
+        .explode-item.size-xl { width: 260px; }
+        .explode-item.size-lg { width: 210px; }
+        .explode-item.size-md { width: 170px; }
+        .explode-item.size-sm { width: 140px; }
+
+        /* Numeritos temporales, solo para identificar cada foto mientras
+           afinamos la composición en test.html. Quitar antes de producción. */
+        .explode-num {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 3;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(17, 17, 17, 0.75);
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        /* Tonos de fondo de respaldo + proporción real de cada foto */
+        .explode-item.tone-sea    { background-color: #123247; aspect-ratio: 4 / 3; }
+        .explode-item.tone-stone  { background-color: #2b2621; aspect-ratio: 3 / 4; }
+        .explode-item.tone-sand   { background-color: #4a3a26; aspect-ratio: 4 / 3; }
+        .explode-item.tone-rust   { background-color: #5c2f20; aspect-ratio: 4 / 3; }
+        .explode-item.tone-navy   { background-color: #0c2436; aspect-ratio: 1 / 1; }
+        .explode-item.tone-dusk   { background-color: #33261f; aspect-ratio: 4 / 3; }
+
+        @media (max-width: 900px) {
+            .explode-pin-wrapper {
+                height: 150vh;
+            }
+            .explode-stage {
+                flex-direction: column;
+                justify-content: center;
+                padding: 100px 0 0;
+            }
+            .explode-copy {
+                width: 100%;
+                text-align: center;
+                padding: 0 6vw;
+                margin-bottom: 20px;
+            }
+            .explode-desc {
+                max-width: none;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .explode-visual {
+                width: 100%;
+            }
+            .explode-central {
+                width: 180px;
+                height: auto;
+                aspect-ratio: 1 / 1;
+            }
+            .explode-item.size-xl,
+            .explode-item.size-lg { width: 150px; }
+            .explode-item.size-md,
+            .explode-item.size-sm { width: 110px; }
+        }
+    </style>
+
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Aldara Álvarez",
+        "jobTitle": "Diseñadora Gráfica",
+        "description": "Diseñadora gráfica especializada en identidad de marca, diseño editorial y dirección de arte.",
+        "url": "https://aldaraalvarez.es/",
+        "image": "https://aldaraalvarez.es/static/logo/logo_google.png",
+        "email": "aldaraalvarezglez@gmail.com",
+        "knowsAbout": ["Diseño Editorial", "Identidad de Marca", "Diseño de Packaging", "Modelado 3D", "Diseño UX/UI"],
+        "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Universidad Complutense de Madrid" },
+            { "@type": "CollegeOrUniversity", "name": "UNIR - Universidad Internacional de La Rioja" }
+        ]
+    }
+    </script>
+</head>
+<body>
+
+    <header>
+        <a href="./" class="logo"><img src="static/logo/logo.png" alt="Logo Aldara Álvarez" width="53" height="40"></a>
+        <nav class="magnification-dock">
+            <a href="projects" class="dock-item" data-label="Proyectos">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Proyectos</span>
+            </a>
+            <a href="about" class="dock-item" data-label="Sobre Mí">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Sobre Mí</span>
+            </a>
+            <a href="contact" class="dock-item" data-label="Contacto">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Contacto</span>
+            </a>
+            <div class="dock-item lang-selector" data-label="Idioma">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span class="dock-tooltip">Idioma</span>
+                <div class="lang-dropdown">
+                    <a href="./" class="lang-option active">ES</a>
+                    <a href="en/" class="lang-option">EN</a>
+                    <a href="gl/" class="lang-option">GAL</a>
+                </div>
+            </div>
+            </nav>
+    </header>
+
+    <!-- Hero Section with Typographic Echo Stack & Split Layout -->
+    <section class="hero">
+        <div class="hero-split-container">
+            <!-- Left Column: Logo -->
+            <div class="hero-left-col">
+                <img src="static/logo/logo.png" width="1692" height="1269" alt="Logo Aldara Álvarez" class="hero-logo">
+            </div>
+            
+            <!-- Vertical Divider -->
+            <div class="hero-divider"></div>
+            
+            <!-- Right Column: Name and Tagline -->
+            <div class="hero-right-col">
+                <h1 class="hero-heading-group">
+                    <span class="echo-container">
+                        <span class="echo-text echo-front">Aldara Álvarez</span>
+                    </span>
+                    <span id="hero-subtitle" class="hero-subtitle"><strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mi proyecto más reciente: animación "Exploded View Assembly" -->
+    <section id="recent-project" class="recent-project-section">
+        <div class="explode-pin-wrapper">
+            <div class="explode-stage" id="explode-stage">
+                <div class="explode-copy">
+                    <p class="explode-eyebrow">Edición N.º 1 — Cuadernos de identidad baionesa</p>
+                    <h2 class="section-title">MI ÚLTIMO PROYECTO</h2>
+                    <p class="explode-desc">Porta reconstruye la identidad visual de Baiona a través de un cuaderno editorial: dirección de arte, ilustración y maquetación.</p>
+                    <a href="projects/porta.html" class="explode-link">Ver proyecto&nbsp;→</a>
+                </div>
+
+                <div class="explode-visual">
+                    <a href="projects/porta.html" class="explode-central" aria-label="Ver proyecto Porta" style="background-image: url('static/images/porta/porta-mook-coleccion.jpg');"></a>
+
+                    <div class="explode-item tone-stone size-lg" data-explode="190,0,-14" data-final="380,0,0" style="background-image: url('static/images/porta/porta-mook-vertical.jpg');"><span class="explode-num">1</span></div>
+                    <div class="explode-item tone-sea size-lg" data-explode="-190,0,14" data-final="-380,0,0" style="background-image: url('static/images/porta/porta-foto-01.jpg');"><span class="explode-num">2</span></div>
+                    <div class="explode-item tone-sand size-md" data-explode="85,145,20" data-final="165,286,8" style="background-image: url('static/images/porta/porta-editorial-01.jpg');"><span class="explode-num">3</span></div>
+                    <div class="explode-item tone-dusk size-md" data-explode="-85,145,-20" data-final="-165,286,-8" style="background-image: url('static/images/porta/porta-ilustracion-01.jpg');"><span class="explode-num">4</span></div>
+                    <div class="explode-item tone-rust size-md" data-explode="-85,-145,20" data-final="-165,-286,8" style="background-image: url('static/images/porta/porta-mook-horizontal.jpg');"><span class="explode-num">5</span></div>
+                    <div class="explode-item tone-navy size-sm" data-explode="85,-145,-20" data-final="165,-286,-8" style="background-image: url('static/images/porta/porta-monograma.png');"><span class="explode-num">6</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion Proyectos para Ordenador (4 proyectos en una fila, sin carrusel) -->
+    <section id="showcase-desktop-container" class="showcase-desktop-only">
+        <div class="projects-section-header">
+            <h2 class="section-title">OTROS PROYECTOS</h2>
+            <p class="section-subtitle">Aquí te dejo una selección de&nbsp;proyectos que&nbsp;espero que&nbsp;te transmitan mi dedicación y&nbsp;pasión por&nbsp;el diseño.</p>
+        </div>
+        
+        <div class="projects-desktop-grid">
+            <!-- Project 1: El viejo y el mar -->
+            <div class="project-info">
+                <a href="projects/elviejoyelmar">
+                    <img src="static/images/pr_viejomar_cover.jpg" alt="Proyecto El viejo y el mar" class="image-size" loading="lazy" width="1637" height="1500">
+                    <div class="image-text">
+                        <h3 class="titulo-text">EL VIEJO Y EL MAR</h3>
+                        <h4 class="proyecto-text">DISEÑO DE CUBIERTA E ILUSTRACIÓN</h4>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Project 2: Forma y Función -->
+            <div class="project-info">
+                <a href="projects/formayfuncion">
+                    <img src="static/images/pr_formayfuncion_cover.jpg" alt="Proyecto Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
+                    <div class="image-text">
+                        <h3 class="titulo-text">FORMA Y FUNCIÓN</h3>
+                        <h4 class="proyecto-text">DISEÑO EDITORIAL</h4>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Project 3: Casa Decor -->
+            <div class="project-info">
+                <a href="projects/casadecor">
+                    <img src="static/images/pr_casadecor_cover.jpg" alt="Proyecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
+                    <div class="image-text">
+                        <h3 class="titulo-text">CASA DECOR</h3>
+                        <h4 class="proyecto-text">DISEÑO DE SEÑALÉTICA</h4>
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+
+        <div class="projects-cta-btn-wrapper">
+            <a href="projects" id="projects-cta-btn" class="button-circle projects-cta-btn btn-lightbeam">
+                <span>ver&nbsp;más proyectos</span>
+            </a>
+        </div>
+    </section>
+
+    <section id="showcase-pin-container" class="showcase-pin-container showcase-mobile-only">
+        <div class="projects-section-header">
+            <h2 class="section-title">OTROS PROYECTOS</h2>
+            <p class="section-subtitle">Aquí te dejo una selección de&nbsp;proyectos que&nbsp;espero que&nbsp;te transmitan mi dedicación y&nbsp;pasión por&nbsp;el diseño.</p>
+        </div>
+        
+        <div class="scroller-wrapper">
+            <div class="hover-area-left"></div>
+            <div class="hover-area-right"></div>
+            <button class="scroll-arrow arrow-left"  id="arrow-left"  aria-label="Anterior">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <button class="scroll-arrow arrow-right" id="arrow-right" aria-label="Siguiente">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <div id="showcase-ticker" class="projects-scroller">
+                <!-- Project 1: El viejo y el mar -->
+                <div class="project-info">
+                    <a href="projects/elviejoyelmar">
+                        <img src="static/images/pr_viejomar_cover.jpg" alt="Proyecto El viejo y el mar" class="image-size" loading="lazy" width="1637" height="1500">
+                        <div class="image-text">
+                            <h3 class="titulo-text">EL VIEJO Y EL MAR</h3>
+                            <h4 class="proyecto-text">DISEÑO DE CUBIERTA E ILUSTRACIÓN</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 2: Namasté -->
+                <div class="project-info">
+                    <a href="projects/namaste">
+                        <img src="static/images/pr_namaste_cover.jpg" alt="Proyecto Namasté" class="image-size" loading="lazy" width="2146" height="2084">
+                        <div class="image-text">
+                            <h3 class="titulo-text">NAMASTÉ</h3>
+                            <h4 class="proyecto-text">DISEÑO DE <em>PACKAGING</em></h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 3: Casa de Cuentos -->
+                <div class="project-info">
+                    <a href="projects/casacuentos">
+                        <img src="static/images/pr_casacuentos_cover.jpg" alt="Proyecto Casa de cuentos" class="image-size" loading="lazy" width="1621" height="1578">
+                        <div class="image-text">
+                            <h3 class="titulo-text">CASA DE CUENTOS</h3>
+                            <h4 class="proyecto-text">DISEÑO DE MODELO 3D</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 4: Forma y Función -->
+                <div class="project-info">
+                    <a href="projects/formayfuncion">
+                        <img src="static/images/pr_formayfuncion_cover.jpg" alt="Proyecto Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
+                        <div class="image-text">
+                            <h3 class="titulo-text">FORMA Y FUNCIÓN</h3>
+                            <h4 class="proyecto-text">DISEÑO EDITORIAL</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 5: Deporte en Señales -->
+                <div class="project-info">
+                    <a href="projects/deporteenseñales">
+                        <img src="static/images/pr_deporteenseñales_cover.png" alt="Proyecto Deporte en Señales" class="image-size" loading="lazy" width="3685" height="3550">
+                        <div class="image-text">
+                            <h3 class="titulo-text">DEPORTE EN SEÑALES</h3>
+                            <h4 class="proyecto-text">DISEÑO DE SEÑALÉTICA</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 6: La boca del lobo -->
+                <div class="project-info">
+                    <a href="projects/labocadellobo">
+                        <img src="static/images/pr_labocadellobo_cover.png" alt="Proyecto La boca del lobo" class="image-size" loading="lazy" width="1131" height="1131">
+                        <div class="image-text">
+                            <h3 class="titulo-text">LA BOCA DEL LOBO</h3>
+                            <h4 class="proyecto-text">DISEÑO DE <em>LETTERING</em></h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 7: Casa Decor -->
+                <div class="project-info">
+                    <a href="projects/casadecor">
+                        <img src="static/images/pr_casadecor_cover.jpg" alt="Proyecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
+                        <div class="image-text">
+                            <h3 class="titulo-text">CASA DECOR</h3>
+                            <h4 class="proyecto-text">DISEÑO DE SEÑALÉTICA</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 8: Diez Negritos -->
+                <div class="project-info">
+                    <a href="projects/dieznegritos">
+                        <img src="static/images/pr_dieznegritos_cover.jpg" alt="Proyecto Diez Negritos" class="image-size" loading="lazy" width="1940" height="1885">
+                        <div class="image-text">
+                            <h3 class="titulo-text">DIEZ NEGRITOS</h3>
+                            <h4 class="proyecto-text">DISEÑO DE CUBIERTA</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bespoke Service Cards -->
+    <section class="services">
+        <div class="services-header">
+            <h2>Especialidades</h2>
+        </div>
+        <div class="services-grid">
+            <!-- Card 1 -->
+            <div class="service-card">
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <div class="service-content">
+                    <h3>Diseño Editorial</h3>
+                    <p>Maquetación de&nbsp;publicaciones, dirección tipográfica y&nbsp;diseño de&nbsp;libros, revistas y&nbsp;catálogos con&nbsp;criterio y&nbsp;detalle.</p>
+                </div>
+                <a href="projects" class="service-cta" style="display:none;">
+                    Explorar proyectos
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+            <!-- Card 2 -->
+            <div class="service-card">
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                </div>
+                <div class="service-content">
+                    <h3>Identidad de&nbsp;Marca</h3>
+                    <p>Creación de&nbsp;identidades visuales coherentes y&nbsp;duraderas: logotipo, paleta, tipografía y&nbsp;sistema de&nbsp;marca completo.</p>
+                </div>
+                <a href="projects" class="service-cta" style="display:none;">
+                    Explorar proyectos
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+            <!-- Card 3 -->
+            <div class="service-card">
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polygon points="2 17 12 22 22 17"/><polygon points="2 12 12 17 22 12"/></svg>
+                </div>
+                <div class="service-content">
+                    <h3>Diseño UX·UI</h3>
+                    <p>Interfaces digitales centradas en&nbsp;el usuario: wireframes, prototipos y&nbsp;diseño visual de&nbsp;productos web y&nbsp;app.</p>
+                </div>
+                <a href="projects" class="service-cta" style="display:none;">
+                    Explorar proyectos
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    
+        <!-- Secure Sanitized Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contacto</h2>
+        <p class="intro">¿Tienes algún proyecto en&nbsp;mente o&nbsp;quieres preguntarme algo?<br><span style="display:inline-block; margin-top:12px;">Hablemos de&nbsp;forma segura.</span></p>
+        
+        <div class="contact-form-wrapper" style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
+            <!-- Hidden Loading State Overlay -->
+            <div id="loading-overlay" class="loading-overlay" style="display: none;">
+                <!-- Long Fazers Background -->
+                <div class="longfazers">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="loader-container">
+                    <div class="loader">
+                        <span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <div class="base">
+                            <span></span>
+                            <div class="face"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading-content">
+                    <h2 class="loading-title">ENVIANDO MENSAJE</h2>
+                    <p class="loading-subtitle">Estableciendo conexión segura...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Success State Overlay -->
+            <div id="success-overlay" class="success-overlay" style="display: none;">
+                <div class="success-icon-container">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <h2 class="success-title" id="success-title-text">¡Gracias!</h2>
+                <p class="success-subtitle">Te contactaré en&nbsp;breve.</p>
+            </div>
+
+            <form id="contact-form" class="contact-form" action="#" method="POST">
+                <!-- Spambot Honeypot Field -->
+                <div style="display:none;">
+                    <label for="honeypot">Dejar vacío</label>
+                    <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" name="name" placeholder="¿Cómo te llamas?" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="¿A qué correo te respondo?" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" placeholder="Cuéntame qué tienes en mente, qué necesitas diseñar y nos ponemos a ello..." rows="5" required></textarea>
+                </div>
+                <button type="submit" class="button-circle btn-lightbeam"><span>ENVIAR MENSAJE</span></button>
+                <div id="form-status" class="form-status" style="display:none; margin-top: 15px; font-weight: 700; font-size: 14px;"></div>
+            </form>
+        </div>
+    </section>
+    
+
+        <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="static/logo/logo.png" alt="Logo Aldara Álvarez" class="footer-logo" width="40" height="30">
+                <p><strong>Aldara Álvarez</strong> — Diseñadora Gráfica.<br>Graduada en Diseño por&nbsp;la&nbsp;UCM y en Diseño Gráfico Digital por&nbsp;la&nbsp;UNIR. Especializada en soluciones visuales conceptuales, diseño editorial e identidad corporativa.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Secciones</h3>
+                <ul>
+                    <li><a href="projects">Proyectos</a></li>
+                    <li><a href="about">Sobre Mí</a></li>
+                    <li><a href="contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Proyectos Destacados</h3>
+                <ul>
+                    <li><a href="projects/elviejoyelmar">El viejo y&nbsp;el mar</a></li>
+                    <li><a href="projects/namaste">Namasté</a></li>
+                    <li><a href="projects/formayfuncion">Forma y&nbsp;función</a></li>
+                    <li><a href="projects/casadecor">Casa Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contacto</h3>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <a href="mailto:aldaraalvarezglez@gmail.com">aldaraalvarezglez@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara Álvarez. Todos los derechos reservados.</span>
+            <a href="legal" class="footer-legal-link">Aviso Legal</a>
+            
+        </div>
+    </footer>
+
+    
+
+    <script>
+        // Carrusel de proyectos: scroll horizontal nativo (trackpad, swipe
+        // táctil, shift+rueda) con flechas que avanzan una tarjeta cada vez.
+        const ticker = document.getElementById("showcase-ticker");
+        const scroller = document.querySelector(".scroller-wrapper");
+        const arrowLeft = document.getElementById("arrow-left");
+        const arrowRight = document.getElementById("arrow-right");
+
+        function scrollStep() {
+            const firstCard = ticker.querySelector(".project-info");
+            if (!firstCard) return scroller.clientWidth * 0.8;
+            const gap = parseFloat(getComputedStyle(ticker).gap) || 0;
+            return firstCard.getBoundingClientRect().width + gap;
+        }
+
+        arrowLeft.addEventListener("click", () => {
+            scroller.scrollBy({ left: -scrollStep(), behavior: "smooth" });
+        });
+        arrowRight.addEventListener("click", () => {
+            scroller.scrollBy({ left: scrollStep(), behavior: "smooth" });
+        });
+    </script>
+
+    <!-- Typing animation script for hero subtitle -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const subtitleEl = document.getElementById("hero-subtitle");
+            if (subtitleEl) {
+                const text = "diseñadora | especialista en identidad de marca y diseño editorial";
+                subtitleEl.innerHTML = "";
+                let i = 0;
+                function type() {
+                    if (i < text.length) {
+                        if (i < 10) {
+                            subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
+                        } else {
+                            subtitleEl.innerHTML = `<strong>diseñadora</strong><span class="hero-pipe"> | </span>${text.substring(13, i + 1)}`;
+                        }
+                        i++;
+                        setTimeout(type, 40);
+                    } else {
+                        subtitleEl.innerHTML = '<strong>diseñadora</strong><span class="hero-pipe"> | </span>especialista en identidad de marca y diseño editorial';
+                    }
+                }
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    setTimeout(type, 1000);
+                }
+            }
+        });
+    </script>
+
+<script src="static/scripts/contact.js"></script>
+<script src="static/scripts/dock.js"></script>
+    <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <!-- Interactive Effects: Mouse Glow, Tilted Cards, and TextPressure -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+            // 2. Tilted Card effect for Projects Desktop Grid
+            const cards = document.querySelectorAll("#showcase-desktop-container .project-info");
+            if (cards.length > 0 && !prefersReducedMotion) {
+                cards.forEach(card => {
+                    let reqId = null;
+                    let targetRotateX = 0;
+                    let targetRotateY = 0;
+                    let targetScale = 1;
+                    let currentRotateX = 0;
+                    let currentRotateY = 0;
+                    let currentScale = 1;
+                    let isHovered = false;
+
+                    card.addEventListener("mouseenter", () => {
+                        isHovered = true;
+                        targetScale = 1.06; // subtle scale up
+                        if (!reqId) {
+                            reqId = requestAnimationFrame(updateCardTransform);
+                        }
+                    });
+
+                    card.addEventListener("mousemove", (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const width = rect.width;
+                        const height = rect.height;
+                        const x = e.clientX - rect.left - width / 2;
+                        const y = e.clientY - rect.top - height / 2;
+                        
+                        // Normalize between -1 and 1
+                        const normX = x / (width / 2);
+                        const normY = y / (height / 2);
+
+                        // Max 8 degrees tilt
+                        targetRotateY = normX * 8;
+                        targetRotateX = -normY * 8;
+                    });
+
+                    card.addEventListener("mouseleave", () => {
+                        isHovered = false;
+                        targetRotateX = 0;
+                        targetRotateY = 0;
+                        targetScale = 1;
+                    });
+
+                    function updateCardTransform() {
+                        // Spring interpolation (lerp factor 0.1)
+                        currentRotateX += (targetRotateX - currentRotateX) * 0.1;
+                        currentRotateY += (targetRotateY - currentRotateY) * 0.1;
+                        currentScale += (targetScale - currentScale) * 0.1;
+
+                        card.style.transform = `rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg) scale(${currentScale.toFixed(3)})`;
+
+                        const diffX = Math.abs(targetRotateX - currentRotateX);
+                        const diffY = Math.abs(targetRotateY - currentRotateY);
+                        const diffScale = Math.abs(targetScale - currentScale);
+
+                        if (!isHovered && diffX < 0.01 && diffY < 0.01 && diffScale < 0.001) {
+                            card.style.transform = 'none';
+                            reqId = null;
+                        } else {
+                            reqId = requestAnimationFrame(updateCardTransform);
+                        }
+                    }
+                });
+            }
+
+            // 3. TextPressure variable font-weight effect for Hero Title
+            const nameEl = document.querySelector(".echo-text.echo-front");
+            if (nameEl && !prefersReducedMotion) {
+                const text = nameEl.textContent.trim();
+                nameEl.setAttribute("aria-label", text);
+                nameEl.innerHTML = "";
+                
+                // Split text into spans for each character (preserving spacing and accents)
+                const spans = Array.from(text).map(char => {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    span.setAttribute("aria-hidden", "true");
+                    span.style.display = "inline-block";
+                    span.style.fontWeight = "300"; // base font-weight
+                    span.style.transition = "font-weight 0.15s ease, font-variation-settings 0.15s ease";
+                    if (char === " ") {
+                        span.style.whiteSpace = "pre";
+                    }
+                    nameEl.appendChild(span);
+                    return span;
+                });
+
+                let mouseX = -1000;
+                let mouseY = -1000;
+                let reqId = null;
+
+                document.addEventListener("mousemove", (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (!reqId) {
+                        reqId = requestAnimationFrame(updateTextWeight);
+                    }
+                });
+
+                document.addEventListener("mouseleave", () => {
+                    mouseX = -1000;
+                    mouseY = -1000;
+                    if (!reqId) {
+                        reqId = requestAnimationFrame(updateTextWeight);
+                    }
+                });
+
+                function updateTextWeight() {
+                    spans.forEach(span => {
+                        const rect = span.getBoundingClientRect();
+                        const charX = rect.left + rect.width / 2;
+                        const charY = rect.top + rect.height / 2;
+                        const dist = Math.hypot(mouseX - charX, mouseY - charY);
+                        
+                        const maxRadius = 180; // area of influence
+                        let weight = 300; // base weight
+
+                        if (dist < maxRadius) {
+                            const factor = 1 - (dist / maxRadius);
+                            const easeFactor = factor * factor; // quadratic curve for visual appeal
+                            // Clash Display variable weight range is 200 to 700. Max out weight at 700.
+                            weight = 300 + Math.round(easeFactor * 400); 
+                        }
+
+                        span.style.fontWeight = weight.toString();
+                        span.style.fontVariationSettings = `'wght' ${weight}`;
+                    });
+                    reqId = null;
+                }
+            }
+        });
+    </script>
+
+    <!-- Exploded View Assembly: animación de "mi proyecto más reciente" (Porta) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const wrapper = document.querySelector(".explode-pin-wrapper");
+            const stage = document.getElementById("explode-stage");
+            const visual = document.querySelector(".explode-visual");
+            const items = document.querySelectorAll(".explode-item");
+            const central = document.querySelector(".explode-central");
+
+            const header = document.querySelector("header");
+
+            if (!wrapper || !stage || !visual || items.length === 0 || typeof gsap === "undefined") return;
+
+            // La cabecera es sticky y tiene más z-index que el stage, así
+            // que cuando ScrollTrigger fija el stage a pantalla completa
+            // la cabecera queda tapando la franja superior. Le damos al
+            // stage un padding-top igual a la altura real del header (que
+            // cambia entre desktop y breakpoints táctiles) para que nada
+            // se dibuje debajo de ella. En el layout apilado de móvil
+            // (<=900px) ya existe su propio padding fijo en CSS, así que
+            // ahí no tocamos nada.
+            function syncHeaderOffset() {
+                if (window.innerWidth <= 900) {
+                    stage.style.paddingTop = "";
+                    return;
+                }
+                const headerHeight = header ? header.getBoundingClientRect().height : 80;
+                stage.style.paddingTop = headerHeight + "px";
+            }
+
+            // Calcula cuánto hay que escalar los desplazamientos para que
+            // ninguna foto se salga de .explode-visual, sea cual sea el
+            // tamaño de pantalla. En vez de adivinar por ancho de ventana,
+            // mide el espacio real disponible (la columna de texto le resta
+            // ancho al carril visual, y el padding-top de la cabecera resta
+            // alto) y el tamaño real de cada foto. Se calcula un factor por
+            // eje (no uno solo) para no encoger el ancho cuando lo único
+            // que aprieta es el alto (así se aprovecha mejor el lado
+            // derecho de la pantalla, que suele tener más aire que alto).
+            function computeFitScale() {
+                const rect = visual.getBoundingClientRect();
+                const margin = 40; // deja aire para el box-shadow de cada foto
+                const halfW = rect.width / 2 - margin;
+                const halfH = rect.height / 2 - margin;
+
+                let maxX = 0;
+                let maxY = 0;
+                items.forEach((item) => {
+                    const w = item.offsetWidth;
+                    const h = item.offsetHeight;
+                    ["explode", "final"].forEach((key) => {
+                        const [x, y, rot] = item.dataset[key].split(",").map(Number);
+                        // La caja rotada ocupa más que su ancho/alto sin rotar:
+                        // se calcula el rectángulo que la envuelve (AABB).
+                        const rad = (rot * Math.PI) / 180;
+                        const cos = Math.abs(Math.cos(rad));
+                        const sin = Math.abs(Math.sin(rad));
+                        const boxHalfW = (w * cos + h * sin) / 2;
+                        const boxHalfH = (w * sin + h * cos) / 2;
+                        maxX = Math.max(maxX, Math.abs(x) + boxHalfW);
+                        maxY = Math.max(maxY, Math.abs(y) + boxHalfH);
+                    });
+                });
+
+                const scaleX = maxX === 0 || halfW <= 0 ? 1 : Math.min(1, halfW / maxX);
+                const scaleY = maxY === 0 || halfH <= 0 ? 1 : Math.min(1, halfH / maxY);
+                return { scaleX, scaleY };
+            }
+
+            let tl = null;
+
+            function buildAnimation() {
+                if (tl) {
+                    tl.scrollTrigger && tl.scrollTrigger.kill();
+                    tl.kill();
+                    tl = null;
+                }
+                // OJO: clearProps solo debe tocar las propiedades que GSAP
+                // anima (x/y/rotation/scale/opacity). Usar clearProps:"all"
+                // borra TODO el atributo style, incluido el background-image
+                // inline que fija la foto de cada pieza — eso desligaba las
+                // imágenes al reconstruir la animación (p.ej. en un resize).
+                gsap.set(items, { clearProps: "x,y,rotation,scale,opacity" });
+                gsap.set(central, { clearProps: "scale" });
+
+                syncHeaderOffset();
+                const { scaleX, scaleY } = computeFitScale();
+
+                if (prefersReducedMotion) {
+                    // Sin animación: coloca cada pieza directamente en su layout final.
+                    items.forEach((item) => {
+                        const [fx, fy, frot] = item.dataset.final.split(",").map(Number);
+                        gsap.set(item, {
+                            opacity: 1,
+                            x: fx * scaleX,
+                            y: fy * scaleY,
+                            rotation: frot,
+                            scale: 1,
+                        });
+                    });
+                    return;
+                }
+
+                tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: wrapper,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 1,
+                        pin: stage,
+                    }
+                });
+
+                // Fase 1: las piezas "explotan" hacia afuera desde el mockup central.
+                items.forEach((item) => {
+                    const [ex, ey, erot] = item.dataset.explode.split(",").map(Number);
+                    tl.to(item, {
+                        x: ex * scaleX,
+                        y: ey * scaleY,
+                        rotation: erot,
+                        scale: 1,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power2.out",
+                    }, 0);
+                });
+
+                tl.to(central, { scale: 0.9, duration: 1, ease: "power2.out" }, 0);
+
+                // Fase 2: las piezas vuelven y se "bloquean" en su layout final.
+                items.forEach((item) => {
+                    const [fx, fy, frot] = item.dataset.final.split(",").map(Number);
+                    tl.to(item, {
+                        x: fx * scaleX,
+                        y: fy * scaleY,
+                        rotation: frot,
+                        duration: 1,
+                        ease: "power3.inOut",
+                    }, 1);
+                });
+
+                tl.to(central, { scale: 1, duration: 1, ease: "power3.inOut" }, 1);
+            }
+
+            gsap.registerPlugin(ScrollTrigger);
+            buildAnimation();
+
+            // Si la ventana cambia de tamaño (o las fuentes web reflowan el
+            // layout tras cargar), recalcula el factor de escala y
+            // reconstruye la animación para que las fotos sigan cabiendo.
+            let resizeTimeout;
+            window.addEventListener("resize", () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    buildAnimation();
+                    ScrollTrigger.refresh();
+                }, 200);
+            });
+
+            window.addEventListener("load", () => {
+                buildAnimation();
+                ScrollTrigger.refresh();
+            });
+        });
+    </script>
+</body>
+</html>
