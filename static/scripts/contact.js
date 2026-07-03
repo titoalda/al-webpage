@@ -82,9 +82,58 @@ document.addEventListener("DOMContentLoaded", function() {
             const loadingOverlay = document.getElementById("loading-overlay");
             if (loadingOverlay) loadingOverlay.style.display = "flex";
 
-            // 6. Submit form in the background using Web3Forms API (no email client popup needed)
+            function showSuccess() {
+                if (loadingOverlay) loadingOverlay.style.display = "none";
+
+                const successOverlay = document.getElementById("success-overlay");
+                const successTitle = document.getElementById("success-title-text");
+
+                if (successTitle) {
+                    const currentLang = document.documentElement.lang || 'es';
+                    if (currentLang === 'en') {
+                        successTitle.innerText = `Thank you, ${cleanName}!`;
+                    } else if (currentLang === 'gl') {
+                        successTitle.innerText = `Grazas, ${cleanName}!`;
+                    } else {
+                        successTitle.innerText = `¡Gracias, ${cleanName}!`;
+                    }
+                }
+
+                if (successOverlay) {
+                    successOverlay.style.display = "flex";
+                }
+
+                form.reset();
+            }
+
+            function showError() {
+                if (loadingOverlay) loadingOverlay.style.display = "none";
+
+                // Restore the form so the person can retry sending the message
+                form.style.display = "";
+                if (desc) desc.style.display = "";
+                if (heading) heading.style.display = "";
+
+                const currentLang = document.documentElement.lang || 'es';
+                if (currentLang === 'en') {
+                    statusDiv.innerText = "Something went wrong sending your message. Please try again or email me directly.";
+                } else if (currentLang === 'gl') {
+                    statusDiv.innerText = "Algo fallou ao enviar a túa mensaxe. Téntao de novo ou escríbeme directamente.";
+                } else {
+                    statusDiv.innerText = "Ha ocurrido un error al enviar tu mensaje. Inténtalo de nuevo o escríbeme directamente.";
+                }
+                statusDiv.style.color = "#ff4d4d";
+                statusDiv.style.display = "block";
+            }
+
+            // 6. Submit form in the background using Web3Forms API (no email client popup needed),
+            // keeping the loading animation visible for at least 3s and only confirming
+            // success once the request has actually been accepted by the API.
+            const minLoadingTime = new Promise(resolve => setTimeout(resolve, 3000));
+
+            let submission;
             if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY !== "YOUR_ACCESS_KEY_HERE") {
-                fetch("https://api.web3forms.com/submit", {
+                submission = fetch("https://api.web3forms.com/submit", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -99,35 +148,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     })
                 })
                 .then(response => response.json())
-                .then(data => {})
-                .catch(() => {});
+                .then(data => {
+                    if (!data.success) throw new Error("Web3Forms rejected the submission");
+                });
             } else {
+                submission = Promise.reject(new Error("Missing Web3Forms access key"));
             }
 
-            // 7. Run loading state for 3 seconds, then transition to success page
-            setTimeout(() => {
-                if (loadingOverlay) loadingOverlay.style.display = "none";
-                
-                const successOverlay = document.getElementById("success-overlay");
-                const successTitle = document.getElementById("success-title-text");
-                
-                if (successTitle) {
-                    const currentLang = document.documentElement.lang || 'es';
-                    if (currentLang === 'en') {
-                        successTitle.innerText = `Thank you, ${cleanName}!`;
-                    } else if (currentLang === 'gl') {
-                        successTitle.innerText = `Grazas, ${cleanName}!`;
-                    } else {
-                        successTitle.innerText = `¡Gracias, ${cleanName}!`;
-                    }
-                }
-                
-                if (successOverlay) {
-                    successOverlay.style.display = "flex";
-                }
-            }, 3000);
-
-            form.reset();
+            submission
+                .then(() => minLoadingTime.then(showSuccess))
+                .catch(() => minLoadingTime.then(showError));
         });
     }
 });
