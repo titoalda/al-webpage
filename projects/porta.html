@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <link rel="shortcut icon" href="../static/logo/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../static/logo/apple-touch-icon.png">
+        <meta charset="UTF-8">
+        <link href="../static/styles/style_individualproject.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../static/styles/fonts.css">
+        <script src="../static/scripts/script-scroll.js" defer></script>
+
+        <title>Porta | Identidad Visual y Diseño Editorial - Aldara Álvarez</title>
+        <meta name="description" content="Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.">
+
+        <link rel="canonical" href="https://aldaraalvarez.es/projects/porta">
+        <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta" />
+        <link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- para que sea responsive -->
+        <meta name="theme-color" content="#111111">
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://aldaraalvarez.es/projects/porta">
+        <meta property="og:title" content="Porta | Identidad Visual y Diseño Editorial - Aldara Álvarez">
+        <meta property="og:description" content="Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.">
+        <meta property="og:image" content="https://aldaraalvarez.es/static/images/porta/porta-cover.jpg">
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://aldaraalvarez.es/projects/porta">
+        <meta property="twitter:title" content="Porta | Identidad Visual y Diseño Editorial - Aldara Álvarez">
+        <meta property="twitter:description" content="Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.">
+        <meta property="twitter:image" content="https://aldaraalvarez.es/static/images/porta/porta-cover.jpg">
+        <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Porta",
+    "description": "Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.",
+    "image": "https://aldaraalvarez.es/static/images/porta/porta-cover.jpg",
+    "url": "https://aldaraalvarez.es/projects/porta",
+    "creator": {
+        "@type": "Person",
+        "name": "Aldara Álvarez",
+        "url": "https://aldaraalvarez.es/"
+    }
+}
+        </script>
+        <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://aldaraalvarez.es/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Proyectos",
+            "item": "https://aldaraalvarez.es/projects"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Porta",
+            "item": "https://aldaraalvarez.es/projects/porta"
+        }
+    ]
+}
+        </script>
+
+        <style>
+            /* --- Intro sticky: imagen izquierda + textos que se revelan al hacer scroll --- */
+            .porta-intro {
+                display: flex;
+                align-items: flex-start;
+                gap: 64px;
+                padding: 100px 4vw;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .porta-intro-media {
+                flex: 1.15;
+                position: sticky;
+                top: 100px;
+                height: 82vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--bg-color);
+                perspective: 1800px;
+            }
+            /* Envoltorio que recibe la rotación 3D (tilted card) siguiendo
+               el cursor; separado del <img> para no pisar su transition
+               de fundido de carga. */
+            .porta-intro-tilt {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform-style: preserve-3d;
+                will-change: transform;
+            }
+            .porta-intro-media img {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                opacity: 0;
+                transition: opacity 0.7s ease;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+            .porta-intro-media img.porta-img-loaded {
+                opacity: 1;
+            }
+            .porta-intro-text {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 48px;
+                padding-top: 6vh;
+            }
+            .porta-intro-block {
+                min-height: 26vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                opacity: 0;
+                transform: translateY(28px);
+                filter: blur(0);
+                border: 1px solid var(--border-color);
+                border-radius: 10px;
+                padding: 36px 40px;
+                background-color: rgba(255, 255, 255, 0.02);
+                transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                            transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            /* El difuminado de los bloques fuera de foco se calcula y se
+               suaviza (lerp) enteramente en JS, cuadro a cuadro -- por eso
+               no hay aquí ninguna transition para `filter`: si se deja una
+               transition de CSS compitiendo con una actualización directa
+               en cada frame, el resultado son dos suavizados encadenados
+               que se "persiguen" entre sí y se nota como un movimiento
+               tosco/con retardo en vez de fluido. */
+            .porta-intro-block:last-child {
+                min-height: 18vh;
+            }
+            .porta-intro-block.is-in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .porta-intro-eyebrow {
+                font-size: 14px;
+                font-weight: 300;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--gray-dark);
+                margin: 0 0 12px;
+            }
+            .porta-intro-block h1,
+            .porta-intro-block h2 {
+                font-family: var(--font-display);
+                font-weight: 300;
+                font-size: 32px;
+                text-transform: uppercase;
+                letter-spacing: -0.01em;
+                color: var(--text-color);
+                margin: 0 0 16px;
+            }
+            .porta-intro-block h1 {
+                font-size: 72px;
+            }
+            .porta-intro-block h2 em,
+            .porta-intro-block p em {
+                font-style: italic;
+            }
+            .porta-intro-block p {
+                font-size: 16px;
+                line-height: 1.6;
+                color: var(--gray-muted);
+                font-weight: 300;
+                max-width: 46ch;
+                margin: 0 0 16px;
+            }
+            .porta-intro-block p:last-child {
+                margin-bottom: 0;
+            }
+            .porta-intro-block p strong {
+                color: var(--text-color);
+                font-weight: 500;
+            }
+            @media (max-width: 1024px) {
+                .porta-intro {
+                    flex-direction: column;
+                }
+                .porta-intro-media {
+                    position: static;
+                    height: 50vh;
+                    width: 100%;
+                }
+                .porta-intro-block,
+                .porta-intro-block:last-child {
+                    min-height: 0;
+                    padding: 24px;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .porta-intro-block {
+                    transition: none;
+                    opacity: 1;
+                    transform: none;
+                    filter: none;
+                }
+            }
+
+            /* --- Galería Porta (masonry, escopeada a esta página) --- */
+            .porta-gallery-section {
+                padding: 100px 4vw;
+                border-bottom: 1px solid var(--border-color);
+                background-color: #111111;
+            }
+            .porta-gallery-header {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 48px;
+                text-align: center;
+            }
+            .porta-gallery-eyebrow {
+                font-size: 14px;
+                font-weight: 300;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--gray-dark);
+            }
+            .porta-gallery-title {
+                font-family: var(--font-display);
+                font-weight: 300;
+                font-size: 40px;
+                text-transform: uppercase;
+                letter-spacing: -0.01em;
+                color: var(--text-color);
+                margin: 0;
+            }
+            /* El grid se posiciona con JS (left/top/width/height por pieza).
+               Se evita deliberadamente `column-count`: WebKit/Safari tiene bugs
+               de larga data donde `transform` en hijos de un contenedor con
+               columnas CSS no repinta o no anima correctamente. */
+            .porta-gallery-grid {
+                position: relative;
+                width: 100%;
+            }
+
+            .porta-gallery-item {
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                border-radius: 4px;
+                border: 1px solid var(--border-color);
+                background-color: #1a1a1a;
+                opacity: 0;
+                transform: translateY(28px);
+                transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+                            transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            /* La transición de left/top/width/height solo se activa cuando el
+               grid recoloca las piezas por un resize (clase añadida por JS).
+               Si estuviera siempre activa, la primera colocación al cargar la
+               página se veía como si las tarjetas "crecieran" desde 0x0, un
+               efecto no intencionado. */
+            .porta-gallery-grid.is-resizing .porta-gallery-item {
+                transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+                            transform 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+                            left 0.3s ease, top 0.3s ease, width 0.3s ease, height 0.3s ease;
+            }
+            .porta-gallery-item.is-in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .porta-gallery-item:nth-child(4n+1) { transition-delay: 0ms; }
+            .porta-gallery-item:nth-child(4n+2) { transition-delay: 140ms; }
+            .porta-gallery-item:nth-child(4n+3) { transition-delay: 280ms; }
+            .porta-gallery-item:nth-child(4n+4) { transition-delay: 420ms; }
+
+            /* Tarjeta con inclinación 3D siguiendo el cursor (tilted card) */
+            .porta-gallery-tilt {
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                /* El suavizado del tilt lo controla el bucle rAF en JS
+                   (lerp por frame); una transition CSS aquí competiría con
+                   él y se notaría como un efecto brusco/con tirones. */
+                will-change: transform;
+            }
+            .porta-gallery-tilt img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                filter: grayscale(10%);
+                opacity: 0;
+                transition: filter 0.5s ease, opacity 0.6s ease;
+            }
+            .porta-gallery-tilt img.porta-img-loaded {
+                opacity: 1;
+            }
+            .porta-gallery-item:hover .porta-gallery-tilt img {
+                filter: grayscale(0%);
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .porta-gallery-item,
+                .porta-gallery-grid.is-resizing .porta-gallery-item {
+                    transition: none;
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            /* --- Flipbook de prueba: pasa páginas con scroll/drag vertical u horizontal --- */
+            .porta-flipbook-section {
+                padding: 100px 4vw;
+                border-bottom: 1px solid var(--border-color);
+                background-color: #111111;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 36px;
+            }
+            .porta-flipbook-header {
+                text-align: center;
+                max-width: 520px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .porta-flipbook-title {
+                font-family: var(--font-display);
+                font-weight: 300;
+                font-size: 40px;
+                text-transform: uppercase;
+                letter-spacing: -0.01em;
+                color: var(--text-color);
+                margin: 0;
+            }
+            .porta-flipbook-title em {
+                font-style: italic;
+            }
+            /* Fila con el flipbook en el centro y, a los lados, accesos a
+               los dos manuales (identidad corporativa / estilo editorial) */
+            .porta-flipbook-row {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 32px;
+                width: 100%;
+            }
+            /* Solo controla el hueco/tamaño en la fila; la tipografía,
+               borde y hover los hereda de .button-circle (el mismo botón
+               que se usa en el resto de la web) para que no desentone. */
+            .porta-flipbook-sidebtn {
+                flex: 0 0 180px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.4;
+                white-space: normal;
+                border-radius: 12px;
+            }
+            @media (max-width: 900px) {
+                .porta-flipbook-row {
+                    flex-direction: column;
+                }
+                .porta-flipbook-sidebtn {
+                    flex: none;
+                    width: min(94vw, 680px);
+                }
+            }
+            .porta-flipbook {
+                position: relative;
+                width: min(94vw, 680px);
+                aspect-ratio: 2000 / 1339;
+                perspective: 2800px;
+                user-select: none;
+                cursor: grab;
+                touch-action: none;
+                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.55);
+            }
+            .porta-flipbook:active {
+                cursor: grabbing;
+            }
+            /* Sombra de "lomo" central, donde se encuadernan las dos páginas */
+            .porta-flipbook::before {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 2%;
+                bottom: 2%;
+                width: 34px;
+                margin-left: -17px;
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
+                z-index: 999;
+                pointer-events: none;
+            }
+            .porta-flipbook-stage {
+                position: absolute;
+                inset: 0;
+                transform-style: preserve-3d;
+            }
+            /* Página base a la izquierda: lo que se ve antes de pasar ninguna
+               hoja (el "hueco" del libro abierto) y lo que queda por debajo
+               de la pila de páginas ya leídas. */
+            .porta-flipbook-leftbase,
+            .porta-flipbook-rightbase {
+                position: absolute;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background: #111111;
+                z-index: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .porta-flipbook-leftbase {
+                left: 0;
+                border-radius: 4px 0 0 4px;
+                opacity: 0;
+                transition: opacity 1s ease;
+            }
+            /* Antes de pasar la primera página no hay "lado izquierdo" del
+               libro todavía -- se ve como un libro cerrado mostrando solo
+               la portada. En cuanto se empieza a pasar página, aparece. */
+            .porta-flipbook-leftbase.is-visible {
+                opacity: 1;
+            }
+            .porta-flipbook-rightbase {
+                right: 0;
+                border-radius: 0 4px 4px 0;
+                transition: opacity 1s ease;
+            }
+            /* Al terminar de pasar todas las páginas, el lado derecho se
+               desvanece hasta transparentarse y deja ver el fondo de la
+               sección -- así se entiende que el flipbook ha terminado, en
+               vez de un aviso escrito. */
+            .porta-flipbook-rightbase.is-visible {
+                opacity: 0;
+            }
+            .porta-flipbook-page {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 50%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transform-origin: 0% 50%;
+                will-change: transform;
+            }
+            .porta-flipbook-face {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                border-radius: 4px;
+                background-color: #1a1a1a;
+                box-shadow: 0 0 0 1px var(--border-color) inset;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+            .porta-flipbook-face img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .porta-flipbook-back {
+                transform: rotateY(180deg);
+            }
+            .porta-flipbook-shade {
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                pointer-events: none;
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 65%);
+            }
+            .porta-flipbook-counter {
+                font-size: 13px;
+                color: var(--gray-muted);
+                font-weight: 300;
+                letter-spacing: 0.05em;
+            }
+            .porta-flipbook-controls {
+                display: flex;
+                gap: 12px;
+            }
+            .porta-flipbook-btn {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid var(--border-color);
+                background: transparent;
+                color: var(--text-color);
+                cursor: pointer;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background-color 0.2s ease;
+            }
+            .porta-flipbook-btn:hover:not(:disabled) {
+                background-color: var(--border-color);
+            }
+            .porta-flipbook-btn:disabled {
+                opacity: 0.3;
+                cursor: default;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <header>
+        <a href="../" class="logo"><img src="../static/logo/logo.png" alt="Logo Aldara Álvarez" width="53" height="40"></a>
+        <nav class="magnification-dock">
+            <a href="../projects" class="dock-item" data-label="Proyectos">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Proyectos</span>
+            </a>
+            <a href="../about" class="dock-item" data-label="Sobre Mí">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Sobre Mí</span>
+            </a>
+            <a href="../contact" class="dock-item" data-label="Contacto">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Contacto</span>
+            </a>
+            <div class="dock-item lang-selector" data-label="Idioma">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span class="dock-tooltip">Idioma</span>
+                <div class="lang-dropdown">
+                    <a href="porta" class="lang-option active">ES</a>
+                    <a href="../en/projects/porta" class="lang-option">EN</a>
+                    <a href="../gl/projects/porta" class="lang-option">GAL</a>
+                </div>
+            </div>
+            </nav>
+    </header>
+
+    <div class="back-btn-wrapper">
+        <a href="../projects.html" class="back-btn"><span class="back-arrow">←</span> Proyectos</a>
+    </div>
+
+
+
+
+
+        <div id="bg-wrap"> <!-- fondo animado extraido de https://alvarotrigo.com/blog/animated-backgrounds-css/ y posteriormente editado -->
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5"><animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(40, 40, 40, 1)"></stop><stop offset="100%" stop-color="rgba(40, 40, 40, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5"><animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(60, 60, 60, 1)"></stop><stop offset="100%" stop-color="rgba(60, 60, 60, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5"><animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(80, 80, 80, 1)"></stop><stop offset="100%" stop-color="rgba(80, 80, 80, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient4" cx="50%" cy="50%" fx="4.56417%" fy="50%" r=".5"><animate attributeName="fx" dur="23s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(0, 40, 0, 1)"></stop><stop offset="100%" stop-color="rgba(0, 60, 0, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient5" cx="50%" cy="50%" fx="2.65405%" fy="50%" r=".5"><animate attributeName="fx" dur="24.5s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(0,0,60, 1)"></stop><stop offset="100%" stop-color="rgba(0,0,60, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient6" cx="50%" cy="50%" fx="0.981338%" fy="50%" r=".5"><animate attributeName="fx" dur="25.5s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(80,0,0, 1)"></stop><stop offset="100%" stop-color="rgba(60,0,0, 0)"></stop></radialGradient>
+                </defs>
+                <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)" transform="rotate(334.41 50 50)"><animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate><animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite"></animateTransform></rect>
+                <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)" transform="rotate(255.072 50 50)"><animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate><animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s" repeatCount="indefinite"></animateTransform></rect>
+                <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)" transform="rotate(139.903 50 50)"><animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate><animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s" repeatCount="indefinite"></animateTransform></rect>
+            </svg>
+        </div>
+
+
+        <!-- Intro sticky: cubierta completa a la izquierda, textos que se revelan a la derecha -->
+        <section class="porta-intro">
+            <div class="porta-intro-media">
+                <div class="porta-intro-tilt" id="porta-intro-tilt">
+                    <img src="../static/images/porta/porta-portada.png" width="1195" height="1600" alt="Porta — ilustración de portada">
+                </div>
+            </div>
+            <div class="porta-intro-text">
+                <div class="porta-intro-block">
+                    <p class="porta-intro-eyebrow">proyecto de&nbsp;diseño de&nbsp;identidad visual y&nbsp;editorial</p>
+                    <h1>PORTA</h1>
+                    <p>Un&nbsp;<em>mook</em> editorial que&nbsp;traduce el&nbsp;patrimonio de&nbsp;Baiona (Galicia) en&nbsp;una experiencia de&nbsp;lectura pausada.</p>
+                </div>
+                <div class="porta-intro-block">
+                    <p class="porta-intro-eyebrow">01</p>
+                    <h2>El&nbsp;proyecto</h2>
+                    <p>PORTA es&nbsp;un&nbsp;proyecto integral de&nbsp;autor que&nbsp;abarca la&nbsp;conceptualización, edición y&nbsp;producción de&nbsp;principio a&nbsp;fin de&nbsp;un&nbsp;<em>mook</em> —un&nbsp;formato híbrido entre revista y&nbsp;libro— dedicado al&nbsp;patrimonio de&nbsp;Baiona. Ante la&nbsp;saturación de&nbsp;la&nbsp;comunicación turística masiva, la&nbsp;propuesta apuesta por&nbsp;el&nbsp;<em>slow journalism</em>, materializándose en&nbsp;una pieza editorial de&nbsp;coleccionista con&nbsp;un&nbsp;alto valor cultural y&nbsp;estético pensado para&nbsp;perdurar en&nbsp;el&nbsp;tiempo.</p>
+                </div>
+                <div class="porta-intro-block">
+                    <p class="porta-intro-eyebrow">02</p>
+                    <h2>El&nbsp;reto</h2>
+                    <p>El&nbsp;desafío radicó en&nbsp;asumir la&nbsp;autoría y&nbsp;dirección de&nbsp;arte 360º de&nbsp;una publicación compleja desde cero. El&nbsp;proyecto exigía ir&nbsp;mucho más allá de&nbsp;la&nbsp;maquetación clásica: implicaba romper con&nbsp;los códigos visuales genéricos del&nbsp;turismo convencional para&nbsp;construir un&nbsp;universo propio, encargándose simultáneamente de&nbsp;la&nbsp;estrategia de&nbsp;<em>branding</em>, la&nbsp;redacción del&nbsp;contenido escrito, la&nbsp;producción visual (fotografía e&nbsp;ilustración) y&nbsp;el&nbsp;diseño editorial de&nbsp;la&nbsp;obra.</p>
+                </div>
+                <div class="porta-intro-block">
+                    <p class="porta-intro-eyebrow">03</p>
+                    <h2>La&nbsp;solución</h2>
+                    <p>Para&nbsp;resolver este proyecto global, el&nbsp;flujo de&nbsp;trabajo se&nbsp;estructuró en&nbsp;cuatro fases estratégicas:</p>
+                    <p><strong>Estrategia e&nbsp;Identidad de&nbsp;Marca:</strong> Creación del&nbsp;<em>branding</em> desde cero bajo el&nbsp;nombre de&nbsp;PORTA (puerta en&nbsp;gallego), evocando el&nbsp;concepto de&nbsp;puerto de&nbsp;arribada y&nbsp;fortaleza local. Se&nbsp;diseñó el&nbsp;imagotipo (arco de&nbsp;medio punto y&nbsp;vela latina), una paleta cromática basada en&nbsp;el&nbsp;paisaje atlántico y&nbsp;se&nbsp;desarrolló su&nbsp;Manual de&nbsp;Identidad de&nbsp;Marca normativo.</p>
+                    <p><strong>Dirección de&nbsp;Arte y&nbsp;Contenido:</strong> Redacción íntegra de&nbsp;los textos de&nbsp;la&nbsp;publicación y&nbsp;dirección creativa del&nbsp;universo visual. Esto abarcó la&nbsp;realización de&nbsp;la&nbsp;serie fotográfica editorial en&nbsp;localización y&nbsp;la&nbsp;creación de&nbsp;ilustraciones digitales a&nbsp;medida para&nbsp;enriquecer la&nbsp;narrativa.</p>
+                    <p><strong>Diseño y&nbsp;Estilo Editorial:</strong> Diseño global de&nbsp;la&nbsp;publicación de&nbsp;96&nbsp;páginas estructurada bajo una retícula modular estricta. Para&nbsp;asegurar la&nbsp;cohesión visual del&nbsp;formato, se&nbsp;desarrolló un&nbsp;Manual de&nbsp;Estilo Editorial exhaustivo que&nbsp;unifica las jerarquías tipográficas y&nbsp;los ritmos de&nbsp;lectura.</p>
+                    <p><strong>Producción Técnica:</strong> Planteamiento y&nbsp;preparación de&nbsp;artes finales para&nbsp;su&nbsp;producción física como objeto premium: impresión <em>offset</em> en&nbsp;papel natural certificado FSC, encuadernación vista cosida a&nbsp;hilo, acabados con&nbsp;estampación en&nbsp;seco (golpe seco) del&nbsp;logotipo en&nbsp;portada y&nbsp;un&nbsp;estuche contenedor rígido.</p>
+                </div>
+                <div class="porta-intro-block">
+                    <p class="porta-intro-eyebrow">04</p>
+                    <h2>Ficha técnica</h2>
+                    <p><strong>Rol y&nbsp;Disciplinas:</strong> Dirección de&nbsp;arte integral, Redacción y&nbsp;Edición de&nbsp;contenido, Diseño editorial, Identidad de&nbsp;marca, Fotografía, Ilustración y&nbsp;Packaging.</p>
+                    <p><strong>Entregables principales:</strong> <em>Mook</em> impreso (17 × 24&nbsp;cm, 96&nbsp;págs.), Manual de&nbsp;Identidad de&nbsp;Marca, Manual de&nbsp;Estilo Editorial y&nbsp;Estuche contenedor.</p>
+                    <p><strong>Software utilizado:</strong></p>
+                    <p><strong>Adobe InDesign:</strong> Maquetación integral de&nbsp;la&nbsp;publicación, sistemas de&nbsp;retículas, estilos y&nbsp;preparación de&nbsp;artes finales para&nbsp;imprenta.</p>
+                    <p><strong>Adobe Illustrator:</strong> Diseño, vectorización y&nbsp;normativización de&nbsp;la&nbsp;identidad de&nbsp;marca, grafismos y&nbsp;cartografía.</p>
+                    <p><strong>Adobe Photoshop:</strong> Tratamiento y&nbsp;revelado de&nbsp;la&nbsp;fotografía editorial, retoque digital y&nbsp;creación de&nbsp;mockups de&nbsp;presentación.</p>
+                    <p><strong>Procreate:</strong> Creación, abocetado e&nbsp;ilustración digital de&nbsp;los recursos gráficos de&nbsp;la&nbsp;obra.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Flipbook: primeras 20 páginas del mook PORTA -->
+        <section class="porta-flipbook-section">
+            <div class="porta-flipbook-header">
+                <h2 class="porta-flipbook-title">Hojea el&nbsp;<em>mook</em></h2>
+            </div>
+            <div class="porta-flipbook-row">
+            <a href="../static/files/porta_manual-identidad-corporativa.pdf" target="_blank" rel="noopener noreferrer" class="porta-flipbook-sidebtn button-circle" id="porta-manual-identidad">
+                <span>Ver manual de&nbsp;identidad corporativa</span>
+            </a>
+            <div class="porta-flipbook" id="porta-flipbook">
+                <div class="porta-flipbook-stage" id="porta-flipbook-stage">
+                    <div class="porta-flipbook-leftbase"></div>
+                    <div class="porta-flipbook-rightbase"></div>
+                    <div class="porta-flipbook-page" data-index="0">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-01.jpg" alt="Página 1 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-02.jpg" alt="Página 2 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="1">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-03.jpg" alt="Página 3 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-04.jpg" alt="Página 4 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="2">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-05.jpg" alt="Página 5 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-06.jpg" alt="Página 6 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="3">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-07.jpg" alt="Página 7 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-08.jpg" alt="Página 8 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="4">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-09.jpg" alt="Página 9 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-10.jpg" alt="Página 10 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="5">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-11.jpg" alt="Página 11 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-12.jpg" alt="Página 12 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="6">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-13.jpg" alt="Página 13 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-14.jpg" alt="Página 14 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="7">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-15.jpg" alt="Página 15 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-16.jpg" alt="Página 16 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="8">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-17.jpg" alt="Página 17 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-18.jpg" alt="Página 18 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                    <div class="porta-flipbook-page" data-index="9">
+                        <div class="porta-flipbook-face porta-flipbook-front"><img src="../static/images/porta/mook/porta-page-19.jpg" alt="Página 19 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"><img src="../static/images/porta/mook/porta-page-20.jpg" alt="Página 20 del mook PORTA"><div class="porta-flipbook-shade"></div></div>
+                    </div>
+                </div>
+            </div>
+            <a href="../static/files/porta_manual-estilo-editorial.pdf" target="_blank" rel="noopener noreferrer" class="porta-flipbook-sidebtn button-circle" id="porta-manual-editorial">
+                <span>Ver manual de&nbsp;estilo editorial</span>
+            </a>
+            </div>
+            <div class="porta-flipbook-counter" id="porta-flipbook-counter">1 / 10</div>
+            <div class="porta-flipbook-controls">
+                <button type="button" class="porta-flipbook-btn" id="porta-flipbook-prev" aria-label="Página anterior">←</button>
+                <button type="button" class="porta-flipbook-btn" id="porta-flipbook-next" aria-label="Página siguiente">→</button>
+            </div>
+            <a href="https://portamook.com" target="_blank" rel="noopener noreferrer" class="button-circle">Compra aquí</a>
+        </section>
+
+
+        <!-- Galería del proyecto (masonry, entrada escalonada al hacer scroll) -->
+        <section class="porta-gallery-section">
+            <div class="porta-gallery-header">
+                <p class="porta-gallery-eyebrow">Porta — identidad visual y&nbsp;editorial</p>
+                <h2 class="porta-gallery-title">Galería del&nbsp;proyecto</h2>
+            </div>
+            <div class="porta-gallery-grid" id="porta-gallery-grid">
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-logo.png" width="5692" height="1950" alt="Logotipo de Porta"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-cover.jpg" width="1400" height="1400" alt="Cubierta y slipcase de Porta"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-monograma.png" width="3609" height="3200" alt="Monograma de Porta"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-iconos.png" width="3750" height="1250" alt="Iconografía de Porta: barco, ola y arco"></div></div>
+
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-01.jpg" width="1000" height="747" alt="Maquetación editorial de Porta"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-01.jpg" width="1000" height="669" alt="Monasterio de Baiona"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-01.jpg" width="1000" height="862" alt="Ilustración a acuarela de Porta"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-02.jpg" width="1000" height="747" alt="Maquetación editorial de Porta"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-02.jpg" width="1000" height="669" alt="Faro de Cabo Silleiro" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-02.jpg" width="1000" height="1240" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-03.jpg" width="1000" height="1063" alt="Monumento a la Virgen de la Roca" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-03.jpg" width="1000" height="968" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-03.jpg" width="1000" height="747" alt="Maquetación editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-04.jpg" width="1000" height="453" alt="Faro de Cabo Silleiro" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-04.jpg" width="1000" height="1339" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-04.jpg" width="1000" height="747" alt="Maquetación editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-05.jpg" width="1000" height="563" alt="Flora del entorno de Baiona" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-05.jpg" width="1000" height="466" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-05.jpg" width="1000" height="747" alt="Maquetación editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-06.jpg" width="1000" height="830" alt="Petroglifos del Val Miñor" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-06.jpg" width="1000" height="1410" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-06.jpg" width="1000" height="747" alt="Maquetación editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-07.jpg" width="1000" height="750" alt="Patrimonio marítimo de Baiona" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-07.jpg" width="1000" height="491" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-07.jpg" width="1000" height="747" alt="Maquetación editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-foto-08.jpg" width="926" height="1296" alt="Faro de Cabo Silleiro" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-08.jpg" width="1000" height="806" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-editorial-08.jpg" width="1000" height="747" alt="Maquetación editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-09.jpg" width="1000" height="981" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-ilustracion-10.jpg" width="1000" height="1339" alt="Ilustración a acuarela de Porta" loading="lazy"></div></div>
+
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-papeleria.jpg" width="1000" height="1000" alt="Papelería corporativa de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-merchandising.jpg" width="1000" height="1000" alt="Merchandising de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-mook-horizontal.jpg" width="1000" height="671" alt="Mockup editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-mook-vertical.jpg" width="1000" height="1339" alt="Mockup editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-mook-coleccion.jpg" width="1000" height="1000" alt="Colección editorial de Porta" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../static/images/porta/porta-slipcase-full.jpg" width="1000" height="1000" alt="Slipcase de Porta" loading="lazy"></div></div>
+            </div>
+        </section>
+
+
+        <div class="more_projects">
+            <div class="rectangle">
+                <a href="../projects" class="button-circle center">VER MÁS PROYECTOS</a>
+            </div>
+        </div>
+
+
+        <div class="contact_me">
+            <p class="preguntas-text">¿TIENES ALGÚN PROYECTO EN&nbsp;MENTE?</p>
+            <p class="hablemos-text">¡HABLEMOS!</p>
+            <a href="../contact" class="button-circle btn-lightbeam"><span>ENVIAR MENSAJE</span></a>
+            <p class="mensajefinal-text">Siempre es un placer conectar con&nbsp;nuevos proyectos y&nbsp;personas.</p>
+        </div>
+
+
+      <!-- Footer -->
+        <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="../static/logo/logo.png" alt="Logo Aldara Álvarez" class="footer-logo" width="40" height="30">
+                <p><strong>Aldara Álvarez</strong> — Diseñadora Gráfica.<br>Graduada en Diseño por&nbsp;la&nbsp;UCM y en Diseño Gráfico Digital por&nbsp;la&nbsp;UNIR. Especializada en soluciones visuales conceptuales, diseño editorial e identidad corporativa.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Secciones</h3>
+                <ul>
+                    <li><a href="../projects">Proyectos</a></li>
+                    <li><a href="../about">Sobre Mí</a></li>
+                    <li><a href="../contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Proyectos Destacados</h3>
+                <ul>
+                    <li><a href="elviejoyelmar">El viejo y&nbsp;el mar</a></li>
+                    <li><a href="namaste">Namasté</a></li>
+                    <li><a href="formayfuncion">Forma y&nbsp;función</a></li>
+                    <li><a href="casadecor">Casa Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contacto</h3>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <a href="mailto:aldaraalvarezglez@gmail.com">aldaraalvarezglez@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara Álvarez. Todos los derechos reservados.</span>
+            <a href="../legal" class="footer-legal-link">Aviso Legal</a>
+
+        </div>
+    </footer>
+
+    <script src="../static/scripts/dock.js"></script>
+
+    <script>
+    (function () {
+        var grid = document.getElementById("porta-gallery-grid");
+        if (!grid) return;
+        var items = Array.prototype.slice.call(grid.querySelectorAll(".porta-gallery-item"));
+        if (!items.length) return;
+
+        var GAP = 20;
+
+        // Calcula el número de columnas según el ancho disponible, y
+        // posiciona cada pieza en la columna más corta (masonry real,
+        // calculado en JS: no depende de `column-count`, que es lo que
+        // fallaba en Safari al combinarse con `transform`).
+        function layout() {
+            var width = grid.clientWidth;
+            var columns = 1;
+            if (width >= 1300) columns = 4;
+            else if (width >= 900) columns = 3;
+            else if (width >= 600) columns = 2;
+
+            var colWidth = (width - GAP * (columns - 1)) / columns;
+            var colHeights = new Array(columns).fill(0);
+
+            items.forEach(function (item) {
+                var img = item.querySelector("img");
+                var w = parseFloat(img.getAttribute("width")) || 1;
+                var h = parseFloat(img.getAttribute("height")) || 1;
+                var ratio = h / w;
+
+                var col = 0;
+                var min = colHeights[0];
+                for (var i = 1; i < columns; i++) {
+                    if (colHeights[i] < min) { min = colHeights[i]; col = i; }
+                }
+
+                var x = col * (colWidth + GAP);
+                var y = colHeights[col];
+                var itemH = colWidth * ratio;
+
+                item.style.width = colWidth + "px";
+                item.style.height = itemH + "px";
+                item.style.left = x + "px";
+                item.style.top = y + "px";
+
+                colHeights[col] = y + itemH + GAP;
+            });
+
+            grid.style.height = Math.max.apply(null, colHeights) + "px";
+        }
+
+        layout(); // primera colocación: instantánea, sin transición (sin clase is-resizing)
+        var resizeTimer;
+        window.addEventListener("resize", function () {
+            grid.classList.add("is-resizing");
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                layout();
+                setTimeout(function () { grid.classList.remove("is-resizing"); }, 350);
+            }, 150);
+        });
+
+        // Fundido suave cuando cada imagen termina de cargar, en vez de
+        // aparecer de golpe en cuanto llega la respuesta de red.
+        items.forEach(function (item) {
+            var img = item.querySelector("img");
+            if (!img) return;
+            if (img.complete && img.naturalWidth > 0) {
+                img.classList.add("porta-img-loaded");
+            } else {
+                img.addEventListener("load", function () {
+                    img.classList.add("porta-img-loaded");
+                });
+            }
+        });
+
+        // Revelado escalonado cuando cada pieza es realmente visible en pantalla
+        if ("IntersectionObserver" in window) {
+            var galleryObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-in");
+                        galleryObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            items.forEach(function (item) { galleryObs.observe(item); });
+
+            // Red de seguridad: si el observer no dispara para alguna pieza
+            // (p. ej. bfcache de Safari), se revela igualmente. Se da margen
+            // de sobra para que no "adelante" el efecto a quien todavía está
+            // leyendo la intro antes de llegar a la galería.
+            setTimeout(function () {
+                items.forEach(function (item) { item.classList.add("is-in"); });
+            }, 15000);
+        } else {
+            items.forEach(function (item) { item.classList.add("is-in"); });
+        }
+
+        // Tarjeta con inclinación 3D siguiendo el cursor (tilted card),
+        // con suavizado por interpolación cuadro a cuadro (lerp) en vez de
+        // saltar directamente al valor calculado en cada mousemove -- eso
+        // era lo que se sentía "durísimo": el transform se reescribía en
+        // crudo en cada evento, sin ningún amortiguamiento (el equivalente
+        // vanilla a un spring de framer-motion).
+        // Se omite en pantallas táctiles (no hay cursor que seguir) y si el
+        // usuario prefiere menos movimiento.
+        var prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var canHover = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        if (canHover && !prefersReducedMotion) {
+            var MAX_TILT = 14;
+            var SCALE_ON_HOVER = 1.08;
+            var EASE = 0.14; // cuanto más bajo, más "spring"/suave; más alto, más directo
+
+            var tiltStates = items.map(function (item) {
+                var tilt = item.querySelector(".porta-gallery-tilt");
+                return { item: item, tilt: tilt, tx: 0, ty: 0, ts: 1, rx: 0, ry: 0, rs: 1 };
+            }).filter(function (s) { return s.tilt; });
+
+            tiltStates.forEach(function (state) {
+                state.item.addEventListener("mousemove", function (e) {
+                    var rect = state.item.getBoundingClientRect();
+                    var offsetX = e.clientX - rect.left - rect.width / 2;
+                    var offsetY = e.clientY - rect.top - rect.height / 2;
+                    state.tx = (offsetY / (rect.height / 2)) * -MAX_TILT;
+                    state.ty = (offsetX / (rect.width / 2)) * MAX_TILT;
+                });
+                state.item.addEventListener("mouseenter", function () {
+                    state.ts = SCALE_ON_HOVER;
+                });
+                state.item.addEventListener("mouseleave", function () {
+                    state.tx = 0;
+                    state.ty = 0;
+                    state.ts = 1;
+                });
+            });
+
+            (function raf() {
+                tiltStates.forEach(function (s) {
+                    s.rx += (s.tx - s.rx) * EASE;
+                    s.ry += (s.ty - s.ry) * EASE;
+                    s.rs += (s.ts - s.rs) * EASE;
+                    s.tilt.style.transform = "perspective(1600px) rotateX(" + s.rx.toFixed(2) + "deg) rotateY(" + s.ry.toFixed(2) + "deg) scale3d(" + s.rs.toFixed(3) + "," + s.rs.toFixed(3) + ",1)";
+                });
+                requestAnimationFrame(raf);
+            })();
+        }
+
+        // Portada de la intro: mismo efecto de tarjeta inclinada (tilted
+        // card) que las piezas de la galería, siguiendo el cursor sobre
+        // toda el área de la imagen.
+        var introTilt = document.getElementById("porta-intro-tilt");
+        if (introTilt && canHover && !prefersReducedMotion) {
+            var introTiltArea = introTilt.closest(".porta-intro-media");
+            var iMaxTilt = 10;
+            var iEase = 0.12;
+            var iState = { tx: 0, ty: 0, rx: 0, ry: 0 };
+
+            introTiltArea.addEventListener("mousemove", function (e) {
+                var rect = introTiltArea.getBoundingClientRect();
+                var offsetX = e.clientX - rect.left - rect.width / 2;
+                var offsetY = e.clientY - rect.top - rect.height / 2;
+                iState.tx = (offsetY / (rect.height / 2)) * -iMaxTilt;
+                iState.ty = (offsetX / (rect.width / 2)) * iMaxTilt;
+            });
+            introTiltArea.addEventListener("mouseleave", function () {
+                iState.tx = 0;
+                iState.ty = 0;
+            });
+
+            (function raf() {
+                iState.rx += (iState.tx - iState.rx) * iEase;
+                iState.ry += (iState.ty - iState.ry) * iEase;
+                introTilt.style.transform = "rotateX(" + iState.rx.toFixed(2) + "deg) rotateY(" + iState.ry.toFixed(2) + "deg)";
+                requestAnimationFrame(raf);
+            })();
+        }
+
+        // Bloques de texto de la intro: se revelan al entrar en pantalla
+        var introBlocks = document.querySelectorAll(".porta-intro-block");
+        if (introBlocks.length && "IntersectionObserver" in window) {
+            var introObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-in");
+                        introObs.unobserve(entry.target);
+                    }
+                });
+                // Umbral bajo a propósito: el bloque "La solución" es más
+                // alto que el viewport (varios párrafos + recuadro), y con
+                // threshold: 0.4 su intersectionRatio nunca llegaba a
+                // cruzar ese valor -- el callback no se disparaba nunca y
+                // el bloque solo aparecía tras el timeout de seguridad de
+                // 15s. Con 0.1 se dispara en cuanto asoma un 10%, algo que
+                // cualquier bloque, por alto que sea, cruza enseguida.
+            }, { threshold: 0.1 });
+            introBlocks.forEach(function (block) { introObs.observe(block); });
+            setTimeout(function () {
+                introBlocks.forEach(function (block) { block.classList.add("is-in"); });
+            }, 15000);
+        } else {
+            introBlocks.forEach(function (block) { block.classList.add("is-in"); });
+        }
+
+        // Efecto de profundidad de campo (Gradual Blur): el bloque de texto
+        // más cercano al centro de la pantalla queda nítido y el resto se
+        // difumina de forma graduada según la distancia al centro. Se
+        // suaviza con su propio lerp en un bucle rAF continuo (independiente
+        // de los eventos de scroll) en vez de fijar el valor exacto en cada
+        // frame -- esto último es lo que se notaba "brusco": una transition
+        // de CSS intentando perseguir un valor que ya cambiaba a cada
+        // instante generaba un doble suavizado con retardo.
+        if (introBlocks.length && !prefersReducedMotion) {
+            var MAX_BLUR_PX = 7;
+            var BLUR_EASE = 0.1;
+            var blockStates = Array.prototype.map.call(introBlocks, function (block) {
+                return { el: block, blur: 0, target: 0 };
+            });
+            (function raf() {
+                var viewportCenter = window.innerHeight / 2;
+                blockStates.forEach(function (s) {
+                    if (!s.el.classList.contains("is-in")) return;
+                    var rect = s.el.getBoundingClientRect();
+                    // Si el centro del viewport cae dentro del propio bloque,
+                    // se considera en foco (distancia 0) sea cual sea su
+                    // altura -- usar el centro del bloque entero penalizaba
+                    // a los bloques más largos que la pantalla (como "La
+                    // solución"), que nunca llegaban a desbloquearse del
+                    // todo aunque ocuparan toda la vista.
+                    var dist = 0;
+                    if (viewportCenter < rect.top) dist = rect.top - viewportCenter;
+                    else if (viewportCenter > rect.bottom) dist = viewportCenter - rect.bottom;
+                    var norm = Math.min(dist / (window.innerHeight * 0.9), 1);
+                    s.target = norm * MAX_BLUR_PX;
+                    s.blur += (s.target - s.blur) * BLUR_EASE;
+                    s.el.style.filter = "blur(" + s.blur.toFixed(2) + "px)";
+                });
+                requestAnimationFrame(raf);
+            })();
+        }
+
+        // Flipbook de prueba: pasa las páginas simulando el giro real de una
+        // hoja de libro (rotateY sobre el lomo, con sombreado dinámico),
+        // controlado tanto por scroll vertical como horizontal (algunos
+        // trackpads generan deltaX al deslizar con dos dedos hacia los
+        // lados) y por arrastre táctil/ratón en cualquiera de los dos ejes.
+        (function () {
+            var flipbookEl = document.getElementById("porta-flipbook");
+            if (!flipbookEl) return;
+            var stage = document.getElementById("porta-flipbook-stage");
+            var pageEls = Array.prototype.slice.call(stage.querySelectorAll(".porta-flipbook-page"));
+            var total = pageEls.length;
+            var counterEl = document.getElementById("porta-flipbook-counter");
+            var prevBtn = document.getElementById("porta-flipbook-prev");
+            var nextBtn = document.getElementById("porta-flipbook-next");
+            var rightBase = flipbookEl.querySelector(".porta-flipbook-rightbase");
+            var leftBase = flipbookEl.querySelector(".porta-flipbook-leftbase");
+            if (!total || !counterEl || !prevBtn || !nextBtn) return;
+
+            var target = 0; // 0..total, con decimales mientras se arrastra o se hace scroll
+            var current = 0; // valor interpolado que se pinta cada frame
+            var settleTimer = null;
+            var EASE = prefersReducedMotion ? 1 : 0.18;
+
+            function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+            function scheduleSettle() {
+                clearTimeout(settleTimer);
+                settleTimer = setTimeout(function () { target = Math.round(target); }, 220);
+            }
+
+            function render() {
+                current += (target - current) * EASE;
+                if (Math.abs(target - current) < 0.001) current = target;
+
+                pageEls.forEach(function (page, i) {
+                    var progress = clamp(current - i, 0, 1);
+                    var angle = progress * -180;
+                    // La página se "levanta" ligeramente del lomo a mitad de
+                    // giro (translateZ en forma de arco) para simular el
+                    // combado real de una hoja de papel al pasarla, en vez
+                    // de una rotación plana y rígida.
+                    var lifted = Math.sin(progress * Math.PI);
+                    var lift = lifted * 26;
+                    page.style.transform = "rotateY(" + angle.toFixed(2) + "deg) translateZ(" + lift.toFixed(2) + "px)";
+                    page.style.zIndex = progress < 0.5 ? (total - i) : i;
+                    var shade = lifted * 0.55;
+                    var faces = page.querySelectorAll(".porta-flipbook-shade");
+                    for (var f = 0; f < faces.length; f++) { faces[f].style.opacity = shade; }
+                    // box-shadow (no filter: drop-shadow) para no romper el
+                    // preserve-3d en Safari -- misma precaución que ya se
+                    // aplicó en el contenedor .porta-flipbook.
+                    var shadowFaces = page.querySelectorAll(".porta-flipbook-face");
+                    var shadowCss = "0 " + (lifted * 14).toFixed(1) + "px " + (lifted * 18).toFixed(1) + "px rgba(0,0,0," + (lifted * 0.45).toFixed(2) + "), 0 0 0 1px var(--border-color) inset";
+                    for (var sf = 0; sf < shadowFaces.length; sf++) { shadowFaces[sf].style.boxShadow = shadowCss; }
+                });
+
+                var pageNum = clamp(Math.floor(current) + 1, 1, total);
+                counterEl.textContent = pageNum + " / " + total;
+                prevBtn.disabled = target <= 0;
+                nextBtn.disabled = target >= total;
+                if (rightBase) {
+                    rightBase.classList.toggle("is-visible", current >= total - 0.02);
+                }
+                if (leftBase) {
+                    leftBase.classList.toggle("is-visible", current > 0.02);
+                }
+
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+
+            function goTo(v) {
+                target = clamp(v, 0, total);
+                scheduleSettle();
+            }
+
+            prevBtn.addEventListener("click", function () { goTo(Math.round(target) - 1); });
+            nextBtn.addEventListener("click", function () { goTo(Math.round(target) + 1); });
+
+            flipbookEl.addEventListener("wheel", function (e) {
+                var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+                var atStart = target <= 0 && delta < 0;
+                var atEnd = target >= total && delta > 0;
+                if (!atStart && !atEnd) {
+                    e.preventDefault();
+                    target = clamp(target + delta * 0.006, 0, total);
+                    scheduleSettle();
+                }
+            }, { passive: false });
+
+            var dragging = false;
+            var startX = 0, startY = 0, startTarget = 0;
+            function dragStart(x, y) {
+                dragging = true;
+                startX = x; startY = y; startTarget = target;
+                clearTimeout(settleTimer);
+            }
+            // Devuelve si el arrastre puede seguir moviendo el flipbook en la
+            // dirección indicada por delta, o si ya se llegó a un extremo
+            // (en cuyo caso no se debe capturar el scroll/swipe: hay que
+            // dejar que el gesto siga su curso normal hacia el resto de la
+            // página, como pasa con la rueda del ratón).
+            function canDrag(delta) {
+                if (delta < 0 && startTarget <= 0) return false;
+                if (delta > 0 && startTarget >= total) return false;
+                return true;
+            }
+            function dragMove(x, y) {
+                if (!dragging) return null;
+                var dx = startX - x;
+                var dy = startY - y;
+                var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+                if (!canDrag(delta)) return false;
+                target = clamp(startTarget + delta * 0.012, 0, total);
+                return true;
+            }
+            function dragEnd() {
+                if (!dragging) return;
+                dragging = false;
+                scheduleSettle();
+            }
+
+            // Pointer Events + setPointerCapture unifica ratón/táctil/lápiz
+            // en un único manejador y, sobre todo, garantiza que el arrastre
+            // siga recibiéndose aunque el cursor o el dedo salgan del área
+            // del flipbook a mitad de gesto (en vez de depender de que el
+            // navegador siga entregando eventos al elemento original).
+            flipbookEl.addEventListener("pointerdown", function (e) {
+                dragStart(e.clientX, e.clientY);
+                flipbookEl.setPointerCapture(e.pointerId);
+                e.preventDefault();
+            });
+            flipbookEl.addEventListener("pointermove", function (e) {
+                var moved = dragMove(e.clientX, e.clientY);
+                if (moved) e.preventDefault();
+            });
+            flipbookEl.addEventListener("pointerup", dragEnd);
+            flipbookEl.addEventListener("pointercancel", dragEnd);
+        })();
+
+        // Fundido de carga para la imagen sticky de la intro
+        var introImg = document.querySelector(".porta-intro-media img");
+        if (introImg) {
+            if (introImg.complete && introImg.naturalWidth > 0) {
+                introImg.classList.add("porta-img-loaded");
+            } else {
+                introImg.addEventListener("load", function () {
+                    introImg.classList.add("porta-img-loaded");
+                });
+            }
+        }
+    })();
+    </script>
+    <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

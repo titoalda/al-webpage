@@ -62,6 +62,14 @@
         <priority>0.7</priority>
     </url>
     <url>
+        <loc>https://aldaraalvarez.es/projects/porta</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta"/>
+        <lastmod>2026-07-04</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://aldaraalvarez.es/projects/dieznegritos</loc>
         <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/dieznegritos"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/dieznegritos"/>

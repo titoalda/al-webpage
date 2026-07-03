@@ -27,10 +27,6 @@ animation6.html
 logs/
 default.conf
 
-# Proyecto Porta en curso (no debe llegar a produccion todavia)
-projects/porta.html
-static/images/porta/
-
 # Docker deploy local (no relacionado con el despliegue real)
 docker-compose.yml
 docker/
