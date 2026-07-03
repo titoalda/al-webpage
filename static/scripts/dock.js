@@ -190,6 +190,90 @@ document.addEventListener("DOMContentLoaded", function() {
     requestAnimationFrame(animate);
 });
 
+// --- External language switch (desktop/web): lives outside the dock,
+// to its right. Independent of the dock's spring physics. ---
+document.addEventListener("DOMContentLoaded", function() {
+    const extSwitch = document.querySelector(".lang-switch-external");
+    if (!extSwitch) return;
+
+    const extDropdown = extSwitch.querySelector(".lang-dropdown");
+    const extToggle = extSwitch.querySelector(".lang-switch-toggle");
+    if (!extDropdown) return;
+
+    let isOpen = false;
+    let closeTimeout = null;
+
+    const setExpanded = (value) => {
+        if (extToggle) extToggle.setAttribute("aria-expanded", value ? "true" : "false");
+    };
+
+    const openExt = () => {
+        if (closeTimeout) {
+            clearTimeout(closeTimeout);
+            closeTimeout = null;
+        }
+        isOpen = true;
+        extSwitch.classList.add("is-open");
+        setExpanded(true);
+
+        const rect = extSwitch.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom;
+        if (spaceBelow < 150) {
+            extDropdown.classList.add("open-up");
+            extDropdown.classList.remove("open-down");
+        } else {
+            extDropdown.classList.add("open-down");
+            extDropdown.classList.remove("open-up");
+        }
+    };
+
+    const closeExt = () => {
+        if (closeTimeout) clearTimeout(closeTimeout);
+        closeTimeout = setTimeout(() => {
+            isOpen = false;
+            extSwitch.classList.remove("is-open");
+            setExpanded(false);
+        }, 300);
+    };
+
+    extSwitch.addEventListener("mouseenter", openExt);
+    extSwitch.addEventListener("mouseleave", closeExt);
+
+    extSwitch.addEventListener("focusin", openExt);
+    extSwitch.addEventListener("focusout", (e) => {
+        if (!extSwitch.contains(e.relatedTarget)) closeExt();
+    });
+
+    extSwitch.addEventListener("click", (e) => {
+        if (e.target.closest(".lang-option")) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (isOpen) {
+            isOpen = false;
+            extSwitch.classList.remove("is-open");
+            setExpanded(false);
+        } else {
+            openExt();
+        }
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!extSwitch.contains(e.target)) {
+            isOpen = false;
+            extSwitch.classList.remove("is-open");
+            setExpanded(false);
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            isOpen = false;
+            extSwitch.classList.remove("is-open");
+            setExpanded(false);
+        }
+    });
+});
+
 
 // --- Scroll Reveal Intersection Observer ---
 document.addEventListener("DOMContentLoaded", function() {

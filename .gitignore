@@ -16,3 +16,16 @@ chat.md
 
 # Sandbox local de pruebas (no debe llegar a produccion)
 test.html
+animation1.html
+animation2.html
+animation3.html
+animation4.html
+animation5.html
+
+# Docker / nginx local
+logs/
+default.conf
+
+# Proyecto Porta en curso (no debe llegar a produccion todavia)
+projects/porta.html
+static/images/porta/
