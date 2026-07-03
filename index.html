@@ -8,9 +8,25 @@
         // Evita el parpadeo del intro (barrido + hero) en visitas repetidas
         // dentro de la misma sesion: si ya se reprodujo, marca <html> antes
         // de que se pinte nada para que el CSS arranque ya en su estado final.
-        if (sessionStorage.getItem("heroIntroPlayed")) {
-            document.documentElement.classList.add("no-intro");
-        }
+        // Excepcion: un F5 / recarga real (no navegar-y-volver) SI repite el
+        // intro, distinguido via la Navigation Timing API.
+        (function() {
+            function isReload() {
+                try {
+                    var entries = performance.getEntriesByType("navigation");
+                    if (entries && entries.length && entries[0].type) {
+                        return entries[0].type === "reload";
+                    }
+                } catch (e) {}
+                if (performance.navigation) {
+                    return performance.navigation.type === 1;
+                }
+                return false;
+            }
+            if (sessionStorage.getItem("heroIntroPlayed") && !isReload()) {
+                document.documentElement.classList.add("no-intro");
+            }
+        })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#111111">
