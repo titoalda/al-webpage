@@ -1,27 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="gl">
 <head>
     <link rel="shortcut icon" href="../static/logo/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="../static/logo/apple-touch-icon.png">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script>
+        // Evita el parpadeo del intro (barrido + hero) en visitas repetidas
+        // dentro de la misma sesion: si ya se reprodujo, marca <html> antes
+        // de que se pinte nada para que el CSS arranque ya en su estado final.
+        if (sessionStorage.getItem("heroIntroPlayed")) {
+            document.documentElement.classList.add("no-intro");
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="btlxaaof0wmCUsqybOUHnUKYGFLHdww5OdvdoZFqh44" />
     <meta name="theme-color" content="#111111">
     <title>Aldara Álvarez | Deseñadora Gráfica, Editorial e de Marca</title>
-    <meta name="description" content="Portafolio de deseño de Aldara Álvarez, deseñadora gráfica en Galicia. Especializada en deseño editorial, identidade de marca, modelado 3D e packaging.">
+    <meta name="description" content="Portafolio de deseño de Aldara Álvarez, deseñadora gráfica en Galicia. Especializada en deseño editorial, identidade de marca e dirección de arte.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aldaraalvarez.es/gl/">
     <meta property="og:title" content="Aldara Álvarez | Deseñadora Gráfica, Editorial e de Marca">
-    <meta property="og:description" content="Explora o portafolio de deseño de Aldara Álvarez. Solucións visuais en deseño editorial, branding, modelado 3D e packaging.">
+    <meta property="og:description" content="Explora o portafolio de deseño de Aldara Álvarez. Solucións visuais en deseño editorial, identidade de marca e dirección de arte.">
     <meta property="og:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://aldaraalvarez.es/gl/">
     <meta name="twitter:title" content="Aldara Álvarez | Deseñadora Gráfica, Editorial e de Marca">
-    <meta name="twitter:description" content="Explora o portafolio de deseño de Aldara Álvarez. Solucións visuais en deseño editorial, branding, modelado 3D e packaging.">
+    <meta name="twitter:description" content="Explora o portafolio de deseño de Aldara Álvarez. Solucións visuais en deseño editorial, identidade de marca e dirección de arte.">
     <meta name="twitter:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
 
     <link rel="canonical" href="https://aldaraalvarez.es/gl/">
@@ -69,9 +78,22 @@
         }
 
         .showcase-desktop-only .projects-section-header {
-            text-align: center;
+            text-align: right;
         }
 
+        .showcase-desktop-only .projects-cta-btn-wrapper {
+            justify-content: flex-end;
+            padding: 0 4vw;
+            box-sizing: border-box;
+            margin-top: 8px;
+            margin-bottom: 40px;
+        }
+
+        /* Alinea "Especialidades" a la izquierda (por defecto va centrado
+           en style.css). */
+        .services-header {
+            text-align: left !important;
+        }
 
         .projects-desktop-grid {
             display: grid;
@@ -121,6 +143,369 @@
                 filter: blur(0);
             }
         }
+
+        /* --- Intro: barrido horizontal de inversion + entrada del hero --- */
+        .viewport-wiper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 10000; /* Por encima de todo, incluyendo el header */
+            mix-blend-mode: difference; /* Invierte los colores dinamicamente */
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+
+        .viewport-wiper.animate {
+            animation: viewportWipe 2.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+        }
+
+        @keyframes viewportWipe {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        body.loading-active {
+            overflow: hidden;
+        }
+
+        /* Ocultar divisoria al inicio */
+        .hero-divider {
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body.loaded .hero-divider {
+            transform: scaleY(1);
+        }
+
+        /* Ocultar suavemente el subtitulo al inicio (opacidad + desplazamiento) */
+        .hero-subtitle {
+            display: inline-block !important;
+            opacity: 0;
+            transform: translateY(-15px);
+            margin-top: 15px !important;
+            transition: opacity 1.2s cubic-bezier(0.76, 0, 0.24, 1),
+                        transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        body.loaded .hero-subtitle {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nombre ligeramente mas grande al inicio, se reduce al cargar */
+        .hero-right-col .echo-text {
+            font-size: 7.5vw;
+            line-height: 1;
+            transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        body.loaded .hero-right-col .echo-text {
+            font-size: 6.5vw;
+        }
+
+        @media (max-width: 768px) {
+            .hero-right-col .echo-text {
+                font-size: 12.5vw;
+                transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+            }
+            body.loaded .hero-right-col .echo-text {
+                font-size: 11vw;
+            }
+        }
+
+        /* Visitas repetidas en la misma sesion: sin barrido, hero ya abierto */
+        html.no-intro .viewport-wiper {
+            display: none;
+        }
+        html.no-intro body.loading-active {
+            overflow: visible;
+        }
+        html.no-intro .hero-divider {
+            transform: scaleY(1);
+            transition: none;
+        }
+        html.no-intro .hero-subtitle {
+            opacity: 1;
+            transform: translateY(0);
+            transition: none;
+        }
+        html.no-intro .hero-right-col .echo-text {
+            font-size: 6.5vw;
+            transition: none;
+        }
+        @media (max-width: 768px) {
+            html.no-intro .hero-right-col .echo-text {
+                font-size: 11vw;
+            }
+        }
+
+        /* --- Carrusel horizontal infinito: interior del cuaderno Porta --- */
+        .porta-carousel-section {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 70px 0 80px;
+            overflow: hidden;
+        }
+
+        /* Texto a la izquierda (ancho según su contenido, no medio
+           pantalla) y carrusel a la derecha: así el carrusel no se ve
+           empujado casi al borde mientras el texto deja un hueco muerto
+           en el centro. */
+        .porta-carousel-layout {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 3vw;
+            width: 100%;
+        }
+
+        .porta-carousel-copy {
+            flex: 0 0 auto;
+            width: min(34vw, 460px);
+            padding: 0 2vw 0 6vw;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        /* Cabecera de texto: título, descripción y botón "Ver proyecto",
+           alineados a la izquierda en la mitad de la sección. */
+        .porta-carousel-copy .section-title {
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 0.98;
+            margin: 0 0 20px 0;
+        }
+
+        .porta-carousel-copy .explode-desc {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--gray-muted);
+            font-weight: 300;
+            max-width: 34ch;
+            margin: 0 0 28px;
+        }
+
+        /* Botón "pill" a juego con .button-circle del resto del sitio,
+           pero con un halo que sigue al cursor (--mx/--my, actualizadas
+           por JS en pointermove) en vez del borde giratorio de
+           .btn-lightbeam. */
+        .explode-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 26px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 9999px;
+            background-color: transparent;
+            overflow: hidden;
+            isolation: isolate;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .explode-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .explode-link span,
+        .explode-link svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .explode-link:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .explode-link:hover::before {
+            opacity: 1;
+        }
+
+        /* Mitad derecha: el carrusel, con perspectiva 3D para que las
+           fotos se curven hacia atrás como en un tiovivo/carrusel de
+           feria en vez de deslizarse en línea recta. */
+        .porta-carousel-visual {
+            position: relative;
+            flex: 1 1 auto;
+            min-width: 0;
+            padding-right: 6vw;
+            box-sizing: border-box;
+        }
+
+        .porta-carousel-viewport {
+            position: relative;
+            width: 100%;
+            /* clamp() en vez de min() para poner un suelo: en pantallas
+               bajas (portátiles con poca altura) 66vh se quedaba corto y
+               la imagen central (escalada 1.18x + sombra) se recortaba
+               contra el borde superior/inferior del contenedor. El
+               padding vertical añade colchón extra sin ser recortado,
+               porque overflow-y:hidden solo recorta fuera del padding-box. */
+            height: clamp(560px, 72vh, 700px);
+            padding: 40px 0;
+            box-sizing: content-box;
+            overflow-x: auto;
+            overflow-y: hidden;
+            cursor: grab;
+            -webkit-user-select: none;
+            user-select: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            perspective: 1400px;
+            /* El arrastre se gestiona a mano vía Pointer Events (con
+               inercia), así que se desactiva el paneo táctil nativo para
+               que no compita con él. */
+            touch-action: none;
+            /* Difumina los bordes izquierdo/derecho para que el carrusel
+               infinito no revele un corte brusco de las fotos. */
+            -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+        }
+
+        .porta-carousel-viewport.is-dragging {
+            cursor: grabbing;
+        }
+
+        .porta-carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+
+        .porta-carousel-track {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 100%;
+            width: max-content;
+            padding: 0 20vw;
+            transform-style: preserve-3d;
+        }
+
+        .porta-carousel-item {
+            flex: 0 0 auto;
+            width: min(30vw, 440px);
+            aspect-ratio: 1 / 1;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: #17232b;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            /* rotateY + translateZ curvan cada foto hacia atrás según se
+               aleja del centro, como los caballitos de un tiovivo vistos
+               de frente; scale/opacity refuerzan la sensación de anillo. */
+            transform:
+                translateY(var(--carousel-y, 0px))
+                translateZ(var(--carousel-z, -120px))
+                rotateY(var(--carousel-rot, 0deg))
+                scale(var(--carousel-scale, 0.8));
+            opacity: var(--carousel-opacity, 0.6);
+            transition: box-shadow 0.3s ease;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        .porta-carousel-item.is-center {
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+        }
+
+        .porta-carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* Pista de que el carrusel se puede deslizar: pegada literalmente
+           a la derecha de la palabra "MI" en el título, en el hueco que
+           deja el salto de línea. Ancla invisible (.hint-inline-anchor)
+           justo tras "MI" en el HTML; el JS mide su posición real y
+           coloca el hint ahí, relativo a .porta-carousel-layout. */
+        .porta-carousel-hint {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            white-space: nowrap;
+            color: var(--gray-muted);
+            opacity: 0.65;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .porta-carousel-hint svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            animation: carousel-hint-nudge 1.8s ease-in-out infinite;
+        }
+
+        .porta-carousel-hint.is-hidden {
+            opacity: 0;
+        }
+
+        @keyframes carousel-hint-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+
+        @media (max-width: 900px) {
+            .porta-carousel-layout {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .porta-carousel-copy {
+                width: 100%;
+                padding: 0 6vw;
+                margin-bottom: 32px;
+            }
+            .porta-carousel-viewport {
+                height: clamp(340px, 55vh, 420px);
+                padding: 24px 0;
+            }
+            .porta-carousel-track {
+                padding: 0 30vw;
+            }
+            .porta-carousel-item {
+                width: min(46vw, 260px);
+            }
+            .porta-carousel-hint {
+                display: none;
+            }
+        }
     </style>
 
 
@@ -130,9 +515,9 @@
         "@type": "Person",
         "name": "Aldara Álvarez",
         "jobTitle": "Deseñadora Gráfica",
-        "description": "Deseñadora gráfica especializada en identidade de marca, deseño editorial, modelado 3D e packaging.",
-        "url": "https://aldaraalvarez.es/",
-        "image": "https://aldaraalvarez.es/static/logo/logo_inverted.png",
+        "description": "Deseñadora gráfica especializada en identidade de marca, deseño editorial e dirección de arte.",
+        "url": "https://aldaraalvarez.es/gl/",
+        "image": "https://aldaraalvarez.es/static/logo/logo_google.png",
         "email": "aldaraalvarezglez@gmail.com",
         "knowsAbout": ["Deseño Editorial", "Identidade de Marca", "Deseño de Packaging", "Modelado 3D", "Deseño UX/UI"],
         "alumniOf": [
@@ -142,7 +527,9 @@
     }
     </script>
 </head>
-<body>
+<body class="loading-active">
+
+    <div id="viewport-wiper" class="viewport-wiper"></div>
 
     <header>
         <a href="./" class="logo"><img src="../static/logo/logo.png" alt="Logo Aldara Álvarez" width="53" height="40"></a>
@@ -212,13 +599,48 @@
         </div>
     </section>
 
-    <!-- Seccion Proxectos para Ordenador (4 proyectos en una fila, sin carrusel) -->
+    <!-- Carrusel horizontal infinito: paginas interiores del cuaderno Porta -->
+    <section class="porta-carousel-section">
+        <div class="porta-carousel-layout">
+            <div class="porta-carousel-copy">
+                <h2 class="section-title">O<span class="hint-inline-anchor" id="hint-inline-anchor"></span> MEU ÚLTIMO <span id="hint-right-anchor">PROXECTO</span></h2>
+                <p class="explode-desc">Unha ollada á&nbsp;miña última aventura creativa: a&nbsp;creación da&nbsp;marca e&nbsp;o deseño integral dun <em>mook</em>.</p>
+                <a href="projects/porta" class="explode-link"><span>Ver proxecto</span></a>
+            </div>
+            <p class="porta-carousel-hint" id="porta-carousel-hint">
+                Desliza para explorar
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </p>
+            <div class="porta-carousel-visual">
+                <div class="porta-carousel-viewport" id="porta-carousel-viewport">
+                    <div class="porta-carousel-track" id="porta-carousel-track">
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-01.jpg" alt="Porta, páxina interior 1" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-02.jpg" alt="Porta, páxina interior 2" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-03.jpg" alt="Porta, páxina interior 3" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-04.jpg" alt="Porta, páxina interior 4" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-05.jpg" alt="Porta, páxina interior 5" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-06.jpg" alt="Porta, páxina interior 6" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-07.jpg" alt="Porta, páxina interior 7" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-08.jpg" alt="Porta, páxina interior 8" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-09.jpg" alt="Porta, páxina interior 9" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-10.jpg" alt="Porta, páxina interior 10" loading="lazy"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion Proyectos para Ordenador (4 proyectos en una fila, sin carrusel) -->
     <section id="showcase-desktop-container" class="showcase-desktop-only">
         <div class="projects-section-header">
-            <h2 class="section-title">PROXECTOS</h2>
-            <p class="section-subtitle">Aquí che deixo unha selección de&nbsp;proxectos que&nbsp;espero que&nbsp;che transmitan a miña dedicación e&nbsp;pasión polo&nbsp;deseño.</p>
+            <h2 class="section-title">OUTROS PROXECTOS</h2>
+            <p class="section-subtitle">Aquí che deixo unha selección de&nbsp;proxectos que&nbsp;espero que&nbsp;che transmitan a&nbsp;miña dedicación e&nbsp;paixón polo&nbsp;deseño.</p>
         </div>
-        
+
+        <div class="projects-cta-btn-wrapper">
+            <a href="projects" id="projects-cta-btn" class="explode-link"><span>Ver máis proxectos</span></a>
+        </div>
+
         <div class="projects-desktop-grid">
             <!-- Project 1: El viejo y el mar -->
             <div class="project-info">
@@ -248,24 +670,18 @@
                     <img src="../static/images/pr_casadecor_cover.jpg" alt="Proxecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
                     <div class="image-text">
                         <h3 class="titulo-text">CASA DECOR</h3>
-                        <h4 class="proyecto-text">DESEÑO DE SINALÉCTICA</h4>
+                        <h4 class="proyecto-text">DESEÑO DE SINALÉTICA</h4>
                     </div>
                 </a>
             </div>
-            
-        </div>
 
-        <div class="projects-cta-btn-wrapper">
-            <a href="projects" id="projects-cta-btn" class="button-circle projects-cta-btn btn-lightbeam">
-                <span>ver&nbsp;máis proxectos</span>
-            </a>
         </div>
     </section>
 
     <section id="showcase-pin-container" class="showcase-pin-container showcase-mobile-only">
         <div class="projects-section-header">
             <h2 class="section-title">PROXECTOS</h2>
-            <p class="section-subtitle">Aquí che deixo unha selección de&nbsp;proxectos que&nbsp;espero que&nbsp;che transmitan a miña dedicación e&nbsp;pasión polo&nbsp;deseño.</p>
+            <p class="section-subtitle">Aquí che deixo unha selección de&nbsp;proxectos que&nbsp;espero que&nbsp;che transmitan a&nbsp;miña dedicación e&nbsp;paixón polo&nbsp;deseño.</p>
         </div>
         
         <div class="scroller-wrapper">
@@ -274,7 +690,7 @@
             <button class="scroll-arrow arrow-left"  id="arrow-left"  aria-label="Anterior">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             </button>
-            <button class="scroll-arrow arrow-right" id="arrow-right" aria-label="Siguiente">
+            <button class="scroll-arrow arrow-right" id="arrow-right" aria-label="Seguinte">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
             <div id="showcase-ticker" class="projects-scroller">
@@ -328,7 +744,7 @@
                         <img src="../static/images/pr_deporteensenales_cover.png" alt="Proxecto Deporte en Señales" class="image-size" loading="lazy" width="3685" height="3550">
                         <div class="image-text">
                             <h3 class="titulo-text">DEPORTE EN SEÑALES</h3>
-                            <h4 class="proyecto-text">DESEÑO DE SINALÉCTICA</h4>
+                            <h4 class="proyecto-text">DESEÑO DE SINALÉTICA</h4>
                         </div>
                     </a>
                 </div>
@@ -350,7 +766,7 @@
                         <img src="../static/images/pr_casadecor_cover.jpg" alt="Proxecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
                         <div class="image-text">
                             <h3 class="titulo-text">CASA DECOR</h3>
-                            <h4 class="proyecto-text">DESEÑO DE SINALÉCTICA</h4>
+                            <h4 class="proyecto-text">DESEÑO DE SINALÉTICA</h4>
                         </div>
                     </a>
                 </div>
@@ -361,7 +777,7 @@
                         <img src="../static/images/pr_dieznegritos_cover.jpg" alt="Proxecto Diez Negritos" class="image-size" loading="lazy" width="1940" height="1885">
                         <div class="image-text">
                             <h3 class="titulo-text">DIEZ NEGRITOS</h3>
-                            <h4 class="proyecto-text">DESEÑO DE CUBIERTA</h4>
+                            <h4 class="proyecto-text">DESEÑO DE CUBERTA</h4>
                         </div>
                     </a>
                 </div>
@@ -516,9 +932,9 @@
             <div class="footer-col">
                 <h3>Proxectos Destacados</h3>
                 <ul>
-                    <li><a href="projects/elviejoyelmar">El Viejo y&nbsp;el Mar</a></li>
+                    <li><a href="projects/elviejoyelmar">El viejo y&nbsp;el mar</a></li>
                     <li><a href="projects/namaste">Namasté</a></li>
-                    <li><a href="projects/formayfuncion">Forma y&nbsp;Función</a></li>
+                    <li><a href="projects/formayfuncion">Forma y&nbsp;función</a></li>
                     <li><a href="projects/casadecor">Casa Decor</a></li>
                 </ul>
             </div>
@@ -562,31 +978,59 @@
         });
     </script>
 
-    <!-- Typing animation script for hero subtitle -->
+    <!-- Intro: barrido horizontal + entrada del hero (una vez por sesion) -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const introAlreadyPlayed = document.documentElement.classList.contains("no-intro");
+            const wiper = document.getElementById("viewport-wiper");
             const subtitleEl = document.getElementById("hero-subtitle");
-            if (subtitleEl) {
-                const text = "deseñadora | especialista en identidade de marca e deseño editorial";
-                subtitleEl.innerHTML = "";
-                let i = 0;
-                function type() {
-                    if (i < text.length) {
-                        if (i < 10) {
-                            subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
-                        } else {
-                            subtitleEl.innerHTML = `<strong>deseñadora</strong><span class="hero-pipe"> | </span>${text.substring(13, i + 1)}`;
-                        }
-                        i++;
-                        setTimeout(type, 40);
-                    } else {
-                        subtitleEl.innerHTML = '<strong>deseñadora</strong><span class="hero-pipe"> | </span>especialista en identidade de marca e deseño editorial';
-                    }
-                }
-                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    setTimeout(type, 1000);
+            const text = "deseñadora | especialista en identidade de marca e deseño editorial";
+
+            function showSubtitleFinal() {
+                if (subtitleEl) {
+                    subtitleEl.innerHTML = '<strong>deseñadora</strong><span class="hero-pipe"> | </span>especialista en identidade de marca e deseño editorial';
                 }
             }
+
+            function type(i = 0) {
+                if (!subtitleEl) return;
+                if (i < text.length) {
+                    if (i < 10) {
+                        subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
+                    } else {
+                        subtitleEl.innerHTML = `<strong>deseñadora</strong><span class="hero-pipe"> | </span>${text.substring(13, i + 1)}`;
+                    }
+                    setTimeout(() => type(i + 1), 40);
+                } else {
+                    showSubtitleFinal();
+                }
+            }
+
+            if (introAlreadyPlayed) {
+                // Ya se vio el intro en esta sesion: mostrar directamente el
+                // estado final, sin barrido ni transiciones.
+                document.body.classList.remove("loading-active");
+                document.body.classList.add("loaded");
+                showSubtitleFinal();
+                return;
+            }
+
+            sessionStorage.setItem("heroIntroPlayed", "1");
+
+            if (subtitleEl) subtitleEl.innerHTML = "";
+            if (wiper) wiper.classList.add("animate");
+
+            // Esperar a que finalice el barrido (2.4s) antes de abrir el hero
+            setTimeout(() => {
+                document.body.classList.remove("loading-active");
+                document.body.classList.add("loaded");
+
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    setTimeout(() => type(0), 500);
+                } else {
+                    showSubtitleFinal();
+                }
+            }, 2400);
         });
     </script>
 
@@ -732,6 +1176,236 @@
                 }
             }
         });
+    </script>
+
+    <!-- Carrusel horizontal infinito con imagen central ampliada -->
+    <script>
+        (function () {
+            const viewport = document.getElementById("porta-carousel-viewport");
+            const track = document.getElementById("porta-carousel-track");
+            if (!viewport || !track) return;
+
+            const hint = document.getElementById("porta-carousel-hint");
+            const hintAnchor = document.getElementById("hint-inline-anchor");
+            const hintRightAnchor = document.getElementById("hint-right-anchor");
+            const hintParent = document.querySelector(".porta-carousel-layout");
+            function hideHint() {
+                if (hint) hint.classList.add("is-hidden");
+            }
+            // Vertical: a la altura de "MI" (mide el ancla invisible justo
+            // tras esa palabra en el título). Horizontal: el hint termina
+            // (su borde derecho) donde termina "PROYECTO", así no invade el
+            // carrusel ni queda pegado a él, pero tampoco se acerca tanto
+            // al texto como para tocar "MI".
+            function positionHint() {
+                if (!hint || !hintAnchor || !hintRightAnchor || !hintParent) return;
+                const anchorRect = hintAnchor.getBoundingClientRect();
+                const rightAnchorRect = hintRightAnchor.getBoundingClientRect();
+                const parentRect = hintParent.getBoundingClientRect();
+                const left = rightAnchorRect.right - parentRect.left - hint.offsetWidth;
+                const top = anchorRect.top + anchorRect.height / 2 - parentRect.top;
+                hint.style.left = left + "px";
+                hint.style.top = top + "px";
+            }
+
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            // Triplicamos las 10 fotos para poder hacer scroll infinito en
+            // ambas direcciones: mientras el usuario navega dentro del
+            // bloque central, al acercarse a un extremo saltamos (sin
+            // animación) al mismo punto del bloque siguiente/anterior, así
+            // el bucle 1→10→1 nunca se nota.
+            const SET_COUNT = 3;
+            track.innerHTML = track.innerHTML.repeat(SET_COUNT);
+            const items = Array.from(track.children);
+            const itemsPerSet = items.length / SET_COUNT;
+
+            let setWidth = 0;
+
+            // Posición "real" que se pinta cada frame (currentX) persiguiendo
+            // suavemente a la posición que pide el usuario (targetX). En vez
+            // de mover scrollLeft a saltos en cada evento de rueda/scroll,
+            // todo el input (rueda, trackpad, arrastre) solo actualiza
+            // targetX, y un único bucle de render hace el resto con
+            // interpolación — así el movimiento siempre es fluido, sin
+            // importar lo brusco que sea el input.
+            let currentX = 0;
+            let targetX = 0;
+            const EASE = 0.085;
+
+            function measure() {
+                if (items.length > itemsPerSet) {
+                    setWidth = items[itemsPerSet].offsetLeft - items[0].offsetLeft;
+                }
+            }
+
+            function wrap() {
+                if (setWidth <= 0) return;
+                while (currentX < setWidth * 0.5) {
+                    currentX += setWidth;
+                    targetX += setWidth;
+                }
+                while (currentX > setWidth * 1.5) {
+                    currentX -= setWidth;
+                    targetX -= setWidth;
+                }
+            }
+
+            // Coloca cada foto sobre un arco 3D según lo lejos que esté del
+            // centro del viewport (como los caballitos de un tiovivo
+            // vistos de frente): las del centro quedan grandes y de
+            // frente, las de los lados se giran, encogen, se atenúan y se
+            // hunden hacia atrás siguiendo una curva.
+            function updateScales() {
+                const rect = viewport.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                let closest = null;
+                let closestDist = Infinity;
+
+                items.forEach((item) => {
+                    const r = item.getBoundingClientRect();
+                    const itemCenter = r.left + r.width / 2;
+                    const signedDist = itemCenter - centerX;
+                    const dist = Math.abs(signedDist);
+                    const norm = Math.max(-1, Math.min(1, signedDist / (rect.width / 2 + r.width / 2)));
+                    const absNorm = Math.abs(norm);
+
+                    const rot = -norm * 46; // gira hacia el centro, como en un anillo
+                    const z = -absNorm * 260; // se hunde hacia el fondo
+                    const y = absNorm * absNorm * 36; // cae en curva, como un arco
+                    const scale = 1.18 - absNorm * 0.42;
+                    const opacity = Math.max(0.3, 1 - absNorm * 0.65);
+
+                    item.style.setProperty("--carousel-rot", rot.toFixed(2) + "deg");
+                    item.style.setProperty("--carousel-z", z.toFixed(1) + "px");
+                    item.style.setProperty("--carousel-y", y.toFixed(1) + "px");
+                    item.style.setProperty("--carousel-scale", scale.toFixed(3));
+                    item.style.setProperty("--carousel-opacity", opacity.toFixed(3));
+
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        closest = item;
+                    }
+                });
+
+                items.forEach((item) => item.classList.toggle("is-center", item === closest));
+            }
+
+            function renderLoop() {
+                const diff = targetX - currentX;
+                if (Math.abs(diff) < 0.05) {
+                    currentX = targetX;
+                } else {
+                    currentX += diff * (prefersReducedMotion ? 1 : EASE);
+                }
+                wrap();
+                viewport.scrollLeft = currentX;
+                updateScales();
+                requestAnimationFrame(renderLoop);
+            }
+
+            // Solo "roba" el scroll de la rueda cuando el carrusel se ve
+            // entero en pantalla: si está a medio tapar (aún entrando o
+            // saliendo del viewport), dejamos que el scroll normal de la
+            // página siga funcionando, porque si no el usuario mueve el
+            // carrusel sin apenas verlo.
+            function isFullyInViewport() {
+                const rect = viewport.getBoundingClientRect();
+                return rect.top >= 0 && rect.bottom <= window.innerHeight;
+            }
+
+            // Todo el input (rueda vertical, trackpad horizontal, shift+rueda)
+            // se redirige a targetX; el bucle de render se encarga de
+            // suavizarlo, así no hay tirones aunque el usuario haga scroll
+            // a golpes.
+            viewport.addEventListener("wheel", (e) => {
+                if (!isFullyInViewport()) return;
+                e.preventDefault();
+                const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+                targetX += delta;
+                hideHint();
+            }, { passive: false });
+
+            // Arrastre con ratón/dedo: mientras se arrastra sigue al puntero
+            // 1:1 (sin lag), y al soltar se proyecta la velocidad como
+            // impulso para que el carrusel siga deslizando y frene solo,
+            // como un scroll con inercia real.
+            let isDragging = false;
+            let dragLastX = 0;
+            let dragLastT = 0;
+            let dragVelocity = 0;
+
+            viewport.addEventListener("pointerdown", (e) => {
+                isDragging = true;
+                dragLastX = e.clientX;
+                dragLastT = performance.now();
+                dragVelocity = 0;
+                viewport.classList.add("is-dragging");
+                viewport.setPointerCapture(e.pointerId);
+                hideHint();
+            });
+
+            viewport.addEventListener("pointermove", (e) => {
+                if (!isDragging) return;
+                const now = performance.now();
+                const dx = e.clientX - dragLastX;
+                const dt = Math.max(1, now - dragLastT);
+                dragVelocity = -dx / dt; // px por ms, sentido del scroll
+                targetX -= dx;
+                currentX = targetX; // sin inercia mientras el dedo/ratón sigue activo
+                dragLastX = e.clientX;
+                dragLastT = now;
+            });
+
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                viewport.classList.remove("is-dragging");
+                // Impulso de inercia proporcional a la velocidad del arrastre.
+                targetX += dragVelocity * 180;
+            }
+
+            viewport.addEventListener("pointerup", endDrag);
+            viewport.addEventListener("pointercancel", endDrag);
+
+            function init() {
+                measure();
+                currentX = setWidth;
+                targetX = setWidth;
+                viewport.scrollLeft = currentX;
+                updateScales();
+                positionHint();
+            }
+
+            init();
+            window.addEventListener("load", init);
+            window.addEventListener("resize", () => {
+                measure();
+                wrap();
+                updateScales();
+                positionHint();
+            });
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(positionHint);
+            }
+
+            requestAnimationFrame(renderLoop);
+        })();
+
+        // Halo que sigue al cursor en los botones "pill" (--mx/--my en %
+        // relativos al propio botón, consumidos por el radial-gradient
+        // de .explode-link::before).
+        (function () {
+            document.querySelectorAll(".explode-link").forEach((btn) => {
+                btn.addEventListener("pointermove", (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+                    const my = ((e.clientY - rect.top) / rect.height) * 100;
+                    btn.style.setProperty("--mx", mx.toFixed(1) + "%");
+                    btn.style.setProperty("--my", my.toFixed(1) + "%");
+                });
+            });
+        })();
     </script>
 </body>
 </html>
