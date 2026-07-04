@@ -26,11 +26,11 @@
     <meta property="og:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://aldaraalvarez.es/">
-    <meta property="twitter:title" content="Aldara Álvarez | Diseñadora Gráfica, Editorial y de Marca">
-    <meta property="twitter:description" content="Explora el portafolio de diseño de Aldara Álvarez. Soluciones visuales en diseño editorial, identidad de marca y dirección de arte.">
-    <meta property="twitter:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aldaraalvarez.es/">
+    <meta name="twitter:title" content="Aldara Álvarez | Diseñadora Gráfica, Editorial y de Marca">
+    <meta name="twitter:description" content="Explora el portafolio de diseño de Aldara Álvarez. Soluciones visuales en diseño editorial, identidad de marca y dirección de arte.">
+    <meta name="twitter:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
 
     <link rel="canonical" href="https://aldaraalvarez.es/">
     <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/" />
@@ -1206,11 +1206,11 @@
 
             const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-            // Triplicamos las 9 fotos para poder hacer scroll infinito en
+            // Triplicamos las 10 fotos para poder hacer scroll infinito en
             // ambas direcciones: mientras el usuario navega dentro del
             // bloque central, al acercarse a un extremo saltamos (sin
             // animación) al mismo punto del bloque siguiente/anterior, así
-            // el bucle 1→9→1 nunca se nota.
+            // el bucle 1→10→1 nunca se nota.
             const SET_COUNT = 3;
             track.innerHTML = track.innerHTML.repeat(SET_COUNT);
             const items = Array.from(track.children);
