@@ -392,6 +392,13 @@
                     flex: none;
                     width: min(94vw, 680px);
                 }
+                /* En movil el flipbook ocupa casi todo el ancho: con
+                   touch-action:none secuestraba tambien el scroll vertical
+                   de la pagina. pan-y devuelve el scroll al navegador y
+                   deja el gesto horizontal (y el tap) para pasar pagina. */
+                .porta-flipbook {
+                    touch-action: pan-y;
+                }
             }
             .porta-flipbook {
                 position: relative;
@@ -671,7 +678,7 @@
                     <div class="porta-flipbook-leftbase"></div>
                     <div class="porta-flipbook-rightbase"></div>
                     <div class="porta-flipbook-page" data-index="0">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-01.webp"><img src="../../static/images/porta/mook/porta-page-01.jpg" alt="Páxina 1 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-01.webp"><img src="../../static/images/porta/mook/porta-page-01.jpg" alt="Páxina 1 del mook PORTA" width="1004" height="1418" loading="eager" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
                         <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-02.webp"><img src="../../static/images/porta/mook/porta-page-02.jpg" alt="Páxina 2 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="1">
@@ -1118,9 +1125,29 @@
 
             function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
+            // Referencias cacheadas una sola vez: antes paint() hacía dos
+            // querySelectorAll por página en CADA frame (24 consultas DOM a
+            // 60fps solo para encontrar nodos que nunca cambian).
+            var pages = pageEls.map(function (page) {
+                return {
+                    el: page,
+                    shades: Array.prototype.slice.call(page.querySelectorAll(".porta-flipbook-shade")),
+                    faces: Array.prototype.slice.call(page.querySelectorAll(".porta-flipbook-face")),
+                    lastProgress: -1
+                };
+            });
+            var lastCounterText = "";
+
             function paint() {
-                pageEls.forEach(function (page, i) {
+                pages.forEach(function (p, i) {
                     var progress = clamp(current - i, 0, 1);
+                    // Las páginas en reposo (ya pasadas o aún sin pasar) no se
+                    // repintan: solo se escriben estilos de las hojas cuyo
+                    // ángulo ha cambiado de verdad en este frame.
+                    if (progress === p.lastProgress) return;
+                    p.lastProgress = progress;
+
+                    var page = p.el;
                     var angle = progress * -180;
                     // La página se "levanta" ligeramente del lomo a mitad de
                     // giro (translateZ en forma de arco) para simular el
@@ -1131,18 +1158,20 @@
                     page.style.transform = "rotateY(" + angle.toFixed(2) + "deg) translateZ(" + lift.toFixed(2) + "px)";
                     page.style.zIndex = progress < 0.5 ? (total - i) : i;
                     var shade = lifted * 0.55;
-                    var faces = page.querySelectorAll(".porta-flipbook-shade");
-                    for (var f = 0; f < faces.length; f++) { faces[f].style.opacity = shade; }
+                    for (var f = 0; f < p.shades.length; f++) { p.shades[f].style.opacity = shade; }
                     // box-shadow (no filter: drop-shadow) para no romper el
                     // preserve-3d en Safari -- misma precaución que ya se
                     // aplicó en el contenedor .porta-flipbook.
-                    var shadowFaces = page.querySelectorAll(".porta-flipbook-face");
                     var shadowCss = "0 " + (lifted * 14).toFixed(1) + "px " + (lifted * 18).toFixed(1) + "px rgba(0,0,0," + (lifted * 0.45).toFixed(2) + "), 0 0 0 1px var(--border-color) inset";
-                    for (var sf = 0; sf < shadowFaces.length; sf++) { shadowFaces[sf].style.boxShadow = shadowCss; }
+                    for (var sf = 0; sf < p.faces.length; sf++) { p.faces[sf].style.boxShadow = shadowCss; }
                 });
 
                 var pageNum = clamp(Math.floor(current) + 1, 1, total);
-                counterEl.textContent = pageNum + " / " + total;
+                var counterText = pageNum + " / " + total;
+                if (counterText !== lastCounterText) {
+                    lastCounterText = counterText;
+                    counterEl.textContent = counterText;
+                }
                 prevBtn.disabled = target <= 0;
                 nextBtn.disabled = target >= total;
                 if (rightBase) rightBase.classList.toggle("is-visible", current >= total - 0.02);
