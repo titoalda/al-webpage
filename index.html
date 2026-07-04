@@ -209,12 +209,30 @@
         }
 
         @media (max-width: 768px) {
+            /* Nombre partido en dos lineas ("Aldara" / "Álvarez"): el
+               espacio entre palabras (marcado por el JS con .echo-space)
+               pasa a ser un salto de linea, y se sube el tamaño porque
+               cada linea ya no tiene que compartir ancho con la otra. */
             .hero-right-col .echo-text {
-                font-size: 12.5vw;
+                font-size: 16vw;
                 transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
             }
             body.loaded .hero-right-col .echo-text {
-                font-size: 11vw;
+                font-size: 14vw;
+            }
+            .echo-front .echo-space {
+                display: block !important; /* el JS pone inline-block como estilo inline en cada span */
+                width: 0;
+                height: 0;
+            }
+
+            /* Subtitulo: se limita el ancho para que "especialista en..."
+               parta en dos lineas cortas en vez de una sola linea densa
+               pegada a los bordes. */
+            .hero-subtitle {
+                max-width: 62vw !important;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
 
@@ -240,7 +258,17 @@
         }
         @media (max-width: 768px) {
             html.no-intro .hero-right-col .echo-text {
-                font-size: 11vw;
+                font-size: 14vw;
+            }
+            html.no-intro .echo-front .echo-space {
+                display: block !important;
+                width: 0;
+                height: 0;
+            }
+            html.no-intro .hero-subtitle {
+                max-width: 62vw !important;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
 
@@ -1127,6 +1155,7 @@
                     span.style.transition = "font-weight 0.15s ease, font-variation-settings 0.15s ease";
                     if (char === " ") {
                         span.style.whiteSpace = "pre";
+                        span.classList.add("echo-space"); // en movil, este hueco se convierte en salto de linea
                     }
                     nameEl.appendChild(span);
                     return span;
