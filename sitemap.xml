@@ -64,6 +64,8 @@
     <url>
         <loc>https://aldaraalvarez.es/projects/porta</loc>
         <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/porta"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta"/>
         <lastmod>2026-07-04</lastmod>
         <changefreq>monthly</changefreq>
@@ -188,6 +190,16 @@
         <lastmod>2026-07-04</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://aldaraalvarez.es/en/projects/porta</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta"/>
+        <lastmod>2026-07-04</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/en/projects/formayfuncion</loc>
@@ -328,6 +340,16 @@
         <lastmod>2026-07-04</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://aldaraalvarez.es/gl/projects/porta</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/porta"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta"/>
+        <lastmod>2026-07-04</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://aldaraalvarez.es/gl/projects/formayfuncion</loc>
