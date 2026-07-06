@@ -392,121 +392,156 @@
                     flex: none;
                     width: min(94vw, 680px);
                 }
-                /* En movil el flipbook ocupa casi todo el ancho: con
-                   touch-action:none secuestraba tambien el scroll vertical
-                   de la pagina. pan-y devuelve el scroll al navegador y
-                   deja el gesto horizontal (y el tap) para pasar pagina. */
-                .porta-flipbook {
-                    touch-action: pan-y;
-                }
             }
+            /* El hueco del flipbook en la maqueta: mismo tamaño y posición
+               de siempre (doble página), pero TRANSPARENTE -- sin placa
+               oscura de apoyo, sin marco ni sombra de contenedor: el libro
+               "flota" directamente sobre el fondo oscuro de la sección y
+               cerrado se mimetiza con él (solo se ve la propia tapa). */
             .porta-flipbook {
                 position: relative;
                 width: min(94vw, 680px);
                 aspect-ratio: 2000 / 1339;
-                overflow: hidden;
-                border-radius: 4px;
-                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.55);
                 user-select: none;
-                cursor: grab;
-                touch-action: none;
+                touch-action: pan-y;
             }
-            .porta-flipbook:active {
-                cursor: grabbing;
-            }
-            /* Sombra de "lomo" central, donde se encuadernan las dos páginas
-               de cada pliego. Elemento real (ya no ::before) porque su
-               opacidad la controla el script: con el libro cerrado (tapa
-               centrada, ver .porta-flipbook-cover-*) no hay lomo que
-               sombrear y se apaga a 0 para no cruzar la tapa con una linea
-               que no pinta nada ahi. */
-            .porta-flipbook-spine {
+            /* El "libro" físico: un contenedor del ancho de UNA página (la
+               mitad del hueco), como en un libro real cuyas tapas miden una
+               página. Cerrado al principio queda centrado en el hueco;
+               abrirlo lo desliza a la derecha (transición de 1s) para que
+               el lomo caiga en el centro y las hojas pasadas ocupen la
+               mitad izquierda; cerrado al final se desliza otro tanto para
+               que la pila (con la contraportada encima) quede centrada. */
+            .porta-flipbook-book {
                 position: absolute;
-                left: 50%;
+                left: 0;
                 top: 0;
-                bottom: 0;
-                width: 34px;
-                margin-left: -17px;
-                background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
-                z-index: 999;
-                opacity: 0;
-                pointer-events: none;
+                width: 50%;
+                height: 100%;
+                perspective: 2600px;
+                transform: translateX(50%);
+                transition: transform 1s ease;
             }
-            /* Tapas de cartoné: fondo blanco, imagen de cubierta incrustada
-               a sangre con un margen fino, y un ligero relieve (sombra
-               interior + exterior) para sugerir el grosor del carton. Se
-               aplica tanto a la mitad fija (visible en reposo exacto) como
-               a la cara de la hoja giratoria que en cada caso muestra la
-               tapa -- delante para la portada, detras para la
-               contraportada -- para que ambas luzcan identicas durante el
-               relevo entre una y otra. */
-            /* Selectores compuestos (con .porta-flipbook-half/-leaf-face) a
-               proposito: por especificidad, no por orden en la hoja de
-               estilos, para no depender de que este bloque quede antes o
-               despues de las reglas base de esas clases. */
-            .porta-flipbook-half.porta-flipbook-cover-face,
-            .porta-flipbook-leaf-face.porta-flipbook-cover-face {
-                background-color: #fbfbf9;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-                padding: 3.2%;
+            .porta-flipbook-book.porta-flipbook-book-open {
+                transform: translateX(100%);
             }
-            .porta-flipbook-cover-face picture {
+            .porta-flipbook-book.porta-flipbook-book-closed-end {
+                transform: translateX(150%);
+            }
+            /* Elementos que giran: las dos tapas (cartoné, tamaño completo
+               del libro) y las hojas interiores (algo más pequeñas, para
+               que asome el canto blanco de las tapas alrededor, como en un
+               libro de tapa dura real). Todos pivotan sobre el lomo (borde
+               izquierdo del contenedor) con transición CSS fija: 1.5s las
+               tapas, 0.5s las hojas. */
+            .porta-flipbook-board,
+            .porta-flipbook-sheet {
+                position: absolute;
+                transform-origin: left center;
+                transform-style: preserve-3d;
+                transform: rotateY(0deg);
+                transition: transform 0.5s ease;
+                will-change: transform;
+            }
+            .porta-flipbook-board {
+                inset: 0;
+                transition-duration: 1.5s;
+            }
+            .porta-flipbook-sheet {
+                top: 2.4%;
+                height: 95.2%;
+                left: 0;
+                width: 96.8%;
+            }
+            .porta-flipbook-board.porta-flipbook-flipped,
+            .porta-flipbook-sheet.porta-flipbook-flipped {
+                transform: rotateY(-180deg);
+            }
+            /* Caras: cada tapa/hoja tiene frente y reverso; el reverso va
+               pre-girado 180 y ambos ocultan su trasera, el patrón clásico
+               de "carta que se voltea". */
+            .porta-flipbook-face2 {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                background-color: #f6f5f2;
+            }
+            .porta-flipbook-face2-back {
+                transform: rotateY(180deg);
+            }
+            .porta-flipbook-face2 picture {
+                display: block;
+                position: absolute;
+                inset: 0;
+            }
+            .porta-flipbook-face2 img {
+                display: block;
                 width: 100%;
                 height: 100%;
-                border-radius: 2px;
-                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.25);
+                object-fit: cover;
             }
-            /* Esquinas redondeadas solo en el lado que no lleva lomo (igual
-               que un libro real, donde el canto de encuadernacion no se
-               redondea). La portada tiene el lomo a su izquierda; la
-               contraportada, a su derecha. */
-            .porta-flipbook-cover-face.porta-flipbook-cover-front {
-                border-radius: 2px 8px 8px 2px;
+            /* Tapas de cartoné: blancas (no el carmesí del material de
+               referencia), con sombra suave para despegarlas del fondo
+               oscuro. La cara exterior de la portada y de la contraportada
+               llevan su imagen a sangre (cubriendo todo el cartón, sin
+               marco), mimetizadas con la página; las caras interiores son
+               el cartón blanco con la página correspondiente incrustada en
+               el rectángulo exacto donde se apoyan las hojas. */
+            .porta-flipbook-board .porta-flipbook-face2 {
+                background-color: #fbfbf9;
+                box-shadow: 0 0 14px rgba(0, 0, 0, 0.5);
             }
-            .porta-flipbook-cover-face.porta-flipbook-cover-back {
-                border-radius: 8px 2px 2px 8px;
+            /* Esquinas redondeadas solo en el canto exterior (el lomo no se
+               redondea): frente de tapa = canto a la derecha; reversos y
+               cara exterior de la contraportada = canto a la izquierda
+               (tras el giro de 180 su izquierda local es el canto). */
+            .porta-flipbook-board .porta-flipbook-face2-front {
+                border-radius: 3px 8px 8px 3px;
             }
-            /* Tapas "cerradas": la cubierta centrada, con el mismo ancho que
-               una pagina suelta pero sin pegarse al borde del libro
-               abierto. La mitad fija correspondiente (solo visible en
-               reposo exacto) queda siempre centrada con un desplazamiento
-               fijo; la hoja que gira anima ese mismo desplazamiento entre
-               "centrada" y "posicion normal" via JS (ver EDGE_FADE), en vez
-               de un fundido -- un deslizamiento rigido, sin fundir/mezclar
-               dos copias de la imagen. */
-            .porta-flipbook-half-cover {
-                transform: translateX(-50%);
+            .porta-flipbook-board .porta-flipbook-face2-back {
+                border-radius: 8px 3px 3px 8px;
             }
-            .porta-flipbook-half-backcover {
-                transform: translateX(50%);
+            /* Página incrustada en la cara interior de una tapa: ocupa el
+               rectángulo exacto de las hojas (mismos porcentajes que
+               .porta-flipbook-sheet), pegada al lomo. En la cara trasera el
+               lomo queda en la derecha local (la cara está pre-girada). */
+            .porta-flipbook-face2 picture.porta-flipbook-inset-front {
+                inset: 2.4% 3.2% 2.4% 0;
             }
-            /* El stage aporta la perspectiva 3D a la hoja giratoria, pero NO
-               lleva transform-style: preserve-3d: cada hijo se aplana por
-               separado y el apilamiento entre ellos depende solo del z-index
-               (si compartieran un contexto 3D, el navegador los ordenaria
-               por profundidad real tras rotar, ignorando el z-index, y se
-               veria un instante la hoja equivocada durante el giro). Solo la
-               hoja giratoria tiene su propio preserve-3d, para que su frente
-               y su reverso giren bien como las dos caras de una pagina. */
-            .porta-flipbook-stage {
+            .porta-flipbook-face2 picture.porta-flipbook-inset-back {
+                inset: 2.4% 0 2.4% 3.2%;
+            }
+            /* Sombreado de canto junto al lomo de cada cara de hoja (en vez
+               de las imágenes de sombreado del material de referencia):
+               da profundidad de encuadernación sin recursos externos. */
+            .porta-flipbook-face2-shade {
                 position: absolute;
                 inset: 0;
-                perspective: 2600px;
+                pointer-events: none;
             }
-            /* Base fija detras de toda la pila de pliegos: se ve antes del
-               primer pase y despues del ultimo, como el "libro" que sostiene
-               las hojas por leer/ya leidas. */
-            /* Cada lado lleva su propia sombra de profundidad, para que se
-               apague junto con la opacidad cuando ese lado esta vacio y no
-               queden "bordes de libro" flotando donde todavia no hay pagina. */
-            /* Fondo fijo detras de toda la pila: se ve al terminar la
-               ultima apertura (o si algo tarda en cargar). */
-            .porta-flipbook-base {
+            .porta-flipbook-face2-front .porta-flipbook-face2-shade {
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0) 12%);
+            }
+            .porta-flipbook-face2-back .porta-flipbook-face2-shade {
+                background: linear-gradient(270deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0) 12%);
+            }
+            /* Zonas de toque: mitad izquierda retrocede, mitad derecha
+               avanza (además de botones, flechas, rueda y swipe). */
+            .porta-flipbook-tap {
                 position: absolute;
-                inset: 0;
-                background: #111111;
-                z-index: 0;
+                top: 0;
+                height: 100%;
+                width: 50%;
+                z-index: 1200;
+                cursor: pointer;
+                background: transparent;
+                border: 0;
+                padding: 0;
             }
+            .porta-flipbook-tap-prev { left: 0; }
+            .porta-flipbook-tap-next { left: 50%; }
             /* Los .porta-flipbook-page originales son solo el ALMACEN de
                contenido: el script los oculta al arrancar y construye a
                partir de ellos la maquinaria real del giro (mitades fijas +
@@ -518,98 +553,6 @@
             }
             .porta-flipbook-is3d .porta-flipbook-page {
                 display: none;
-            }
-            /* Mitades fijas del libro: la pagina izquierda y derecha de la
-               apertura visible. Durante el giro, la izquierda sigue siendo
-               la de la apertura actual (la hoja nueva cae encima de ella) y
-               la derecha pasa a ser la de la apertura siguiente (la hoja al
-               levantarse la deja al descubierto). */
-            .porta-flipbook-half {
-                position: absolute;
-                top: 0;
-                height: 100%;
-                width: 50%;
-                overflow: hidden;
-                background-color: #1a1a1a;
-                visibility: hidden;
-                z-index: 10;
-            }
-            .porta-flipbook-half-left { left: 0; }
-            .porta-flipbook-half-right { left: 50%; }
-            .porta-flipbook-half picture,
-            .porta-flipbook-leaf-face picture {
-                display: block;
-                width: 100%;
-                height: 100%;
-            }
-            .porta-flipbook-half img,
-            .porta-flipbook-leaf-face img {
-                display: block;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            /* Sombra que la hoja levantada proyecta sobre la pagina que hay
-               debajo, anclada al lomo. */
-            .porta-flipbook-cast {
-                position: absolute;
-                top: 0;
-                height: 100%;
-                width: 50%;
-                opacity: 0;
-                pointer-events: none;
-                z-index: 30;
-            }
-            .porta-flipbook-cast-left {
-                left: 0;
-                background: linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 70%);
-            }
-            .porta-flipbook-cast-right {
-                left: 50%;
-                background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 70%);
-            }
-            /* La hoja giratoria: media pagina (la derecha de la apertura
-               actual) que pivota sobre el lomo. Su frente es esa pagina
-               derecha y su reverso es la pagina izquierda de la apertura
-               siguiente -- las dos caras ensenan siempre contenido real,
-               que es lo que evita la "mascara negra" del giro antiguo. */
-            .porta-flipbook-leaf {
-                position: absolute;
-                top: 0;
-                left: 50%;
-                width: 50%;
-                height: 100%;
-                transform-origin: left center;
-                transform-style: preserve-3d;
-                visibility: hidden;
-                z-index: 60;
-                will-change: transform;
-            }
-            .porta-flipbook-leaf-face {
-                position: absolute;
-                inset: 0;
-                overflow: hidden;
-                background-color: #1a1a1a;
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-            }
-            .porta-flipbook-leaf-back {
-                transform: rotateY(180deg);
-            }
-            /* Sombreado sobre la propia hoja mientras esta en el aire: se
-               enciende a mitad de giro y se apaga al aterrizar. En ambas
-               caras el lado oscuro queda pegado al lomo. */
-            .porta-flipbook-leaf-shade {
-                position: absolute;
-                inset: 0;
-                opacity: 0;
-                pointer-events: none;
-            }
-            .porta-flipbook-leaf-front .porta-flipbook-leaf-shade {
-                background: linear-gradient(90deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0) 55%);
-            }
-            .porta-flipbook-leaf-back .porta-flipbook-leaf-shade {
-                background: linear-gradient(270deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0) 55%);
             }
             /* Antes de que el script pinte el primer frame, solo la portada
                es visible (evita ver todas las aperturas apiladas). */
@@ -818,7 +761,6 @@
             </a>
             <div class="porta-flipbook" id="porta-flipbook">
                 <div class="porta-flipbook-stage" id="porta-flipbook-stage">
-                    <div class="porta-flipbook-base"></div>
                     <div class="porta-flipbook-page" data-index="0">
                         <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread porta-flipbook-spread-solo-right"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-01.webp"><img src="../../static/images/porta/mook/porta-page-01.jpg" alt="Cubierta del mook PORTA" width="1004" height="1418" loading="eager" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
                         <div class="porta-flipbook-face porta-flipbook-back"></div>
@@ -1232,61 +1174,30 @@
             })();
         }
 
-        // Flipbook: pasa entre aperturas del mook con un giro 3D de hoja
-        // real. Cada apertura se divide en sus dos medias páginas; la hoja
-        // que gira lleva la página derecha actual en el frente y la página
-        // izquierda de la apertura siguiente en el reverso, de modo que
-        // durante todo el giro se ve contenido real (sin reverso negro,
-        // que era el problema del giro de pliegos completos). Se controla
-        // con rueda/trackpad (vertical u horizontal), arrastre táctil o de
-        // ratón con detección de "flick" (un gesto rápido pasa página aunque
-        // el recorrido sea corto), toque/click simple (mitad derecha avanza,
-        // mitad izquierda retrocede), botones y flechas del teclado. El
-        // suavizado es independiente del frame-rate y el bucle de render
-        // solo corre mientras queda movimiento pendiente.
+        // Flipbook de tapa dura, con la mecánica del material de referencia
+        // (creative_coding-flip_book, reimplementado desde cero): el libro
+        // es un contenedor del ancho de UNA página que se desliza al
+        // abrirse/cerrarse (transición de 1s) mientras la tapa gira 1.5s
+        // sobre el lomo; cada hoja interior gira con una transición CSS
+        // fija de 0.5s. El paso de página es DISCRETO -- click/tap por
+        // mitades, botones, flechas del teclado, rueda y swipe -- sin
+        // arrastre continuo: la animación es una curva CSS fija, fiel a la
+        // referencia (decisión confirmada por el usuario).
         (function () {
             var flipbookEl = document.getElementById("porta-flipbook");
             if (!flipbookEl) return;
             var stage = document.getElementById("porta-flipbook-stage");
             var pageEls = Array.prototype.slice.call(stage.querySelectorAll(".porta-flipbook-page"));
-            var total = pageEls.length;
-            var last = total - 1; // última apertura navegable: la contraportada queda a la vista
+            var total = pageEls.length; // aperturas: portada + pliegos + contraportada
             var counterEl = document.getElementById("porta-flipbook-counter");
             var prevBtn = document.getElementById("porta-flipbook-prev");
             var nextBtn = document.getElementById("porta-flipbook-next");
-            if (!total || !counterEl || !prevBtn || !nextBtn) return;
-
-            var target = 0;   // 0..total, con decimales durante el gesto
-            var current = 0;  // valor interpolado que se pinta cada frame
-            var dragging = false;
-            var settleTimer = null;
-            var rafId = null;
-            var lastTs = 0;
-
-            // Constantes de tiempo del suavizado exponencial (por segundo):
-            // arrastrando, la hoja va pegada al dedo; al soltar, el giro se
-            // asienta rápido -- una cola exponencial lenta se percibe como
-            // "la página tarda en caer".
-            var FOLLOW_RATE = prefersReducedMotion ? 1000 : 16;
-            var SETTLE_RATE = prefersReducedMotion ? 1000 : 12;
-            // Abrir o cerrar la cubierta es un gesto distinto al resto de
-            // páginas -- se quiere el ritmo pausado de quien abre un libro
-            // con cuidado, no el mismo golpe de muñeca de pasar una hoja
-            // interior. Se usan tasas mucho más bajas (tanto arrastrando
-            // como al asentarse) solo mientras el tramo recorrido toca la
-            // primera o la última apertura.
-            var EDGE_FOLLOW_RATE = prefersReducedMotion ? 1000 : 2.4;
-            var EDGE_SETTLE_RATE = prefersReducedMotion ? 1000 : 0.62;
+            if (total < 3 || !counterEl || !prevBtn || !nextBtn) return;
 
             function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
-            // --- Construcción de la maquinaria del giro -----------------
             // Los .porta-flipbook-page del HTML son solo el almacén de
-            // contenido. De cada uno se extraen sus dos medias páginas y
-            // con clones de esas <picture> se montan: (a) las mitades fijas
-            // izquierda/derecha de cada apertura y (b) una hoja giratoria
-            // por transición, con la página derecha actual en el frente y
-            // la izquierda de la apertura siguiente en el reverso.
+            // contenido; de cada apertura se extraen sus dos medias páginas.
             function spreadHalves(page) {
                 var spread = page.querySelector(".porta-flipbook-spread");
                 var pics = spread.querySelectorAll("picture");
@@ -1301,352 +1212,216 @@
                 return pic.cloneNode(true);
             }
             var spreads = pageEls.map(spreadHalves);
-            // La mitad derecha de la apertura 0 es la portada; la mitad
-            // izquierda de la última apertura es la contraportada. Ambas
-            // llevan el aspecto de tapa dura (fondo blanco, imagen a sangre
-            // con margen, esquinas redondeadas solo del lado sin lomo) y un
-            // desplazamiento fijo que las centra -- solo se ven en reposo
-            // exacto, momento en el que SIEMPRE están centradas.
-            var halfEls = spreads.map(function (s, idx) {
-                var pair = { left: null, right: null };
-                ["left", "right"].forEach(function (side) {
-                    if (!s[side]) return;
-                    var el = document.createElement("div");
-                    el.className = "porta-flipbook-half porta-flipbook-half-" + side;
-                    if (idx === 0 && side === "right") {
-                        el.className += " porta-flipbook-half-cover porta-flipbook-cover-face porta-flipbook-cover-front";
-                    } else if (idx === last && side === "left") {
-                        el.className += " porta-flipbook-half-backcover porta-flipbook-cover-face porta-flipbook-cover-back";
-                    }
-                    el.appendChild(clonePic(s[side]));
-                    stage.appendChild(el);
-                    pair[side] = el;
-                });
-                return pair;
-            });
-            var castLeft = document.createElement("div");
-            castLeft.className = "porta-flipbook-cast porta-flipbook-cast-left";
-            var castRight = document.createElement("div");
-            castRight.className = "porta-flipbook-cast porta-flipbook-cast-right";
-            stage.appendChild(castLeft);
-            stage.appendChild(castRight);
-            var spine = document.createElement("div");
-            spine.className = "porta-flipbook-spine";
-            stage.appendChild(spine);
-            // Fracción del primer/último pase durante la que la tapa
-            // "cerrada" (centrada) se desliza rígidamente hacia su posición
-            // normal de página abierta (ver EDGE_SHIFT en paint()). Con el
-            // asentamiento ya ralentizado (EDGE_SETTLE_RATE) esta fracción
-            // se recorre despacio en tiempo real; se alarga respecto al
-            // resto del pase para que el descubrimiento se note pausado.
-            var EDGE_FADE = 0.4;
-            // Suaviza el propio progreso (en vez de una rampa lineal) para
-            // que el deslizamiento arranque y remate con calma, como una
-            // tapa que se abre con cuidado en vez de moverse a ritmo
-            // constante.
-            function smoothstep(t) { return t * t * (3 - 2 * t); }
-            var leaves = [];
-            (function buildLeaves() {
-                for (var k = 0; k < total - 1; k++) {
-                    var leaf = document.createElement("div");
-                    leaf.className = "porta-flipbook-leaf";
-                    var frontShade = document.createElement("div");
-                    frontShade.className = "porta-flipbook-leaf-shade";
-                    var backShade = document.createElement("div");
-                    backShade.className = "porta-flipbook-leaf-shade";
-                    var front = document.createElement("div");
-                    front.className = "porta-flipbook-leaf-face porta-flipbook-leaf-front";
-                    if (k === 0) front.className += " porta-flipbook-cover-face porta-flipbook-cover-front";
-                    if (spreads[k].right) front.appendChild(clonePic(spreads[k].right));
-                    front.appendChild(frontShade);
-                    var back = document.createElement("div");
-                    back.className = "porta-flipbook-leaf-face porta-flipbook-leaf-back";
-                    if (k === last - 1) back.className += " porta-flipbook-cover-face porta-flipbook-cover-back";
-                    if (spreads[k + 1].left) back.appendChild(clonePic(spreads[k + 1].left));
-                    back.appendChild(backShade);
-                    leaf.appendChild(front);
-                    leaf.appendChild(back);
-                    stage.appendChild(leaf);
-                    leaves.push({ el: leaf, frontShade: frontShade, backShade: backShade });
+
+            // --- Construcción del libro --------------------------------
+            var book = document.createElement("div");
+            book.className = "porta-flipbook-book";
+            stage.appendChild(book);
+
+            function makeFace(side, pic, inset) {
+                var face = document.createElement("div");
+                face.className = "porta-flipbook-face2 porta-flipbook-face2-" + side;
+                if (pic) {
+                    var p = clonePic(pic);
+                    if (inset) p.className = "porta-flipbook-inset-" + side;
+                    face.appendChild(p);
                 }
-            })();
+                var shade = document.createElement("div");
+                shade.className = "porta-flipbook-face2-shade";
+                face.appendChild(shade);
+                return face;
+            }
+            // Elementos giratorios en orden físico. Cada uno es una lámina
+            // con dos caras (el reverso pre-girado 180, traseras ocultas):
+            // - Tapa: exterior = cubierta del mook a sangre; interior =
+            //   cartón blanco con la primera página par incrustada en el
+            //   rectángulo exacto donde se apoyan las hojas.
+            // - Hoja j: frente = página impar (derecha) de la apertura j;
+            //   reverso = página par (izquierda) de la apertura j+1. Así
+            //   cada vista muestra el par par-impar seguido del PDF.
+            // - Contraportada: interior = cartón con la última página impar
+            //   incrustada; exterior = contracubierta a sangre.
+            var flippables = [];
+            function makeFlippable(kind, frontPic, backPic, frontInset, backInset) {
+                var el = document.createElement("div");
+                el.className = "porta-flipbook-" + kind;
+                el.appendChild(makeFace("front", frontPic, frontInset));
+                el.appendChild(makeFace("back", backPic, backInset));
+                book.appendChild(el);
+                flippables.push(el);
+                return el;
+            }
+            makeFlippable("board", spreads[0].right, spreads[1].left, false, true);
+            for (var j = 1; j <= total - 3; j++) {
+                makeFlippable("sheet", spreads[j].right, spreads[j + 1].left, false, false);
+            }
+            makeFlippable("board", spreads[total - 2].right, spreads[total - 1].left, true, false);
+            var maxFlipped = flippables.length; // total - 1
+
             // Con la maquinaria montada, los originales se ocultan (CSS).
             flipbookEl.classList.add("porta-flipbook-is3d");
 
-            // Escrituras de estilo con caché: solo se toca el DOM cuando el
-            // valor cambia de verdad (paint corre en cada frame del giro).
-            function setVis(el, on) {
-                if (!el || el._vis === on) return;
-                el._vis = on;
-                el.style.visibility = on ? "visible" : "hidden";
-            }
-            function setOpacity(el, v) {
-                var s = v.toFixed(3);
-                if (el._op === s) return;
-                el._op = s;
-                el.style.opacity = s;
-            }
-            var lastCounterText = "";
-
-            function paint() {
-                var pos = clamp(current, 0, last);
-                var i = Math.floor(pos);
-                var f = pos - i;
-                if (i >= last) { i = last; f = 0; }
-                if (f < 0.001) f = 0;
-                if (f > 0.999) { i += 1; f = 0; }
-
-                halfEls.forEach(function (h, k) {
-                    // Izquierda: siempre la de la apertura actual (la hoja
-                    // nueva aterriza encima). Derecha: en reposo la actual;
-                    // durante el giro, la siguiente (la hoja al levantarse
-                    // la deja a la vista).
-                    setVis(h.left, k === i);
-                    setVis(h.right, f === 0 ? k === i : k === i + 1);
-                });
-
-                // Progreso de apertura/cierre de las tapas: 0 = cerrada y
-                // centrada, 1 = ya en su posición normal de página abierta.
-                // La portada recorre ese progreso en los primeros EDGE_FADE
-                // del primer pase; la contraportada, en el tramo final del
-                // último. Fuera de esos dos tramos no aplica (valor de
-                // reposo: la tapa ya está del todo abierta o del todo
-                // cerrada, según el caso).
-                var frontOpenness = i === 0 ? smoothstep(clamp(f / EDGE_FADE, 0, 1)) : 1;
-                var backOpenness = i === last ? 1
-                    : (i === last - 1 ? smoothstep(clamp((f - (1 - EDGE_FADE)) / EDGE_FADE, 0, 1)) : 0);
-
-                var lift = f === 0 ? 0 : Math.sin(Math.PI * f);
-                leaves.forEach(function (L, k) {
-                    var active = f > 0 && k === i;
-                    setVis(L.el, active);
-                    if (!active) return;
-                    // Desplazamiento rígido de la tapa: -50%/+50% (centrada,
-                    // en unidades relativas a la propia hoja) cuando está
-                    // cerrada, 0% en cuanto alcanza su posición normal de
-                    // página abierta. Se compone con el giro en el mismo
-                    // transform -- ambos son rígidos (sin fundir/mezclar
-                    // imágenes), igual que un libro real donde la tapa no se
-                    // difumina al abrirse, se desliza.
-                    var shiftPct = 0;
-                    if (k === 0) shiftPct = -50 * (1 - frontOpenness);
-                    else if (k === last - 1) shiftPct = 50 * backOpenness;
-                    var transform = "rotateY(" + (-180 * f).toFixed(2) + "deg)";
-                    if (shiftPct) transform = "translateX(" + shiftPct.toFixed(2) + "%) " + transform;
-                    L.el.style.transform = transform;
-                    setOpacity(L.frontShade, lift * 0.5);
-                    setOpacity(L.backShade, lift * 0.5);
-                });
-                // La sombra proyectada acompaña a la hoja: sobre la página
-                // derecha al despegar, sobre la izquierda al aterrizar.
-                setOpacity(castRight, lift * (1 - f) * 0.6);
-                setOpacity(castLeft, lift * f * 0.6);
-
-                // El lomo no pinta nada sobre una tapa cerrada: se apaga en
-                // fase con la misma tapa que esté ocupando el centro.
-                var spineOpacity = 1;
-                if (i === 0) spineOpacity = frontOpenness;
-                else if (i === last) spineOpacity = 0;
-                else if (i === last - 1) spineOpacity = 1 - backOpenness;
-                setOpacity(spine, spineOpacity);
-
-                var pageNum = clamp(Math.round(current) + 1, 1, total);
-                var counterText = pageNum + " / " + total;
-                if (counterText !== lastCounterText) {
-                    lastCounterText = counterText;
-                    counterEl.textContent = counterText;
-                }
-                prevBtn.disabled = target <= 0;
-                nextBtn.disabled = target >= last;
+            if (prefersReducedMotion) {
+                book.style.transitionDuration = "0.01s";
+                flippables.forEach(function (el) { el.style.transitionDuration = "0.01s"; });
             }
 
-            function render(ts) {
-                rafId = null;
-                // dt acotado: si la pestaña estuvo en segundo plano no
-                // queremos un salto brusco al volver.
-                var dt = Math.min(Math.max((ts - lastTs) / 1000, 0.001), 0.05);
-                lastTs = ts;
-                // El ritmo se decide por la posicion actual, no por todo el
-                // tramo del gesto: solo mientras la cubierta sigue tapando
-                // la escena (f dentro de EDGE_FADE) va despacio -- superado
-                // ese punto, aunque siga siendo la primera/ultima apertura,
-                // el resto del giro recupera el ritmo normal (si no, una
-                // sola tasa exponencial no puede dar a la vez una apertura
-                // pausada Y un aterrizaje del giro en tiempo razonable).
-                var edgePos = clamp(current, 0, last);
-                var edgeI = Math.floor(edgePos);
-                var edgeF = edgePos - edgeI;
-                if (edgeI >= last) { edgeI = last; edgeF = 0; }
-                // Se excluye un margen pequeño justo junto al reposo (0 o 1):
-                // al CERRAR una cubierta el propio destino (f=0 o f=1) cae
-                // dentro de la zona lenta, y una exponencial tan lenta
-                // tardaria ~10s reales en converger del todo aunque ya sea
-                // visualmente idéntica al reposo en menos de un segundo. Sin
-                // el margen, el ultimo tramo (ya invisible) se remata rápido.
-                var inCoverReveal = (edgeI === 0 && edgeF > 0.06 && edgeF < EDGE_FADE) ||
-                    (edgeI === last - 1 && edgeF > 1 - EDGE_FADE && edgeF < 0.94);
-                var rate = dragging
-                    ? (inCoverReveal ? EDGE_FOLLOW_RATE : FOLLOW_RATE)
-                    : (inCoverReveal ? EDGE_SETTLE_RATE : SETTLE_RATE);
-                current += (target - current) * (1 - Math.exp(-rate * dt));
-                var settled = Math.abs(target - current) < 0.0006;
-                if (settled) current = target;
-                paint();
-                if (!settled || dragging) {
-                    rafId = requestAnimationFrame(render);
-                }
+            // --- Estado y apilamiento ----------------------------------
+            var flipped = 0; // nº de láminas ya giradas (0..maxFlipped)
+
+            // Pila derecha (sin girar): la lámina de menor índice encima.
+            // Pila izquierda (giradas): la de mayor índice encima. La
+            // lámina en pleno giro va por encima de todo y recupera su
+            // z-index de pila al terminar la transición (transitionend,
+            // con un timeout de respaldo por si el evento no llega -- p.ej.
+            // pestaña en segundo plano).
+            function stackZ(idx, isFlipped) {
+                return isFlipped ? idx + 2 : (maxFlipped - idx) + 2;
+            }
+            flippables.forEach(function (el, idx) {
+                el.style.zIndex = stackZ(idx, false);
+            });
+            function settleZ(el, idx) {
+                el.style.zIndex = stackZ(idx, el.classList.contains("porta-flipbook-flipped"));
+            }
+            function setTurning(el, idx) {
+                el.style.zIndex = 500 + idx;
+                if (el._turnEnd) { el.removeEventListener("transitionend", el._turnEnd); }
+                if (el._turnTimer) { clearTimeout(el._turnTimer); }
+                var done = function () {
+                    el.removeEventListener("transitionend", el._turnEnd);
+                    clearTimeout(el._turnTimer);
+                    el._turnEnd = null;
+                    el._turnTimer = null;
+                    settleZ(el, idx);
+                };
+                el._turnEnd = function (ev) {
+                    if (ev.target !== el || ev.propertyName !== "transform") return;
+                    done();
+                };
+                el.addEventListener("transitionend", el._turnEnd);
+                var ms = el.className.indexOf("board") !== -1 ? 1500 : 500;
+                el._turnTimer = setTimeout(done, ms + 250);
             }
 
-            // Arranca el bucle de render solo si no está ya corriendo: el
-            // resto del tiempo el flipbook no consume ni un frame.
-            function kick() {
-                if (rafId === null) {
-                    lastTs = performance.now();
-                    rafId = requestAnimationFrame(render);
-                }
+            // El deslizamiento del libro: cerrado al principio (centrado),
+            // abierto (lomo al centro del hueco) o cerrado al final (pila
+            // con la contraportada encima, centrada).
+            function updateBook() {
+                book.classList.toggle("porta-flipbook-book-open", flipped > 0 && flipped < maxFlipped);
+                book.classList.toggle("porta-flipbook-book-closed-end", flipped >= maxFlipped);
+            }
+            function refreshUi() {
+                counterEl.textContent = (flipped + 1) + " / " + total;
+                prevBtn.disabled = flipped <= 0;
+                nextBtn.disabled = flipped >= maxFlipped;
             }
 
-            function scheduleSettle(ms) {
-                clearTimeout(settleTimer);
-                settleTimer = setTimeout(function () {
-                    target = Math.round(target);
-                    kick();
-                }, ms);
+            function flipForward() {
+                if (flipped >= maxFlipped) return;
+                var idx = flipped;
+                var el = flippables[idx];
+                setTurning(el, idx);
+                el.classList.add("porta-flipbook-flipped");
+                flipped++;
+                updateBook();
+                refreshUi();
+            }
+            function flipBackward() {
+                if (flipped <= 0) return;
+                var idx = flipped - 1;
+                var el = flippables[idx];
+                setTurning(el, idx);
+                el.classList.remove("porta-flipbook-flipped");
+                flipped--;
+                updateBook();
+                refreshUi();
             }
 
-            function goTo(v) {
-                target = clamp(Math.round(v), 0, last);
-                clearTimeout(settleTimer);
-                kick();
-            }
-
-            prevBtn.addEventListener("click", function () { goTo(Math.round(target) - 1); });
-            nextBtn.addEventListener("click", function () { goTo(Math.round(target) + 1); });
+            prevBtn.addEventListener("click", flipBackward);
+            nextBtn.addEventListener("click", flipForward);
 
             // Flechas del teclado cuando el flipbook tiene el foco.
             flipbookEl.setAttribute("tabindex", "0");
             flipbookEl.setAttribute("role", "region");
             flipbookEl.setAttribute("aria-label", "Flipbook del mook PORTA: usa las flechas para pasar página");
             flipbookEl.addEventListener("keydown", function (e) {
-                if (e.key === "ArrowRight") { goTo(Math.round(target) + 1); e.preventDefault(); }
-                else if (e.key === "ArrowLeft") { goTo(Math.round(target) - 1); e.preventDefault(); }
+                if (e.key === "ArrowRight") { flipForward(); e.preventDefault(); }
+                else if (e.key === "ArrowLeft") { flipBackward(); e.preventDefault(); }
             });
 
+            // Zonas de toque por mitades: derecha avanza, izquierda
+            // retrocede. Con el libro cerrado, cualquier toque lo abre (o lo
+            // reabre desde el final), como al clicar la tapa en la
+            // referencia. Duplican los botones prev/next ya accesibles, así
+            // que quedan fuera del orden de tabulación y del árbol de
+            // accesibilidad.
+            var lastSwipeAt = 0;
+            function tappedRecentSwipe() {
+                return Date.now() - lastSwipeAt < 400;
+            }
+            function makeTapZone(side, action) {
+                var b = document.createElement("button");
+                b.type = "button";
+                b.className = "porta-flipbook-tap porta-flipbook-tap-" + side;
+                b.setAttribute("aria-hidden", "true");
+                b.tabIndex = -1;
+                b.addEventListener("click", function () {
+                    if (tappedRecentSwipe()) return;
+                    try { flipbookEl.focus({ preventScroll: true }); } catch (err) { flipbookEl.focus(); }
+                    if (flipped === 0) { flipForward(); return; }
+                    if (flipped === maxFlipped) { flipBackward(); return; }
+                    action();
+                });
+                flipbookEl.appendChild(b);
+            }
+            makeTapZone("prev", flipBackward);
+            makeTapZone("next", flipForward);
+
+            // Swipe horizontal (móvil o ratón): un gesto = un pase. El
+            // umbral evita confundirlo con un tap; la marca de tiempo evita
+            // que el click sintético posterior dispare también la zona de
+            // toque.
+            var swipeStartX = null, swipeStartY = null;
+            flipbookEl.addEventListener("pointerdown", function (e) {
+                swipeStartX = e.clientX;
+                swipeStartY = e.clientY;
+            });
+            flipbookEl.addEventListener("pointerup", function (e) {
+                if (swipeStartX === null) return;
+                var dx = e.clientX - swipeStartX;
+                var dy = e.clientY - swipeStartY;
+                swipeStartX = null;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    lastSwipeAt = Date.now();
+                    if (dx < 0) { flipForward(); } else { flipBackward(); }
+                }
+            });
+            flipbookEl.addEventListener("pointercancel", function () { swipeStartX = null; });
+
+            // Rueda/trackpad: un pase por gesto, con un pequeño periodo
+            // refractario para no pasar varias páginas con la inercia. En
+            // los extremos no se captura el scroll (sigue su curso normal
+            // hacia el resto de la página).
+            var wheelReadyAt = 0;
             flipbookEl.addEventListener("wheel", function (e) {
                 var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-                var atStart = target <= 0 && delta < 0;
-                var atEnd = target >= last && delta > 0;
-                if (!atStart && !atEnd) {
-                    e.preventDefault();
-                    target = clamp(target + delta * 0.006, 0, last);
-                    kick();
-                    scheduleSettle(140);
-                }
+                if (Math.abs(delta) < 8) return;
+                var atStart = flipped <= 0 && delta < 0;
+                var atEnd = flipped >= maxFlipped && delta > 0;
+                if (atStart || atEnd) return;
+                e.preventDefault();
+                var now = Date.now();
+                if (now < wheelReadyAt) return;
+                wheelReadyAt = now + 650;
+                if (delta > 0) { flipForward(); } else { flipBackward(); }
             }, { passive: false });
 
-            var startX = 0, startY = 0, startTarget = 0;
-            var velocity = 0;       // páginas por milisegundo, suavizada
-            var lastMoveT = 0;
-            var lastMoveTarget = 0;
-            var travelled = 0;      // píxeles recorridos, para distinguir tap de arrastre
-
-            function dragStart(x, y) {
-                dragging = true;
-                startX = x; startY = y; startTarget = target;
-                velocity = 0;
-                travelled = 0;
-                lastMoveT = performance.now();
-                lastMoveTarget = target;
-                clearTimeout(settleTimer);
-                kick();
-            }
-            // Devuelve si el arrastre puede seguir moviendo el flipbook en la
-            // dirección indicada por delta, o si ya se llegó a un extremo
-            // (en cuyo caso no se debe capturar el scroll/swipe: hay que
-            // dejar que el gesto siga su curso normal hacia el resto de la
-            // página, como pasa con la rueda del ratón).
-            function canDrag(delta) {
-                if (delta < 0 && startTarget <= 0) return false;
-                if (delta > 0 && startTarget >= last) return false;
-                return true;
-            }
-            function dragMove(x, y) {
-                if (!dragging) return null;
-                var dx = startX - x;
-                var dy = startY - y;
-                travelled = Math.max(travelled, Math.abs(dx), Math.abs(dy));
-                var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
-                if (!canDrag(delta)) return false;
-                target = clamp(startTarget + delta * 0.012, 0, last);
-                // Velocidad instantánea suavizada (media exponencial) para
-                // decidir el "flick" al soltar.
-                var now = performance.now();
-                var dtms = now - lastMoveT;
-                if (dtms > 0) {
-                    var inst = (target - lastMoveTarget) / dtms;
-                    velocity = velocity * 0.75 + inst * 0.25;
-                    lastMoveT = now;
-                    lastMoveTarget = target;
-                }
-                kick();
-                return true;
-            }
-            function dragEnd(x) {
-                if (!dragging) return;
-                dragging = false;
-                var FLICK = 0.0018; // umbral de páginas/ms para considerar flick
-                var TAP_PX = 6;
-                if (travelled < TAP_PX && typeof x === "number") {
-                    // Toque simple sin arrastre: avanza o retrocede según la
-                    // mitad del libro donde se ha tocado.
-                    var rect = flipbookEl.getBoundingClientRect();
-                    var forward = x > rect.left + rect.width / 2;
-                    goTo(Math.round(target) + (forward ? 1 : -1));
-                    return;
-                }
-                if (Math.abs(velocity) > FLICK) {
-                    // Gesto rápido: pasa a la página siguiente/anterior en la
-                    // dirección del gesto, aunque el recorrido fuese corto.
-                    target = clamp(velocity > 0 ? Math.floor(current) + 1 : Math.ceil(current) - 1, 0, last);
-                } else {
-                    target = Math.round(target);
-                }
-                kick();
-            }
-
-            // Pointer Events + setPointerCapture unifica ratón/táctil/lápiz
-            // en un único manejador y, sobre todo, garantiza que el arrastre
-            // siga recibiéndose aunque el cursor o el dedo salgan del área
-            // del flipbook a mitad de gesto (en vez de depender de que el
-            // navegador siga entregando eventos al elemento original).
-            flipbookEl.addEventListener("pointerdown", function (e) {
-                dragStart(e.clientX, e.clientY);
-                flipbookEl.setPointerCapture(e.pointerId);
-                // preventDefault bloquea el foco nativo del click: sin esto,
-                // las flechas del teclado no funcionarian tras clicar.
-                try { flipbookEl.focus({ preventScroll: true }); } catch (err) { flipbookEl.focus(); }
-                e.preventDefault();
-            });
-            flipbookEl.addEventListener("pointermove", function (e) {
-                var moved = dragMove(e.clientX, e.clientY);
-                if (moved) e.preventDefault();
-            });
-            flipbookEl.addEventListener("pointerup", function (e) { dragEnd(e.clientX); });
-            flipbookEl.addEventListener("pointercancel", function () { dragEnd(); });
-
-            // Precalentamiento: fuerza la descarga y descodificación de TODAS
-            // las hojas en paralelo (no una a una) en cuanto el flipbook esté
-            // a punto de entrar en pantalla. Antes se hacia en cola, de una
-            // en una con una espera entre cada imagen -- si se pasaba de
-            // pagina antes de que la cola llegase a esa hoja (algo muy facil
-            // con pocas hojas), esa pagina aun no habia empezado siquiera a
-            // descargarse y se veia en negro o con la hoja anterior hasta
-            // que por fin le tocaba el turno. Al lanzarlas todas a la vez,
-            // decode() fuerza la descarga inmediata de cada una (aunque
-            // tenga loading="lazy") y el navegador las reparte en paralelo.
-            // Se calientan todas las imágenes del stage: los clones de las
-            // mitades y de las hojas comparten URL con los originales, así
-            // que cada página se descarga de la red una sola vez.
+            // Precalentamiento: fuerza la descarga y descodificación de
+            // TODAS las imágenes en paralelo (decode() fuerza la descarga
+            // aunque tengan loading="lazy") en cuanto el flipbook esté a
+            // punto de entrar en pantalla. Los clones comparten URL con los
+            // originales, así que cada página se descarga una sola vez.
             var warmImgs = Array.prototype.slice.call(stage.querySelectorAll("img"));
             function warmAll() {
                 warmImgs.forEach(function (im) {
@@ -1671,9 +1446,9 @@
                 warmAll();
             }
 
-            // Pintado inicial (contador, sombras y estado de los botones)
-            // sin esperar a la primera interacción.
-            paint();
+            // Estado inicial (contador y botones) sin esperar interacción.
+            updateBook();
+            refreshUi();
         })();
 
         // Fundido de carga para la imagen sticky de la intro
