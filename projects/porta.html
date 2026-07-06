@@ -416,10 +416,10 @@
             }
             /* Sombra de "lomo" central, donde se encuadernan las dos páginas
                de cada pliego. Elemento real (ya no ::before) porque su
-               opacidad la controla el script: con el libro cerrado (portada
-               o contraportada centradas, ver .porta-flipbook-edge-cover) no
-               hay lomo que sombrear y se apaga a 0 para no cruzar la
-               cubierta con una linea que no pinta nada ahi. */
+               opacidad la controla el script: con el libro cerrado (tapa
+               centrada, ver .porta-flipbook-cover-*) no hay lomo que
+               sombrear y se apaga a 0 para no cruzar la tapa con una linea
+               que no pinta nada ahi. */
             .porta-flipbook-spine {
                 position: absolute;
                 left: 50%;
@@ -432,44 +432,53 @@
                 opacity: 0;
                 pointer-events: none;
             }
-            /* Portada/contraportada "cerradas": la cubierta centrada, con el
-               mismo ancho que una pagina suelta pero sin pegarse al borde
-               del libro abierto. Solo se ve en reposo exacto (antes del
-               primer pase / despues del ultimo); en cuanto se empieza a
-               pasar pagina se funde hacia la disposicion normal (mitad fija
-               + hoja) que ya esta pintada debajo en su posicion real. El
-               envoltorio cubre TODO el stage (no solo el ancho de la
-               cubierta) para tapar por completo la mitad fija de debajo --
-               si solo tapase su propio ancho, el trozo de esa mitad que
-               sobresale se transparentaria y se verian dos copias de la
-               portada superpuestas. */
-            .porta-flipbook-edge-cover {
-                position: absolute;
-                inset: 0;
-                background-color: #111111;
-                opacity: 0;
-                z-index: 90;
-                pointer-events: none;
+            /* Tapas de cartoné: fondo blanco, imagen de cubierta incrustada
+               a sangre con un margen fino, y un ligero relieve (sombra
+               interior + exterior) para sugerir el grosor del carton. Se
+               aplica tanto a la mitad fija (visible en reposo exacto) como
+               a la cara de la hoja giratoria que en cada caso muestra la
+               tapa -- delante para la portada, detras para la
+               contraportada -- para que ambas luzcan identicas durante el
+               relevo entre una y otra. */
+            /* Selectores compuestos (con .porta-flipbook-half/-leaf-face) a
+               proposito: por especificidad, no por orden en la hoja de
+               estilos, para no depender de que este bloque quede antes o
+               despues de las reglas base de esas clases. */
+            .porta-flipbook-half.porta-flipbook-cover-face,
+            .porta-flipbook-leaf-face.porta-flipbook-cover-face {
+                background-color: #fbfbf9;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+                padding: 3.2%;
             }
-            .porta-flipbook-edge-cover-inner {
-                position: absolute;
-                left: 25%;
-                top: 0;
-                width: 50%;
-                height: 100%;
-                overflow: hidden;
-                background-color: #1a1a1a;
-            }
-            .porta-flipbook-edge-cover-inner picture {
-                display: block;
+            .porta-flipbook-cover-face picture {
                 width: 100%;
                 height: 100%;
+                border-radius: 2px;
+                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.25);
             }
-            .porta-flipbook-edge-cover-inner img {
-                display: block;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
+            /* Esquinas redondeadas solo en el lado que no lleva lomo (igual
+               que un libro real, donde el canto de encuadernacion no se
+               redondea). La portada tiene el lomo a su izquierda; la
+               contraportada, a su derecha. */
+            .porta-flipbook-cover-face.porta-flipbook-cover-front {
+                border-radius: 2px 8px 8px 2px;
+            }
+            .porta-flipbook-cover-face.porta-flipbook-cover-back {
+                border-radius: 8px 2px 2px 8px;
+            }
+            /* Tapas "cerradas": la cubierta centrada, con el mismo ancho que
+               una pagina suelta pero sin pegarse al borde del libro
+               abierto. La mitad fija correspondiente (solo visible en
+               reposo exacto) queda siempre centrada con un desplazamiento
+               fijo; la hoja que gira anima ese mismo desplazamiento entre
+               "centrada" y "posicion normal" via JS (ver EDGE_FADE), en vez
+               de un fundido -- un deslizamiento rigido, sin fundir/mezclar
+               dos copias de la imagen. */
+            .porta-flipbook-half-cover {
+                transform: translateX(-50%);
+            }
+            .porta-flipbook-half-backcover {
+                transform: translateX(50%);
             }
             /* El stage aporta la perspectiva 3D a la hoja giratoria, pero NO
                lleva transform-style: preserve-3d: cada hijo se aplana por
@@ -1292,12 +1301,23 @@
                 return pic.cloneNode(true);
             }
             var spreads = pageEls.map(spreadHalves);
-            var halfEls = spreads.map(function (s) {
+            // La mitad derecha de la apertura 0 es la portada; la mitad
+            // izquierda de la última apertura es la contraportada. Ambas
+            // llevan el aspecto de tapa dura (fondo blanco, imagen a sangre
+            // con margen, esquinas redondeadas solo del lado sin lomo) y un
+            // desplazamiento fijo que las centra -- solo se ven en reposo
+            // exacto, momento en el que SIEMPRE están centradas.
+            var halfEls = spreads.map(function (s, idx) {
                 var pair = { left: null, right: null };
                 ["left", "right"].forEach(function (side) {
                     if (!s[side]) return;
                     var el = document.createElement("div");
                     el.className = "porta-flipbook-half porta-flipbook-half-" + side;
+                    if (idx === 0 && side === "right") {
+                        el.className += " porta-flipbook-half-cover porta-flipbook-cover-face porta-flipbook-cover-front";
+                    } else if (idx === last && side === "left") {
+                        el.className += " porta-flipbook-half-backcover porta-flipbook-cover-face porta-flipbook-cover-back";
+                    }
                     el.appendChild(clonePic(s[side]));
                     stage.appendChild(el);
                     pair[side] = el;
@@ -1313,32 +1333,16 @@
             var spine = document.createElement("div");
             spine.className = "porta-flipbook-spine";
             stage.appendChild(spine);
-            // Cubiertas "cerradas": mismo contenido que la mitad fija de la
-            // portada/contraportada, pero centradas. Se superponen a todo lo
-            // demás (z-index por encima de hojas y mitades) y se funden en
-            // cuanto se empieza a pasar página, dejando ver la disposición
-            // normal -- ya correctamente colocada debajo -- sin ningún salto.
-            function buildEdgeCover(pic) {
-                var el = document.createElement("div");
-                el.className = "porta-flipbook-edge-cover";
-                var inner = document.createElement("div");
-                inner.className = "porta-flipbook-edge-cover-inner";
-                if (pic) inner.appendChild(clonePic(pic));
-                el.appendChild(inner);
-                stage.appendChild(el);
-                return el;
-            }
-            var coverOverlay = buildEdgeCover(spreads[0].right);
-            var backCoverOverlay = buildEdgeCover(spreads[last].left);
-            // Fracción del primer/último pase durante la que la cubierta
-            // cerrada se funde hacia la disposición abierta normal. Con el
+            // Fracción del primer/último pase durante la que la tapa
+            // "cerrada" (centrada) se desliza rígidamente hacia su posición
+            // normal de página abierta (ver EDGE_SHIFT en paint()). Con el
             // asentamiento ya ralentizado (EDGE_SETTLE_RATE) esta fracción
             // se recorre despacio en tiempo real; se alarga respecto al
             // resto del pase para que el descubrimiento se note pausado.
             var EDGE_FADE = 0.4;
-            // Suaviza el propio fundido (en vez de una rampa lineal) para
-            // que el desvanecimiento arranque y remate con calma, como una
-            // pagina que se abre con cuidado en vez de deslizarse a ritmo
+            // Suaviza el propio progreso (en vez de una rampa lineal) para
+            // que el deslizamiento arranque y remate con calma, como una
+            // tapa que se abre con cuidado en vez de moverse a ritmo
             // constante.
             function smoothstep(t) { return t * t * (3 - 2 * t); }
             var leaves = [];
@@ -1352,10 +1356,12 @@
                     backShade.className = "porta-flipbook-leaf-shade";
                     var front = document.createElement("div");
                     front.className = "porta-flipbook-leaf-face porta-flipbook-leaf-front";
+                    if (k === 0) front.className += " porta-flipbook-cover-face porta-flipbook-cover-front";
                     if (spreads[k].right) front.appendChild(clonePic(spreads[k].right));
                     front.appendChild(frontShade);
                     var back = document.createElement("div");
                     back.className = "porta-flipbook-leaf-face porta-flipbook-leaf-back";
+                    if (k === last - 1) back.className += " porta-flipbook-cover-face porta-flipbook-cover-back";
                     if (spreads[k + 1].left) back.appendChild(clonePic(spreads[k + 1].left));
                     back.appendChild(backShade);
                     leaf.appendChild(front);
@@ -1399,12 +1405,35 @@
                     setVis(h.right, f === 0 ? k === i : k === i + 1);
                 });
 
+                // Progreso de apertura/cierre de las tapas: 0 = cerrada y
+                // centrada, 1 = ya en su posición normal de página abierta.
+                // La portada recorre ese progreso en los primeros EDGE_FADE
+                // del primer pase; la contraportada, en el tramo final del
+                // último. Fuera de esos dos tramos no aplica (valor de
+                // reposo: la tapa ya está del todo abierta o del todo
+                // cerrada, según el caso).
+                var frontOpenness = i === 0 ? smoothstep(clamp(f / EDGE_FADE, 0, 1)) : 1;
+                var backOpenness = i === last ? 1
+                    : (i === last - 1 ? smoothstep(clamp((f - (1 - EDGE_FADE)) / EDGE_FADE, 0, 1)) : 0);
+
                 var lift = f === 0 ? 0 : Math.sin(Math.PI * f);
                 leaves.forEach(function (L, k) {
                     var active = f > 0 && k === i;
                     setVis(L.el, active);
                     if (!active) return;
-                    L.el.style.transform = "rotateY(" + (-180 * f).toFixed(2) + "deg)";
+                    // Desplazamiento rígido de la tapa: -50%/+50% (centrada,
+                    // en unidades relativas a la propia hoja) cuando está
+                    // cerrada, 0% en cuanto alcanza su posición normal de
+                    // página abierta. Se compone con el giro en el mismo
+                    // transform -- ambos son rígidos (sin fundir/mezclar
+                    // imágenes), igual que un libro real donde la tapa no se
+                    // difumina al abrirse, se desliza.
+                    var shiftPct = 0;
+                    if (k === 0) shiftPct = -50 * (1 - frontOpenness);
+                    else if (k === last - 1) shiftPct = 50 * backOpenness;
+                    var transform = "rotateY(" + (-180 * f).toFixed(2) + "deg)";
+                    if (shiftPct) transform = "translateX(" + shiftPct.toFixed(2) + "%) " + transform;
+                    L.el.style.transform = transform;
                     setOpacity(L.frontShade, lift * 0.5);
                     setOpacity(L.backShade, lift * 0.5);
                 });
@@ -1413,21 +1442,8 @@
                 setOpacity(castRight, lift * (1 - f) * 0.6);
                 setOpacity(castLeft, lift * f * 0.6);
 
-                // Cubiertas cerradas: la portada se funde a partir del
-                // reposo (i=0, f=0) hacia la disposición abierta durante los
-                // primeros EDGE_FADE del primer pase; la contraportada hace
-                // lo simétrico en el tramo final del último pase. Fuera de
-                // esos dos tramos quedan totalmente ocultas.
-                var frontOpenness = i === 0 ? smoothstep(clamp(f / EDGE_FADE, 0, 1)) : 1;
-                setOpacity(coverOverlay, 1 - frontOpenness);
-                setVis(coverOverlay, frontOpenness < 1);
-                var backOpenness = i === last ? 1
-                    : (i === last - 1 ? smoothstep(clamp((f - (1 - EDGE_FADE)) / EDGE_FADE, 0, 1)) : 0);
-                setOpacity(backCoverOverlay, backOpenness);
-                setVis(backCoverOverlay, backOpenness > 0);
-
-                // El lomo no pinta nada sobre una cubierta cerrada: se apaga
-                // en fase con la misma cubierta que esté tapando la escena.
+                // El lomo no pinta nada sobre una tapa cerrada: se apaga en
+                // fase con la misma tapa que esté ocupando el centro.
                 var spineOpacity = 1;
                 if (i === 0) spineOpacity = frontOpenness;
                 else if (i === last) spineOpacity = 0;
