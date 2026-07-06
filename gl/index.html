@@ -182,7 +182,9 @@
             transform: scaleY(1);
         }
 
-        /* Ocultar suavemente el subtitulo al inicio (opacidad + desplazamiento) */
+        /* Ocultar suavemente el subtitulo al inicio (opacidad + desplazamiento).
+           El hueco (margin-top + altura de linea) se reserva SIEMPRE, tanto
+           visible como invisible: por eso NO se colapsa via max-height. */
         .hero-subtitle {
             display: inline-block !important;
             opacity: 0;
@@ -197,25 +199,37 @@
             transform: translateY(0);
         }
 
-        /* Nombre ligeramente mas grande al inicio, se reduce al cargar */
+        /* El nombre mantiene siempre el mismo tamaño (antes se agrandaba en
+           la intro -7.5vw- y encogia al cargar -6.5vw-: ese cambio de
+           tamaño alteraba la altura total de hero-right-col mientras duraba
+           la transicion, desplazando "Aldara Alvarez" respecto al logo, que
+           no cambia de tamaño). */
         .hero-right-col .echo-text {
-            font-size: 7.5vw;
-            line-height: 1;
-            transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
-        }
-
-        body.loaded .hero-right-col .echo-text {
             font-size: 6.5vw;
+            line-height: 1;
         }
 
         @media (max-width: 768px) {
             .hero-right-col .echo-text {
-                font-size: 12.5vw;
-                transition: font-size 1.2s cubic-bezier(0.76, 0, 0.24, 1);
-            }
-            body.loaded .hero-right-col .echo-text {
                 font-size: 11vw;
             }
+        }
+
+        /* Ajuste optico: "ALDARA ALVAREZ" en mayusculas no tiene
+           descendentes, así que dentro de su propia caja de linea el hueco
+           vacio queda todo por debajo del texto -- su centro visual (el que
+           ve el ojo) queda mas alto que el centro real de esa caja, y por
+           tanto mas alto que el centro del logo (que si ocupa toda su caja).
+           Se nota sobre todo antes de que aparezca el subtitulo, que luego
+           "ancla" visualmente el conjunto y compensa la diferencia. Se
+           corrige con un pequeño desplazamiento que desaparece en cuanto el
+           subtitulo empieza a aparecer. */
+        .hero-right-col .echo-container {
+            transform: translateY(30px);
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        body.loaded .hero-right-col .echo-container {
+            transform: translateY(0);
         }
 
         /* Visitas repetidas en la misma sesion: sin barrido, hero ya abierto */
@@ -234,14 +248,9 @@
             transform: translateY(0);
             transition: none;
         }
-        html.no-intro .hero-right-col .echo-text {
-            font-size: 6.5vw;
+        html.no-intro .hero-right-col .echo-container {
+            transform: translateY(0);
             transition: none;
-        }
-        @media (max-width: 768px) {
-            html.no-intro .hero-right-col .echo-text {
-                font-size: 11vw;
-            }
         }
 
         /* --- Carrusel horizontal infinito: interior del cuaderno Porta --- */
@@ -933,7 +942,7 @@
                 <h3>Proxectos Destacados</h3>
                 <ul>
                     <li><a href="projects/elviejoyelmar">El viejo y&nbsp;el mar</a></li>
-                    <li><a href="projects/namaste">Namasté</a></li>
+                    <li><a href="projects/porta">Porta</a></li>
                     <li><a href="projects/formayfuncion">Forma y&nbsp;función</a></li>
                     <li><a href="projects/casadecor">Casa Decor</a></li>
                 </ul>
