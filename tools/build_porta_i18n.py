@@ -70,7 +70,7 @@ EN = [
     ('class="dock-tooltip">Idioma</span>', 'class="dock-tooltip">Language</span>'),
     ('data-label="Contacto"', 'data-label="Contact"'),
     ('class="dock-tooltip">Contacto</span>', 'class="dock-tooltip">Contact</span>'),
-    ('<span class="back-arrow">←</span> Proyectos</a>', '<span class="back-arrow">←</span> Projects</a>'),
+    ('<span class="back-arrow">←</span> Volver a inicio</a>', '<span class="back-arrow">←</span> Back to home</a>'),
     # intro
     ('alt="Porta — ilustración de portada"', 'alt="Porta — cover illustration"'),
     ('proyecto de&nbsp;diseño de&nbsp;identidad visual y&nbsp;editorial</p>',
@@ -170,7 +170,7 @@ GL = [
     ('class="dock-tooltip">Proyectos</span>', 'class="dock-tooltip">Proxectos</span>'),
     ('data-label="Sobre Mí"', 'data-label="Sobre Min"'),
     ('class="dock-tooltip">Sobre Mí</span>', 'class="dock-tooltip">Sobre Min</span>'),
-    ('<span class="back-arrow">←</span> Proyectos</a>', '<span class="back-arrow">←</span> Proxectos</a>'),
+    ('<span class="back-arrow">←</span> Volver a inicio</a>', '<span class="back-arrow">←</span> Volver ao inicio</a>'),
     # intro
     ('alt="Porta — ilustración de portada"', 'alt="Porta — ilustración de portada"'),
     ('proyecto de&nbsp;diseño de&nbsp;identidad visual y&nbsp;editorial</p>',

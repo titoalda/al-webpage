@@ -404,7 +404,9 @@
                 position: relative;
                 width: min(94vw, 680px);
                 aspect-ratio: 2000 / 1339;
-                perspective: 2800px;
+                overflow: hidden;
+                border-radius: 4px;
+                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.55);
                 user-select: none;
                 cursor: grab;
                 touch-action: none;
@@ -412,7 +414,8 @@
             .porta-flipbook:active {
                 cursor: grabbing;
             }
-            /* Sombra de "lomo" central, donde se encuadernan las dos páginas */
+            /* Sombra de "lomo" central, donde se encuadernan las dos páginas
+               de cada pliego */
             .porta-flipbook::before {
                 content: "";
                 position: absolute;
@@ -425,64 +428,141 @@
                 z-index: 999;
                 pointer-events: none;
             }
+            /* El stage aporta la perspectiva 3D a la hoja giratoria, pero NO
+               lleva transform-style: preserve-3d: cada hijo se aplana por
+               separado y el apilamiento entre ellos depende solo del z-index
+               (si compartieran un contexto 3D, el navegador los ordenaria
+               por profundidad real tras rotar, ignorando el z-index, y se
+               veria un instante la hoja equivocada durante el giro). Solo la
+               hoja giratoria tiene su propio preserve-3d, para que su frente
+               y su reverso giren bien como las dos caras de una pagina. */
             .porta-flipbook-stage {
                 position: absolute;
                 inset: 0;
-                transform-style: preserve-3d;
+                perspective: 2600px;
             }
-            /* Página base a la izquierda: lo que se ve antes de pasar ninguna
-               hoja (el "hueco" del libro abierto) y lo que queda por debajo
-               de la pila de páginas ya leídas. */
-            /* Cada lado lleva su propia sombra de profundidad (en vez de una
-               sombra unica para todo el contenedor), para que se apague junto
-               con la opacidad cuando ese lado esta vacio y no queden "bordes
-               de libro" flotando donde todavia no hay pagina. */
-            .porta-flipbook-leftbase,
-            .porta-flipbook-rightbase {
+            /* Base fija detras de toda la pila de pliegos: se ve antes del
+               primer pase y despues del ultimo, como el "libro" que sostiene
+               las hojas por leer/ya leidas. */
+            /* Cada lado lleva su propia sombra de profundidad, para que se
+               apague junto con la opacidad cuando ese lado esta vacio y no
+               queden "bordes de libro" flotando donde todavia no hay pagina. */
+            /* Fondo fijo detras de toda la pila: se ve al terminar la
+               ultima apertura (o si algo tarda en cargar). */
+            .porta-flipbook-base {
+                position: absolute;
+                inset: 0;
+                background: #111111;
+                z-index: 0;
+            }
+            /* Los .porta-flipbook-page originales son solo el ALMACEN de
+               contenido: el script los oculta al arrancar y construye a
+               partir de ellos la maquinaria real del giro (mitades fijas +
+               hojas giratorias). Sin JS se sigue viendo la portada. */
+            .porta-flipbook-page {
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+            }
+            .porta-flipbook-is3d .porta-flipbook-page {
+                display: none;
+            }
+            /* Mitades fijas del libro: la pagina izquierda y derecha de la
+               apertura visible. Durante el giro, la izquierda sigue siendo
+               la de la apertura actual (la hoja nueva cae encima de ella) y
+               la derecha pasa a ser la de la apertura siguiente (la hoja al
+               levantarse la deja al descubierto). */
+            .porta-flipbook-half {
                 position: absolute;
                 top: 0;
-                width: 50%;
                 height: 100%;
-                background: #111111;
-                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.55);
-                z-index: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                width: 50%;
+                overflow: hidden;
+                background-color: #1a1a1a;
+                visibility: hidden;
+                z-index: 10;
             }
-            .porta-flipbook-leftbase {
+            .porta-flipbook-half-left { left: 0; }
+            .porta-flipbook-half-right { left: 50%; }
+            .porta-flipbook-half picture,
+            .porta-flipbook-leaf-face picture {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .porta-flipbook-half img,
+            .porta-flipbook-leaf-face img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            /* Sombra que la hoja levantada proyecta sobre la pagina que hay
+               debajo, anclada al lomo. */
+            .porta-flipbook-cast {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 50%;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 30;
+            }
+            .porta-flipbook-cast-left {
                 left: 0;
-                border-radius: 4px 0 0 4px;
-                opacity: 0;
-                transition: opacity 1s ease;
+                background: linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 70%);
             }
-            /* Antes de pasar la primera página no hay "lado izquierdo" del
-               libro todavía -- se ve como un libro cerrado mostrando solo
-               la portada. En cuanto se empieza a pasar página, aparece. */
-            .porta-flipbook-leftbase.is-visible {
-                opacity: 1;
+            .porta-flipbook-cast-right {
+                left: 50%;
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 70%);
             }
-            .porta-flipbook-rightbase {
-                right: 0;
-                border-radius: 0 4px 4px 0;
-                transition: opacity 1s ease;
-            }
-            /* Al terminar de pasar todas las páginas, el lado derecho se
-               desvanece hasta transparentarse y deja ver el fondo de la
-               sección -- así se entiende que el flipbook ha terminado, en
-               vez de un aviso escrito. */
-            .porta-flipbook-rightbase.is-visible {
-                opacity: 0;
-            }
-            .porta-flipbook-page {
+            /* La hoja giratoria: media pagina (la derecha de la apertura
+               actual) que pivota sobre el lomo. Su frente es esa pagina
+               derecha y su reverso es la pagina izquierda de la apertura
+               siguiente -- las dos caras ensenan siempre contenido real,
+               que es lo que evita la "mascara negra" del giro antiguo. */
+            .porta-flipbook-leaf {
                 position: absolute;
                 top: 0;
                 left: 50%;
                 width: 50%;
                 height: 100%;
+                transform-origin: left center;
                 transform-style: preserve-3d;
-                transform-origin: 0% 50%;
+                visibility: hidden;
+                z-index: 60;
                 will-change: transform;
+            }
+            .porta-flipbook-leaf-face {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                background-color: #1a1a1a;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+            .porta-flipbook-leaf-back {
+                transform: rotateY(180deg);
+            }
+            /* Sombreado sobre la propia hoja mientras esta en el aire: se
+               enciende a mitad de giro y se apaga al aterrizar. En ambas
+               caras el lado oscuro queda pegado al lomo. */
+            .porta-flipbook-leaf-shade {
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .porta-flipbook-leaf-front .porta-flipbook-leaf-shade {
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0) 55%);
+            }
+            .porta-flipbook-leaf-back .porta-flipbook-leaf-shade {
+                background: linear-gradient(270deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0) 55%);
+            }
+            /* Antes de que el script pinte el primer frame, solo la portada
+               es visible (evita ver todas las aperturas apiladas). */
+            .porta-flipbook-page[data-index="0"] {
+                opacity: 1;
             }
             .porta-flipbook-face {
                 position: absolute;
@@ -494,7 +574,33 @@
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
             }
-            .porta-flipbook-face img {
+            .porta-flipbook-spread {
+                display: flex;
+                width: 100%;
+                height: 100%;
+            }
+            /* Portada y contraportada van solas (sin pareja), ocupando
+               media hoja como una unica pagina. La portada aparece en la
+               derecha (como el libro cerrado, mostrando solo la cubierta) y
+               la contraportada en la izquierda (como si el libro se
+               cerrase de nuevo tras la ultima apertura). */
+            .porta-flipbook-spread-solo-right {
+                justify-content: flex-end;
+            }
+            .porta-flipbook-spread-solo-left {
+                justify-content: flex-start;
+            }
+            .porta-flipbook-spread.porta-flipbook-spread-solo-right picture,
+            .porta-flipbook-spread.porta-flipbook-spread-solo-left picture {
+                flex: 0 1 50%;
+            }
+            .porta-flipbook-spread picture {
+                display: block;
+                flex: 1 1 50%;
+                min-width: 0;
+                height: 100%;
+            }
+            .porta-flipbook-spread img {
                 display: block;
                 width: 100%;
                 height: 100%;
@@ -593,7 +699,7 @@
     </header>
 
     <div class="back-btn-wrapper">
-        <a href="../projects.html" class="back-btn"><span class="back-arrow">←</span> Proxectos</a>
+        <a href="../" class="back-btn"><span class="back-arrow">←</span> Volver ao inicio</a>
     </div>
 
 
@@ -660,55 +766,46 @@
             </a>
             <div class="porta-flipbook" id="porta-flipbook">
                 <div class="porta-flipbook-stage" id="porta-flipbook-stage">
-                    <div class="porta-flipbook-leftbase"></div>
-                    <div class="porta-flipbook-rightbase"></div>
+                    <div class="porta-flipbook-base"></div>
                     <div class="porta-flipbook-page" data-index="0">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-01.webp"><img src="../../static/images/porta/mook/porta-page-01.jpg" alt="Páxina 1 del mook PORTA" width="1004" height="1418" loading="eager" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-02.webp"><img src="../../static/images/porta/mook/porta-page-02.jpg" alt="Páxina 2 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread porta-flipbook-spread-solo-right"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-01.webp"><img src="../../static/images/porta/mook/porta-page-01.jpg" alt="Cubierta del mook PORTA" width="1004" height="1418" loading="eager" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="1">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-07.webp"><img src="../../static/images/porta/mook/porta-page-07.jpg" alt="Páxina 7 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-08.webp"><img src="../../static/images/porta/mook/porta-page-08.jpg" alt="Páxina 8 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-16.webp"><img src="../../static/images/porta/mook/porta-page-16.jpg" alt="Páxina 16 del mook PORTA" width="1004" height="1418" loading="eager" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-17.webp"><img src="../../static/images/porta/mook/porta-page-17.jpg" alt="Páxina 17 del mook PORTA" width="1004" height="1418" loading="eager" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="2">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-15.webp"><img src="../../static/images/porta/mook/porta-page-15.jpg" alt="Páxina 15 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-16.webp"><img src="../../static/images/porta/mook/porta-page-16.jpg" alt="Páxina 16 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-24.webp"><img src="../../static/images/porta/mook/porta-page-24.jpg" alt="Páxina 24 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-25.webp"><img src="../../static/images/porta/mook/porta-page-25.jpg" alt="Páxina 25 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="3">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-19.webp"><img src="../../static/images/porta/mook/porta-page-19.jpg" alt="Páxina 19 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-20.webp"><img src="../../static/images/porta/mook/porta-page-20.jpg" alt="Páxina 20 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-32.webp"><img src="../../static/images/porta/mook/porta-page-32.jpg" alt="Páxina 32 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-33.webp"><img src="../../static/images/porta/mook/porta-page-33.jpg" alt="Páxina 33 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="4">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-31.webp"><img src="../../static/images/porta/mook/porta-page-31.jpg" alt="Páxina 31 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-32.webp"><img src="../../static/images/porta/mook/porta-page-32.jpg" alt="Páxina 32 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-40.webp"><img src="../../static/images/porta/mook/porta-page-40.jpg" alt="Páxina 40 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-41.webp"><img src="../../static/images/porta/mook/porta-page-41.jpg" alt="Páxina 41 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="5">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-39.webp"><img src="../../static/images/porta/mook/porta-page-39.jpg" alt="Páxina 39 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-40.webp"><img src="../../static/images/porta/mook/porta-page-40.jpg" alt="Páxina 40 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-48.webp"><img src="../../static/images/porta/mook/porta-page-48.jpg" alt="Páxina 48 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-49.webp"><img src="../../static/images/porta/mook/porta-page-49.jpg" alt="Páxina 49 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="6">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-41.webp"><img src="../../static/images/porta/mook/porta-page-41.jpg" alt="Páxina 41 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-42.webp"><img src="../../static/images/porta/mook/porta-page-42.jpg" alt="Páxina 42 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-56.webp"><img src="../../static/images/porta/mook/porta-page-56.jpg" alt="Páxina 56 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-57.webp"><img src="../../static/images/porta/mook/porta-page-57.jpg" alt="Páxina 57 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="7">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-57.webp"><img src="../../static/images/porta/mook/porta-page-57.jpg" alt="Páxina 57 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-58.webp"><img src="../../static/images/porta/mook/porta-page-58.jpg" alt="Páxina 58 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-64.webp"><img src="../../static/images/porta/mook/porta-page-64.jpg" alt="Páxina 64 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-65.webp"><img src="../../static/images/porta/mook/porta-page-65.jpg" alt="Páxina 65 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="8">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-61.webp"><img src="../../static/images/porta/mook/porta-page-61.jpg" alt="Páxina 61 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-62.webp"><img src="../../static/images/porta/mook/porta-page-62.jpg" alt="Páxina 62 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-72.webp"><img src="../../static/images/porta/mook/porta-page-72.jpg" alt="Páxina 72 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-73.webp"><img src="../../static/images/porta/mook/porta-page-73.jpg" alt="Páxina 73 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="9">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-69.webp"><img src="../../static/images/porta/mook/porta-page-69.jpg" alt="Páxina 69 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-70.webp"><img src="../../static/images/porta/mook/porta-page-70.jpg" alt="Páxina 70 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                    </div>
-                    <div class="porta-flipbook-page" data-index="10">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-87.webp"><img src="../../static/images/porta/mook/porta-page-87.jpg" alt="Páxina 87 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-88.webp"><img src="../../static/images/porta/mook/porta-page-88.jpg" alt="Páxina 88 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                    </div>
-                    <div class="porta-flipbook-page" data-index="11">
-                        <div class="porta-flipbook-face porta-flipbook-front"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-97.webp"><img src="../../static/images/porta/mook/porta-page-97.jpg" alt="Páxina 97 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
-                        <div class="porta-flipbook-face porta-flipbook-back"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-98.webp"><img src="../../static/images/porta/mook/porta-page-98.jpg" alt="Páxina 98 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread porta-flipbook-spread-solo-left"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../../static/images/porta/mook/mobile/porta-page-98.webp"><img src="../../static/images/porta/mook/porta-page-98.jpg" alt="Contracubierta del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                 </div>
             </div>
@@ -716,7 +813,7 @@
                 <span>Ver manual de&nbsp;estilo editorial</span>
             </a>
             </div>
-            <div class="porta-flipbook-counter" id="porta-flipbook-counter">1 / 12</div>
+            <div class="porta-flipbook-counter" id="porta-flipbook-counter">1 / 10</div>
             <div class="porta-flipbook-controls">
                 <button type="button" class="porta-flipbook-btn" id="porta-flipbook-prev" aria-label="Páxina anterior">←</button>
                 <button type="button" class="porta-flipbook-btn" id="porta-flipbook-next" aria-label="Páxina seguinte">→</button>
@@ -767,6 +864,15 @@
                 <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-ilustracion-09.jpg" width="1000" height="981" alt="Ilustración á acuarela de Porta" loading="lazy"></div></div>
                 <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-ilustracion-10.jpg" width="1000" height="1339" alt="Ilustración á acuarela de Porta" loading="lazy"></div></div>
 
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-01.jpg" width="1400" height="1045" alt="Doble página interior de Porta: mapa ilustrado de la bahía de Baiona" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-02.jpg" width="1400" height="1045" alt="Doble página interior de Porta: ilustración de la Torre del Príncipe" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-03.jpg" width="1400" height="1045" alt="Doble página interior de Porta: astrolabio y cartografía de vientos" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-04.jpg" width="1400" height="1045" alt="Doble página interior de Porta: archivo fotográfico histórico de Baiona" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-05.jpg" width="1400" height="1045" alt="Doble página interior de Porta: monumento Encuentro entre Dos Mundos" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-06.jpg" width="1400" height="1045" alt="Doble página interior de Porta: manifiesto tipográfico del diseño total" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-07.jpg" width="1400" height="1045" alt="Doble página interior de Porta: ilustración de ave marina sobre los acantilados" loading="lazy"></div></div>
+                <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-interior-08.jpg" width="1400" height="1045" alt="Doble página interior de Porta: ilustración de la estatua ecuestre de Alfonso IX" loading="lazy"></div></div>
+
                 <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-papeleria.jpg" width="1000" height="1000" alt="Papelería corporativa de Porta" loading="lazy"></div></div>
                 <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-merchandising.jpg" width="1000" height="1000" alt="Merchandising de Porta" loading="lazy"></div></div>
                 <div class="porta-gallery-item"><div class="porta-gallery-tilt"><img src="../../static/images/porta/porta-mook-horizontal.jpg" width="1000" height="671" alt="Mockup editorial de Porta" loading="lazy"></div></div>
@@ -812,7 +918,7 @@
                 <h3>Proxectos Destacados</h3>
                 <ul>
                     <li><a href="elviejoyelmar">El viejo y&nbsp;el mar</a></li>
-                    <li><a href="namaste">Namasté</a></li>
+                    <li><a href="porta">Porta</a></li>
                     <li><a href="formayfuncion">Forma y&nbsp;función</a></li>
                     <li><a href="casadecor">Casa Decor</a></li>
                 </ul>
@@ -1046,7 +1152,7 @@
         // de CSS intentando perseguir un valor que ya cambiaba a cada
         // instante generaba un doble suavizado con retardo.
         if (introBlocks.length && !prefersReducedMotion) {
-            var MAX_BLUR_PX = 7;
+            var MAX_BLUR_PX = 3.5;
             var BLUR_EASE = 0.1;
             var blockStates = Array.prototype.map.call(introBlocks, function (block) {
                 return { el: block, blur: 0, target: 0 };
@@ -1074,8 +1180,12 @@
             })();
         }
 
-        // Flipbook: pasa las páginas simulando el giro real de una hoja de
-        // libro (rotateY sobre el lomo, con sombreado dinámico). Se controla
+        // Flipbook: pasa entre aperturas del mook con un giro 3D de hoja
+        // real. Cada apertura se divide en sus dos medias páginas; la hoja
+        // que gira lleva la página derecha actual en el frente y la página
+        // izquierda de la apertura siguiente en el reverso, de modo que
+        // durante todo el giro se ve contenido real (sin reverso negro,
+        // que era el problema del giro de pliegos completos). Se controla
         // con rueda/trackpad (vertical u horizontal), arrastre táctil o de
         // ratón con detección de "flick" (un gesto rápido pasa página aunque
         // el recorrido sea corto), toque/click simple (mitad derecha avanza,
@@ -1088,11 +1198,10 @@
             var stage = document.getElementById("porta-flipbook-stage");
             var pageEls = Array.prototype.slice.call(stage.querySelectorAll(".porta-flipbook-page"));
             var total = pageEls.length;
+            var last = total - 1; // última apertura navegable: la contraportada queda a la vista
             var counterEl = document.getElementById("porta-flipbook-counter");
             var prevBtn = document.getElementById("porta-flipbook-prev");
             var nextBtn = document.getElementById("porta-flipbook-next");
-            var rightBase = flipbookEl.querySelector(".porta-flipbook-rightbase");
-            var leftBase = flipbookEl.querySelector(".porta-flipbook-leftbase");
             if (!total || !counterEl || !prevBtn || !nextBtn) return;
 
             var target = 0;   // 0..total, con decimales durante el gesto
@@ -1103,64 +1212,133 @@
             var lastTs = 0;
 
             // Constantes de tiempo del suavizado exponencial (por segundo):
-            // arrastrando, la hoja va pegada al dedo; al soltar, se asienta
-            // con una caída más suave y natural.
+            // arrastrando, la hoja va pegada al dedo; al soltar, el giro se
+            // asienta rápido -- una cola exponencial lenta se percibe como
+            // "la página tarda en caer".
             var FOLLOW_RATE = prefersReducedMotion ? 1000 : 16;
-            var SETTLE_RATE = prefersReducedMotion ? 1000 : 9;
+            var SETTLE_RATE = prefersReducedMotion ? 1000 : 12;
 
             function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
-            // Referencias cacheadas una sola vez: antes paint() hacía dos
-            // querySelectorAll por página en CADA frame (24 consultas DOM a
-            // 60fps solo para encontrar nodos que nunca cambian).
-            var pages = pageEls.map(function (page) {
-                return {
-                    el: page,
-                    shades: Array.prototype.slice.call(page.querySelectorAll(".porta-flipbook-shade")),
-                    faces: Array.prototype.slice.call(page.querySelectorAll(".porta-flipbook-face")),
-                    lastProgress: -1
-                };
+            // --- Construcción de la maquinaria del giro -----------------
+            // Los .porta-flipbook-page del HTML son solo el almacén de
+            // contenido. De cada uno se extraen sus dos medias páginas y
+            // con clones de esas <picture> se montan: (a) las mitades fijas
+            // izquierda/derecha de cada apertura y (b) una hoja giratoria
+            // por transición, con la página derecha actual en el frente y
+            // la izquierda de la apertura siguiente en el reverso.
+            function spreadHalves(page) {
+                var spread = page.querySelector(".porta-flipbook-spread");
+                var pics = spread.querySelectorAll("picture");
+                if (spread.classList.contains("porta-flipbook-spread-solo-right")) return { left: null, right: pics[0] };
+                if (spread.classList.contains("porta-flipbook-spread-solo-left")) return { left: pics[0], right: null };
+                return { left: pics[0] || null, right: pics[1] || null };
+            }
+            // Los clones conservan el loading original (portada eager,
+            // resto lazy): la descarga real la fuerza el precalentamiento
+            // con decode() cuando el flipbook se acerca al viewport.
+            function clonePic(pic) {
+                return pic.cloneNode(true);
+            }
+            var spreads = pageEls.map(spreadHalves);
+            var halfEls = spreads.map(function (s) {
+                var pair = { left: null, right: null };
+                ["left", "right"].forEach(function (side) {
+                    if (!s[side]) return;
+                    var el = document.createElement("div");
+                    el.className = "porta-flipbook-half porta-flipbook-half-" + side;
+                    el.appendChild(clonePic(s[side]));
+                    stage.appendChild(el);
+                    pair[side] = el;
+                });
+                return pair;
             });
+            var castLeft = document.createElement("div");
+            castLeft.className = "porta-flipbook-cast porta-flipbook-cast-left";
+            var castRight = document.createElement("div");
+            castRight.className = "porta-flipbook-cast porta-flipbook-cast-right";
+            stage.appendChild(castLeft);
+            stage.appendChild(castRight);
+            var leaves = [];
+            (function buildLeaves() {
+                for (var k = 0; k < total - 1; k++) {
+                    var leaf = document.createElement("div");
+                    leaf.className = "porta-flipbook-leaf";
+                    var frontShade = document.createElement("div");
+                    frontShade.className = "porta-flipbook-leaf-shade";
+                    var backShade = document.createElement("div");
+                    backShade.className = "porta-flipbook-leaf-shade";
+                    var front = document.createElement("div");
+                    front.className = "porta-flipbook-leaf-face porta-flipbook-leaf-front";
+                    if (spreads[k].right) front.appendChild(clonePic(spreads[k].right));
+                    front.appendChild(frontShade);
+                    var back = document.createElement("div");
+                    back.className = "porta-flipbook-leaf-face porta-flipbook-leaf-back";
+                    if (spreads[k + 1].left) back.appendChild(clonePic(spreads[k + 1].left));
+                    back.appendChild(backShade);
+                    leaf.appendChild(front);
+                    leaf.appendChild(back);
+                    stage.appendChild(leaf);
+                    leaves.push({ el: leaf, frontShade: frontShade, backShade: backShade });
+                }
+            })();
+            // Con la maquinaria montada, los originales se ocultan (CSS).
+            flipbookEl.classList.add("porta-flipbook-is3d");
+
+            // Escrituras de estilo con caché: solo se toca el DOM cuando el
+            // valor cambia de verdad (paint corre en cada frame del giro).
+            function setVis(el, on) {
+                if (!el || el._vis === on) return;
+                el._vis = on;
+                el.style.visibility = on ? "visible" : "hidden";
+            }
+            function setOpacity(el, v) {
+                var s = v.toFixed(3);
+                if (el._op === s) return;
+                el._op = s;
+                el.style.opacity = s;
+            }
             var lastCounterText = "";
 
             function paint() {
-                pages.forEach(function (p, i) {
-                    var progress = clamp(current - i, 0, 1);
-                    // Las páginas en reposo (ya pasadas o aún sin pasar) no se
-                    // repintan: solo se escriben estilos de las hojas cuyo
-                    // ángulo ha cambiado de verdad en este frame.
-                    if (progress === p.lastProgress) return;
-                    p.lastProgress = progress;
+                var pos = clamp(current, 0, last);
+                var i = Math.floor(pos);
+                var f = pos - i;
+                if (i >= last) { i = last; f = 0; }
+                if (f < 0.001) f = 0;
+                if (f > 0.999) { i += 1; f = 0; }
 
-                    var page = p.el;
-                    var angle = progress * -180;
-                    // La página se "levanta" ligeramente del lomo a mitad de
-                    // giro (translateZ en forma de arco) para simular el
-                    // combado real de una hoja de papel al pasarla, en vez
-                    // de una rotación plana y rígida.
-                    var lifted = Math.sin(progress * Math.PI);
-                    var lift = lifted * 26;
-                    page.style.transform = "rotateY(" + angle.toFixed(2) + "deg) translateZ(" + lift.toFixed(2) + "px)";
-                    page.style.zIndex = progress < 0.5 ? (total - i) : i;
-                    var shade = lifted * 0.55;
-                    for (var f = 0; f < p.shades.length; f++) { p.shades[f].style.opacity = shade; }
-                    // box-shadow (no filter: drop-shadow) para no romper el
-                    // preserve-3d en Safari -- misma precaución que ya se
-                    // aplicó en el contenedor .porta-flipbook.
-                    var shadowCss = "0 " + (lifted * 14).toFixed(1) + "px " + (lifted * 18).toFixed(1) + "px rgba(0,0,0," + (lifted * 0.45).toFixed(2) + "), 0 0 0 1px var(--border-color) inset";
-                    for (var sf = 0; sf < p.faces.length; sf++) { p.faces[sf].style.boxShadow = shadowCss; }
+                halfEls.forEach(function (h, k) {
+                    // Izquierda: siempre la de la apertura actual (la hoja
+                    // nueva aterriza encima). Derecha: en reposo la actual;
+                    // durante el giro, la siguiente (la hoja al levantarse
+                    // la deja a la vista).
+                    setVis(h.left, k === i);
+                    setVis(h.right, f === 0 ? k === i : k === i + 1);
                 });
 
-                var pageNum = clamp(Math.floor(current) + 1, 1, total);
+                var lift = f === 0 ? 0 : Math.sin(Math.PI * f);
+                leaves.forEach(function (L, k) {
+                    var active = f > 0 && k === i;
+                    setVis(L.el, active);
+                    if (!active) return;
+                    L.el.style.transform = "rotateY(" + (-180 * f).toFixed(2) + "deg)";
+                    setOpacity(L.frontShade, lift * 0.5);
+                    setOpacity(L.backShade, lift * 0.5);
+                });
+                // La sombra proyectada acompaña a la hoja: sobre la página
+                // derecha al despegar, sobre la izquierda al aterrizar.
+                setOpacity(castRight, lift * (1 - f) * 0.6);
+                setOpacity(castLeft, lift * f * 0.6);
+
+                var pageNum = clamp(Math.round(current) + 1, 1, total);
                 var counterText = pageNum + " / " + total;
                 if (counterText !== lastCounterText) {
                     lastCounterText = counterText;
                     counterEl.textContent = counterText;
                 }
                 prevBtn.disabled = target <= 0;
-                nextBtn.disabled = target >= total;
-                if (rightBase) rightBase.classList.toggle("is-visible", current >= total - 0.02);
-                if (leftBase) leftBase.classList.toggle("is-visible", current > 0.02);
+                nextBtn.disabled = target >= last;
             }
 
             function render(ts) {
@@ -1197,7 +1375,7 @@
             }
 
             function goTo(v) {
-                target = clamp(Math.round(v), 0, total);
+                target = clamp(Math.round(v), 0, last);
                 clearTimeout(settleTimer);
                 kick();
             }
@@ -1217,10 +1395,10 @@
             flipbookEl.addEventListener("wheel", function (e) {
                 var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
                 var atStart = target <= 0 && delta < 0;
-                var atEnd = target >= total && delta > 0;
+                var atEnd = target >= last && delta > 0;
                 if (!atStart && !atEnd) {
                     e.preventDefault();
-                    target = clamp(target + delta * 0.006, 0, total);
+                    target = clamp(target + delta * 0.006, 0, last);
                     kick();
                     scheduleSettle(140);
                 }
@@ -1249,7 +1427,7 @@
             // página, como pasa con la rueda del ratón).
             function canDrag(delta) {
                 if (delta < 0 && startTarget <= 0) return false;
-                if (delta > 0 && startTarget >= total) return false;
+                if (delta > 0 && startTarget >= last) return false;
                 return true;
             }
             function dragMove(x, y) {
@@ -1259,7 +1437,7 @@
                 travelled = Math.max(travelled, Math.abs(dx), Math.abs(dy));
                 var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
                 if (!canDrag(delta)) return false;
-                target = clamp(startTarget + delta * 0.012, 0, total);
+                target = clamp(startTarget + delta * 0.012, 0, last);
                 // Velocidad instantánea suavizada (media exponencial) para
                 // decidir el "flick" al soltar.
                 var now = performance.now();
@@ -1289,7 +1467,7 @@
                 if (Math.abs(velocity) > FLICK) {
                     // Gesto rápido: pasa a la página siguiente/anterior en la
                     // dirección del gesto, aunque el recorrido fuese corto.
-                    target = clamp(velocity > 0 ? Math.floor(current) + 1 : Math.ceil(current) - 1, 0, total);
+                    target = clamp(velocity > 0 ? Math.floor(current) + 1 : Math.ceil(current) - 1, 0, last);
                 } else {
                     target = Math.round(target);
                 }
@@ -1316,31 +1494,42 @@
             flipbookEl.addEventListener("pointerup", function (e) { dragEnd(e.clientX); });
             flipbookEl.addEventListener("pointercancel", function () { dragEnd(); });
 
-            // Precalentamiento: fuerza la descarga y descodificación de todas
-            // las hojas en orden de lectura, una a una, nada más montar el
-            // flipbook. Sin esto, cada cara se descodifica (o incluso se
-            // descarga) justo cuando el giro la revela, y el primer paso por
-            // cada página se siente lento.
-            var warmImgs = [];
-            pageEls.forEach(function (page) {
-                var imgs = page.querySelectorAll("img");
-                for (var wi = 0; wi < imgs.length; wi++) warmImgs.push(imgs[wi]);
-            });
-            var warmIdx = 0;
-            function warmNext() {
-                if (warmIdx >= warmImgs.length) return;
-                var im = warmImgs[warmIdx++];
-                var done = function () { setTimeout(warmNext, 40); };
-                var decode = function () {
-                    if (im.decode) { im.decode().then(done, done); } else { done(); }
-                };
-                if (im.complete && im.naturalWidth > 0) { decode(); }
-                else {
-                    im.addEventListener("load", decode, { once: true });
-                    im.addEventListener("error", done, { once: true });
-                }
+            // Precalentamiento: fuerza la descarga y descodificación de TODAS
+            // las hojas en paralelo (no una a una) en cuanto el flipbook esté
+            // a punto de entrar en pantalla. Antes se hacia en cola, de una
+            // en una con una espera entre cada imagen -- si se pasaba de
+            // pagina antes de que la cola llegase a esa hoja (algo muy facil
+            // con pocas hojas), esa pagina aun no habia empezado siquiera a
+            // descargarse y se veia en negro o con la hoja anterior hasta
+            // que por fin le tocaba el turno. Al lanzarlas todas a la vez,
+            // decode() fuerza la descarga inmediata de cada una (aunque
+            // tenga loading="lazy") y el navegador las reparte en paralelo.
+            // Se calientan todas las imágenes del stage: los clones de las
+            // mitades y de las hojas comparten URL con los originales, así
+            // que cada página se descarga de la red una sola vez.
+            var warmImgs = Array.prototype.slice.call(stage.querySelectorAll("img"));
+            function warmAll() {
+                warmImgs.forEach(function (im) {
+                    var decode = function () {
+                        if (im.decode) { im.decode().catch(function () {}); }
+                    };
+                    if (im.complete && im.naturalWidth > 0) { decode(); }
+                    else { im.addEventListener("load", decode, { once: true }); }
+                });
             }
-            warmNext();
+            if ("IntersectionObserver" in window) {
+                var warmObs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            warmObs.disconnect();
+                            warmAll();
+                        }
+                    });
+                }, { rootMargin: "600px 0px" });
+                warmObs.observe(flipbookEl);
+            } else {
+                warmAll();
+            }
 
             // Pintado inicial (contador, sombras y estado de los botones)
             // sin esperar a la primera interacción.
