@@ -475,12 +475,18 @@
                 display: block;
                 position: absolute;
                 inset: 0;
+                overflow: hidden;
             }
+            /* Sangrado: cada foto se sobreescala un poco para que sus
+               propios bordes (el filete blanco del escaneado y el corte de
+               la página) queden recortados fuera del marco y no se vea el
+               canto de la imagen. */
             .porta-flipbook-face2 img {
                 display: block;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                transform: scale(1.045);
             }
             /* Tapas de cartoné: blancas (no el carmesí del material de
                referencia), con sombra suave para despegarlas del fondo
