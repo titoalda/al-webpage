@@ -415,9 +415,12 @@
                 cursor: grabbing;
             }
             /* Sombra de "lomo" central, donde se encuadernan las dos páginas
-               de cada pliego */
-            .porta-flipbook::before {
-                content: "";
+               de cada pliego. Elemento real (ya no ::before) porque su
+               opacidad la controla el script: con el libro cerrado (portada
+               o contraportada centradas, ver .porta-flipbook-edge-cover) no
+               hay lomo que sombrear y se apaga a 0 para no cruzar la
+               cubierta con una linea que no pinta nada ahi. */
+            .porta-flipbook-spine {
                 position: absolute;
                 left: 50%;
                 top: 0;
@@ -426,7 +429,47 @@
                 margin-left: -17px;
                 background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
                 z-index: 999;
+                opacity: 0;
                 pointer-events: none;
+            }
+            /* Portada/contraportada "cerradas": la cubierta centrada, con el
+               mismo ancho que una pagina suelta pero sin pegarse al borde
+               del libro abierto. Solo se ve en reposo exacto (antes del
+               primer pase / despues del ultimo); en cuanto se empieza a
+               pasar pagina se funde hacia la disposicion normal (mitad fija
+               + hoja) que ya esta pintada debajo en su posicion real. El
+               envoltorio cubre TODO el stage (no solo el ancho de la
+               cubierta) para tapar por completo la mitad fija de debajo --
+               si solo tapase su propio ancho, el trozo de esa mitad que
+               sobresale se transparentaria y se verian dos copias de la
+               portada superpuestas. */
+            .porta-flipbook-edge-cover {
+                position: absolute;
+                inset: 0;
+                background-color: #111111;
+                opacity: 0;
+                z-index: 90;
+                pointer-events: none;
+            }
+            .porta-flipbook-edge-cover-inner {
+                position: absolute;
+                left: 25%;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
+                background-color: #1a1a1a;
+            }
+            .porta-flipbook-edge-cover-inner picture {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .porta-flipbook-edge-cover-inner img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
             /* El stage aporta la perspectiva 3D a la hoja giratoria, pero NO
                lleva transform-style: preserve-3d: cada hijo se aplana por
@@ -1259,6 +1302,29 @@
             castRight.className = "porta-flipbook-cast porta-flipbook-cast-right";
             stage.appendChild(castLeft);
             stage.appendChild(castRight);
+            var spine = document.createElement("div");
+            spine.className = "porta-flipbook-spine";
+            stage.appendChild(spine);
+            // Cubiertas "cerradas": mismo contenido que la mitad fija de la
+            // portada/contraportada, pero centradas. Se superponen a todo lo
+            // demás (z-index por encima de hojas y mitades) y se funden en
+            // cuanto se empieza a pasar página, dejando ver la disposición
+            // normal -- ya correctamente colocada debajo -- sin ningún salto.
+            function buildEdgeCover(pic) {
+                var el = document.createElement("div");
+                el.className = "porta-flipbook-edge-cover";
+                var inner = document.createElement("div");
+                inner.className = "porta-flipbook-edge-cover-inner";
+                if (pic) inner.appendChild(clonePic(pic));
+                el.appendChild(inner);
+                stage.appendChild(el);
+                return el;
+            }
+            var coverOverlay = buildEdgeCover(spreads[0].right);
+            var backCoverOverlay = buildEdgeCover(spreads[last].left);
+            // Fracción del primer/último pase durante la que la cubierta
+            // cerrada se funde hacia la disposición abierta normal.
+            var EDGE_FADE = 0.22;
             var leaves = [];
             (function buildLeaves() {
                 for (var k = 0; k < total - 1; k++) {
@@ -1330,6 +1396,27 @@
                 // derecha al despegar, sobre la izquierda al aterrizar.
                 setOpacity(castRight, lift * (1 - f) * 0.6);
                 setOpacity(castLeft, lift * f * 0.6);
+
+                // Cubiertas cerradas: la portada se funde a partir del
+                // reposo (i=0, f=0) hacia la disposición abierta durante los
+                // primeros EDGE_FADE del primer pase; la contraportada hace
+                // lo simétrico en el tramo final del último pase. Fuera de
+                // esos dos tramos quedan totalmente ocultas.
+                var frontOpenness = i === 0 ? clamp(f / EDGE_FADE, 0, 1) : 1;
+                setOpacity(coverOverlay, 1 - frontOpenness);
+                setVis(coverOverlay, frontOpenness < 1);
+                var backOpenness = i === last ? 1
+                    : (i === last - 1 ? clamp((f - (1 - EDGE_FADE)) / EDGE_FADE, 0, 1) : 0);
+                setOpacity(backCoverOverlay, backOpenness);
+                setVis(backCoverOverlay, backOpenness > 0);
+
+                // El lomo no pinta nada sobre una cubierta cerrada: se apaga
+                // en fase con la misma cubierta que esté tapando la escena.
+                var spineOpacity = 1;
+                if (i === 0) spineOpacity = frontOpenness;
+                else if (i === last) spineOpacity = 0;
+                else if (i === last - 1) spineOpacity = 1 - backOpenness;
+                setOpacity(spine, spineOpacity);
 
                 var pageNum = clamp(Math.round(current) + 1, 1, total);
                 var counterText = pageNum + " / " + total;
