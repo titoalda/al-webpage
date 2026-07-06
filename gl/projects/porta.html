@@ -1260,6 +1260,14 @@
             // "la página tarda en caer".
             var FOLLOW_RATE = prefersReducedMotion ? 1000 : 16;
             var SETTLE_RATE = prefersReducedMotion ? 1000 : 12;
+            // Abrir o cerrar la cubierta es un gesto distinto al resto de
+            // páginas -- se quiere el ritmo pausado de quien abre un libro
+            // con cuidado, no el mismo golpe de muñeca de pasar una hoja
+            // interior. Se usan tasas mucho más bajas (tanto arrastrando
+            // como al asentarse) solo mientras el tramo recorrido toca la
+            // primera o la última apertura.
+            var EDGE_FOLLOW_RATE = prefersReducedMotion ? 1000 : 2.4;
+            var EDGE_SETTLE_RATE = prefersReducedMotion ? 1000 : 0.62;
 
             function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
@@ -1323,8 +1331,16 @@
             var coverOverlay = buildEdgeCover(spreads[0].right);
             var backCoverOverlay = buildEdgeCover(spreads[last].left);
             // Fracción del primer/último pase durante la que la cubierta
-            // cerrada se funde hacia la disposición abierta normal.
-            var EDGE_FADE = 0.22;
+            // cerrada se funde hacia la disposición abierta normal. Con el
+            // asentamiento ya ralentizado (EDGE_SETTLE_RATE) esta fracción
+            // se recorre despacio en tiempo real; se alarga respecto al
+            // resto del pase para que el descubrimiento se note pausado.
+            var EDGE_FADE = 0.4;
+            // Suaviza el propio fundido (en vez de una rampa lineal) para
+            // que el desvanecimiento arranque y remate con calma, como una
+            // pagina que se abre con cuidado en vez de deslizarse a ritmo
+            // constante.
+            function smoothstep(t) { return t * t * (3 - 2 * t); }
             var leaves = [];
             (function buildLeaves() {
                 for (var k = 0; k < total - 1; k++) {
@@ -1402,11 +1418,11 @@
                 // primeros EDGE_FADE del primer pase; la contraportada hace
                 // lo simétrico en el tramo final del último pase. Fuera de
                 // esos dos tramos quedan totalmente ocultas.
-                var frontOpenness = i === 0 ? clamp(f / EDGE_FADE, 0, 1) : 1;
+                var frontOpenness = i === 0 ? smoothstep(clamp(f / EDGE_FADE, 0, 1)) : 1;
                 setOpacity(coverOverlay, 1 - frontOpenness);
                 setVis(coverOverlay, frontOpenness < 1);
                 var backOpenness = i === last ? 1
-                    : (i === last - 1 ? clamp((f - (1 - EDGE_FADE)) / EDGE_FADE, 0, 1) : 0);
+                    : (i === last - 1 ? smoothstep(clamp((f - (1 - EDGE_FADE)) / EDGE_FADE, 0, 1)) : 0);
                 setOpacity(backCoverOverlay, backOpenness);
                 setVis(backCoverOverlay, backOpenness > 0);
 
@@ -1434,7 +1450,28 @@
                 // queremos un salto brusco al volver.
                 var dt = Math.min(Math.max((ts - lastTs) / 1000, 0.001), 0.05);
                 lastTs = ts;
-                var rate = dragging ? FOLLOW_RATE : SETTLE_RATE;
+                // El ritmo se decide por la posicion actual, no por todo el
+                // tramo del gesto: solo mientras la cubierta sigue tapando
+                // la escena (f dentro de EDGE_FADE) va despacio -- superado
+                // ese punto, aunque siga siendo la primera/ultima apertura,
+                // el resto del giro recupera el ritmo normal (si no, una
+                // sola tasa exponencial no puede dar a la vez una apertura
+                // pausada Y un aterrizaje del giro en tiempo razonable).
+                var edgePos = clamp(current, 0, last);
+                var edgeI = Math.floor(edgePos);
+                var edgeF = edgePos - edgeI;
+                if (edgeI >= last) { edgeI = last; edgeF = 0; }
+                // Se excluye un margen pequeño justo junto al reposo (0 o 1):
+                // al CERRAR una cubierta el propio destino (f=0 o f=1) cae
+                // dentro de la zona lenta, y una exponencial tan lenta
+                // tardaria ~10s reales en converger del todo aunque ya sea
+                // visualmente idéntica al reposo en menos de un segundo. Sin
+                // el margen, el ultimo tramo (ya invisible) se remata rápido.
+                var inCoverReveal = (edgeI === 0 && edgeF > 0.06 && edgeF < EDGE_FADE) ||
+                    (edgeI === last - 1 && edgeF > 1 - EDGE_FADE && edgeF < 0.94);
+                var rate = dragging
+                    ? (inCoverReveal ? EDGE_FOLLOW_RATE : FOLLOW_RATE)
+                    : (inCoverReveal ? EDGE_SETTLE_RATE : SETTLE_RATE);
                 current += (target - current) * (1 - Math.exp(-rate * dt));
                 var settled = Math.abs(target - current) < 0.0006;
                 if (settled) current = target;
