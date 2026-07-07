@@ -492,6 +492,9 @@
         }
 
         @media (max-width: 900px) {
+            .porta-carousel-section {
+                padding: 28px 0;
+            }
             .porta-carousel-layout {
                 flex-direction: column;
                 align-items: stretch;
@@ -499,17 +502,24 @@
             .porta-carousel-copy {
                 width: 100%;
                 padding: 0 6vw;
-                margin-bottom: 32px;
+                margin-bottom: 4px;
+            }
+            .porta-carousel-copy .section-title {
+                font-size: clamp(30px, 9vw, 38px);
+                margin: 0 0 8px 0;
+            }
+            .porta-carousel-copy .explode-desc {
+                margin: 0 0 14px;
             }
             .porta-carousel-viewport {
-                height: clamp(340px, 55vh, 420px);
-                padding: 24px 0;
+                height: clamp(340px, 56vh, 460px);
+                padding: 10px 0;
             }
             .porta-carousel-track {
-                padding: 0 30vw;
+                padding: 0 20vw;
             }
             .porta-carousel-item {
-                width: min(46vw, 260px);
+                width: min(64vw, 340px);
             }
             .porta-carousel-hint {
                 display: none;

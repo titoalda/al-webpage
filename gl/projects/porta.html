@@ -385,10 +385,39 @@
                 border-radius: 12px;
             }
             @media (max-width: 900px) {
+                /* La fila deja de generar caja propia: sus 3 hijos (manual
+                   izq., flipbook, manual dcha.) pasan a competir por orden
+                   directamente dentro de la columna de .porta-flipbook-section,
+                   junto al contador/controles/CTA -- así pueden colocarse
+                   debajo de todo eso sin tocar el HTML ni el layout de
+                   escritorio (que sigue usando la fila normal). */
                 .porta-flipbook-row {
-                    flex-direction: column;
+                    display: contents;
+                }
+                /* Orden en móvil: flipbook, contador, controles, CTA de
+                   tienda (desactivada por ahora) y, al final, los dos
+                   accesos a los manuales. */
+                .porta-flipbook {
+                    order: 1;
+                }
+                .porta-flipbook-counter {
+                    order: 2;
+                }
+                .porta-flipbook-controls {
+                    order: 3;
+                }
+                .porta-flipbook-cta {
+                    /* Desactivado temporalmente: no se enlaza a la tienda
+                       todavía. Sigue en el DOM (y con su order) por si se
+                       reactiva más adelante. !important porque la regla
+                       base .porta-flipbook-cta (display:flex) aparece más
+                       abajo en el CSS y, sin esto, gana en la cascada aunque
+                       esta media query "parezca" más específica. */
+                    display: none !important;
+                    order: 4;
                 }
                 .porta-flipbook-sidebtn {
+                    order: 5;
                     flex: none;
                     width: min(94vw, 680px);
                 }
@@ -428,12 +457,11 @@
             .porta-flipbook-book.porta-flipbook-book-closed-end {
                 transform: translateX(150%);
             }
-            /* Elementos que giran: las dos tapas (cartoné, tamaño completo
-               del libro) y las hojas interiores (algo más pequeñas, para
-               que asome el canto blanco de las tapas alrededor, como en un
-               libro de tapa dura real). Todos pivotan sobre el lomo (borde
-               izquierdo del contenedor) con transición CSS fija: 1.5s las
-               tapas, 0.5s las hojas. */
+            /* Elementos que giran: las dos tapas y las hojas interiores,
+               todas a tamaño completo del libro (sin canto de cartoné
+               asomando: las páginas van a sangre también en el interior).
+               Todos pivotan sobre el lomo (borde izquierdo del contenedor)
+               con transición CSS fija: 1.5s las tapas, 0.5s las hojas. */
             .porta-flipbook-board,
             .porta-flipbook-sheet {
                 position: absolute;
@@ -448,10 +476,7 @@
                 transition-duration: 1.5s;
             }
             .porta-flipbook-sheet {
-                top: 2.4%;
-                height: 95.2%;
-                left: 0;
-                width: 96.8%;
+                inset: 0;
             }
             .porta-flipbook-board.porta-flipbook-flipped,
             .porta-flipbook-sheet.porta-flipbook-flipped {
@@ -509,15 +534,11 @@
             .porta-flipbook-board .porta-flipbook-face2-back {
                 border-radius: 8px 3px 3px 8px;
             }
-            /* Página incrustada en la cara interior de una tapa: ocupa el
-               rectángulo exacto de las hojas (mismos porcentajes que
-               .porta-flipbook-sheet), pegada al lomo. En la cara trasera el
-               lomo queda en la derecha local (la cara está pre-girada). */
-            .porta-flipbook-face2 picture.porta-flipbook-inset-front {
-                inset: 2.4% 3.2% 2.4% 0;
-            }
+            /* Página incrustada en la cara interior de una tapa: a sangre,
+               igual que el resto de páginas (sin canto de cartoné). */
+            .porta-flipbook-face2 picture.porta-flipbook-inset-front,
             .porta-flipbook-face2 picture.porta-flipbook-inset-back {
-                inset: 2.4% 0 2.4% 3.2%;
+                inset: 0;
             }
             /* Sombreado de canto junto al lomo de cada cara de hoja (en vez
                de las imágenes de sombreado del material de referencia):
@@ -955,10 +976,8 @@
         // fallaba en Safari al combinarse con `transform`).
         function layout() {
             var width = grid.clientWidth;
-            var columns = 1;
+            var columns = 3;
             if (width >= 1300) columns = 4;
-            else if (width >= 900) columns = 3;
-            else if (width >= 600) columns = 2;
 
             var colWidth = (width - GAP * (columns - 1)) / columns;
             var colHeights = new Array(columns).fill(0);
