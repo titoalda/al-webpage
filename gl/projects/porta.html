@@ -205,6 +205,15 @@
                     height: 50vh;
                     width: 100%;
                 }
+                /* `.porta-intro` usa align-items: flex-start para el layout
+                   de escritorio (columnas lado a lado); en columna (móvil)
+                   ese mismo align-items encoge `.porta-intro-text` al ancho
+                   de su contenido más angosto -- antes no se notaba porque
+                   el texto visible ya forzaba el ancho completo, pero con
+                   solo el botón visible se encogía a su tamaño. */
+                .porta-intro-text {
+                    width: 100%;
+                }
                 .porta-intro-block,
                 .porta-intro-block:last-child {
                     min-height: 0;
@@ -212,18 +221,20 @@
                 }
                 /* Móvil: el texto de la intro es largo y hace el scroll
                    interminable -- se oculta por completo tras un botón
-                   único, opcional de abrir, en vez de obligar a bajar por
-                   los 5 bloques (titular + 01/02/03/04) para llegar al
+                   único y centrado que abre el mismo popup de "Briefing"
+                   que usa el resto de proyectos, en vez de obligar a bajar
+                   por los 5 bloques (titular + 01/02/03/04) para llegar al
                    flipbook. */
                 .porta-intro-text .porta-intro-block {
                     display: none;
                 }
                 .porta-intro-toggle {
                     display: inline-flex;
+                    align-self: center;
                     align-items: center;
                     justify-content: center;
-                    width: 100%;
-                    padding: 18px 24px;
+                    width: auto;
+                    padding: 18px 32px;
                     border: 1.5px solid var(--text-color);
                     border-radius: 9999px;
                     background-color: transparent;
@@ -235,12 +246,105 @@
                     letter-spacing: 0.05em;
                     cursor: pointer;
                 }
-                .porta-intro-text.is-expanded .porta-intro-toggle {
-                    display: none;
-                }
-                .porta-intro-text.is-expanded .porta-intro-block {
-                    display: flex;
-                }
+            }
+            /* --- Popup de briefing (mismo patrón que el resto de
+               proyectos, ver .briefing-popup en style_individualproject.css
+               -- porta.html no carga esa hoja de estilos porque es
+               autocontenida, así que se replica aquí escopeado). --- */
+            .briefing-popup {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10000;
+                visibility: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: visibility 0.3s;
+            }
+            .briefing-popup.active {
+                visibility: visible;
+            }
+            .briefing-popup .popup-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.75);
+                backdrop-filter: blur(8px);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .briefing-popup.active .popup-overlay {
+                opacity: 1;
+            }
+            .briefing-popup .popup-content {
+                position: relative;
+                width: 680px;
+                max-width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                background-color: #151515;
+                border: 1px solid var(--border-color);
+                border-radius: 20px;
+                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+                padding: 56px 48px;
+                box-sizing: border-box;
+                transform: scale(0.9);
+                opacity: 0;
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+                z-index: 1;
+            }
+            .briefing-popup.active .popup-content {
+                transform: scale(1);
+                opacity: 1;
+            }
+            .briefing-popup .close-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                color: var(--gray-dark);
+                font-size: 32px;
+                font-weight: 200;
+                cursor: pointer;
+                line-height: 1;
+                transition: color 0.3s, transform 0.3s;
+            }
+            .briefing-popup .close-btn:hover {
+                color: #ffffff;
+                transform: rotate(90deg);
+            }
+            .briefing-popup .popup-title {
+                font-family: var(--font-display);
+                font-size: 40px;
+                font-weight: 300;
+                text-transform: uppercase;
+                color: #ffffff;
+                margin: 0 0 24px 0;
+                letter-spacing: -0.01em;
+            }
+            /* Los .porta-intro-block clonados dentro del popup pierden el
+               aspecto de tarjeta (borde/fondo/min-height) para leerse como
+               texto continuo, y se fuerzan visibles: en el DOM original
+               nunca llegan a intersectar el viewport en móvil (siguen
+               display:none) así que la clase is-in que dispara su fade-in
+               nunca se añade -- sin este override se verían en opacity:0. */
+            .briefing-popup .popup-body .porta-intro-block {
+                display: block !important;
+                opacity: 1 !important;
+                transform: none !important;
+                border: none;
+                background: none;
+                padding: 0 0 32px;
+                min-height: 0;
+            }
+            .briefing-popup .popup-body .porta-intro-block:last-child {
+                padding-bottom: 0;
             }
             @media (prefers-reduced-motion: reduce) {
                 .porta-intro-block {
@@ -766,7 +870,7 @@
                 </div>
             </div>
             <div class="porta-intro-text" id="porta-intro-text">
-                <button type="button" class="porta-intro-toggle" id="porta-intro-toggle" aria-expanded="false">
+                <button type="button" class="porta-intro-toggle" id="porta-intro-toggle" aria-haspopup="dialog">
                     <span>Leer sobre el&nbsp;proyecto</span>
                 </button>
                 <div class="porta-intro-block">
@@ -807,6 +911,15 @@
             </div>
         </section>
 
+        <!-- Popup de briefing (solo se usa en móvil, disparado por #porta-intro-toggle) -->
+        <div id="porta-intro-popup" class="briefing-popup">
+            <div class="popup-overlay"></div>
+            <div class="popup-content">
+                <button type="button" id="porta-intro-popup-close" class="close-btn">&times;</button>
+                <h2 class="popup-title">Porta</h2>
+                <div class="popup-body"></div>
+            </div>
+        </div>
 
         <!-- Flipbook: selección curada de 24 páginas (12 hojas) a lo largo de todo el mook PORTA, terminando en la última página del PDF -->
         <section class="porta-flipbook-section">
@@ -1192,17 +1305,37 @@
             introBlocks.forEach(function (block) { block.classList.add("is-in"); });
         }
 
-        // Móvil: el texto de la intro empieza oculto tras un botón único
-        // (ver CSS @media max-width:1024px) para no alargar el scroll.
+        // Móvil: el texto de la intro empieza oculto (ver CSS @media
+        // max-width:1024px) y el botón único abre un popup de "briefing"
+        // -- mismo patrón que el resto de proyectos -- con una copia del
+        // contenido en vez de revelarlo en la propia página, para no
+        // alargar el scroll.
         (function () {
             var introToggle = document.getElementById("porta-intro-toggle");
-            var introTextEl = document.getElementById("porta-intro-text");
-            if (!introToggle || !introTextEl) return;
-            introToggle.addEventListener("click", function () {
-                introTextEl.classList.add("is-expanded");
-                introToggle.setAttribute("aria-expanded", "true");
-                introBlocks.forEach(function (block) { block.classList.add("is-in"); });
-            });
+            var popup = document.getElementById("porta-intro-popup");
+            if (!introToggle || !popup) return;
+            var popupBody = popup.querySelector(".popup-body");
+            var overlay = popup.querySelector(".popup-overlay");
+            var closeBtn = document.getElementById("porta-intro-popup-close");
+            var cloned = false;
+
+            function openPopup() {
+                if (!cloned) {
+                    introBlocks.forEach(function (block) {
+                        popupBody.appendChild(block.cloneNode(true));
+                    });
+                    cloned = true;
+                }
+                popup.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+            function closePopup() {
+                popup.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+            introToggle.addEventListener("click", openPopup);
+            closeBtn.addEventListener("click", closePopup);
+            overlay.addEventListener("click", closePopup);
         })();
 
         // Flipbook de tapa dura, con la mecánica del material de referencia
