@@ -2729,6 +2729,53 @@ footer {
     margin-top: auto;
 }
 
+/* Tarjeta destacada (Porta, proyecto principal): la imagen ya se ve a
+   todo color en reposo -- el resto de tarjetas solo revela color al pasar
+   el ratón, así que esta lee como "ya activada" sin necesitar interacción.
+   El resto son detalles discretos apoyados en la identidad real de Porta
+   (azul marino + dorado) y en su propio subtítulo editorial. */
+.project-stack-card.card-featured {
+    height: 68vh;
+    border-color: rgba(31, 76, 140, 0.35);
+    box-shadow: 0 -15px 50px rgba(31, 76, 140, 0.2), 0 -15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.project-stack-card.card-featured .card-image img {
+    filter: grayscale(0%);
+}
+
+.project-stack-card .card-eyebrow {
+    display: none;
+}
+
+.project-stack-card.card-featured .card-eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #d6a94a;
+    margin: 0 0 12px 0;
+}
+
+.project-stack-card.card-featured .card-title {
+    font-size: 44px;
+}
+
+.project-stack-card .card-subtitle {
+    display: none;
+}
+
+.project-stack-card.card-featured .card-subtitle {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 300;
+    color: #7ea3d9;
+    margin: 0 0 16px 0;
+}
+
 @media (max-width: 1024px) {
     .project-stack-card {
         grid-template-columns: 1fr;
@@ -2737,6 +2784,9 @@ footer {
         position: relative; /* Disable sticky stack on smaller heights to prevent cutoffs */
         top: auto;
         gap: 20px;
+    }
+    .project-stack-card.card-featured {
+        min-height: 78vh;
     }
     .project-stack-card .card-image {
         height: 35vh;
