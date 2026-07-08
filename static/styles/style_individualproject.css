@@ -356,6 +356,19 @@ body {
     #description-responsive {
         display: block !important;
     }
+    /* Botones sueltos a PDF (p.ej. "Propuesta de Señalética") dentro de
+       .fixed-content: en desktop quedan alineados a la izquierda con el
+       resto del texto, pero en móvil se centran para que no queden
+       colgando de un lado. */
+    #description-responsive .fixed-content > div[style*="margin-top"] {
+        text-align: center;
+    }
+    /* Los botones "Volver a inicio" / "Ver todos mis proyectos" quedaban
+       tapados por el header fijo en móvil -- no aportaban nada visible,
+       solo un hueco/residuo debajo del header. */
+    .back-btn-wrapper {
+        display: none;
+    }
 }
 
 .cover .right-column {

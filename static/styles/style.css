@@ -2869,6 +2869,14 @@ footer {
     box-sizing: border-box;
 }
 
+/* En móvil el header fijo lo tapaba -- quedaba como un hueco/residuo sin
+   nada útil visible debajo. */
+@media (max-width: 1024px) {
+    .back-btn-wrapper {
+        display: none;
+    }
+}
+
 .back-btn {
     display: inline-flex;
     align-items: center;
