@@ -246,6 +246,13 @@ header nav a:hover {
     z-index: 10;
 }
 
+/* Familia variable solo aqui: permite que el peso de fuente interpole de
+   forma continua en el efecto hover (ver index.html), en vez de saltar
+   entre los 3 cortes fijos (300/400/700) que usa el resto del sitio. */
+.echo-text.echo-front {
+    font-family: 'Clash Display Variable', var(--font-display);
+}
+
 .echo-back {
     position: absolute;
     top: 0;

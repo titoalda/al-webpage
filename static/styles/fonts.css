@@ -25,6 +25,18 @@
     src: url('../fonts/clash-display-700.woff2') format('woff2');
 }
 
+/* Corte variable: solo para efectos que interpolan el peso en tiempo real
+   (p.ej. el hover de "Aldara Álvarez"). Familia aparte para no interferir
+   con el font-matching de los 3 cortes fijos de arriba, usados en el resto
+   del sitio. */
+@font-face {
+    font-family: 'Clash Display Variable';
+    font-style: normal;
+    font-weight: 200 700;
+    font-display: swap;
+    src: url('../fonts/clash-display-variable.woff2') format('woff2');
+}
+
 @font-face {
     font-family: 'Satoshi';
     font-style: normal;
