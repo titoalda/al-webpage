@@ -70,6 +70,118 @@
             line-height: 1.3;
             margin: 0;
         }
+
+        /* --- Peza de peche: Porta como último elemento da lista --- */
+        .porta-finale {
+            display: flex;
+            align-items: center;
+            gap: 6vw;
+            padding: 100px 6vw;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .porta-finale.is-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .porta-finale-media {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1800px;
+        }
+        .porta-finale-tilt {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .porta-finale-tilt img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6));
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .porta-finale-tilt img.is-loaded {
+            opacity: 1;
+        }
+        .porta-finale-text {
+            flex: 1;
+            min-width: 0;
+            max-width: 480px;
+        }
+        .porta-finale-eyebrow {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--gray-dark);
+            margin: 0 0 16px;
+        }
+        .porta-finale-title {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: clamp(48px, 6vw, 80px);
+            text-transform: uppercase;
+            line-height: 0.95;
+            color: var(--text-color);
+            margin: 0 0 16px;
+        }
+        .porta-finale-subtitle {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            color: #7ea3d9;
+            margin: 0 0 24px;
+        }
+        .porta-finale-desc {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-muted);
+            max-width: 42ch;
+            margin: 0 0 40px;
+        }
+        @media (max-width: 1024px) {
+            .porta-finale {
+                flex-direction: column;
+                text-align: center;
+                padding: 70px 6vw;
+                gap: 40px;
+            }
+            .porta-finale-media {
+                perspective: none;
+            }
+            .porta-finale-tilt {
+                max-width: 260px;
+            }
+            .porta-finale-text {
+                max-width: 100%;
+            }
+            .porta-finale-desc {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .porta-finale {
+                transition: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
     </style>
 
     <script type="application/ld+json">
@@ -271,6 +383,22 @@
         </div>
     </div>
 
+    <!-- Peza de peche: Porta, proxecto principal -->
+    <section class="porta-finale" id="porta-finale">
+        <div class="porta-finale-media">
+            <div class="porta-finale-tilt" id="porta-finale-tilt">
+                <img src="../static/images/porta/porta-portada.webp" width="1195" height="1600" alt="Porta">
+            </div>
+        </div>
+        <div class="porta-finale-text">
+            <p class="porta-finale-eyebrow">Edición Nº1 · Mook editorial</p>
+            <h2 class="porta-finale-title">O&nbsp;meu último proxecto</h2>
+            <p class="porta-finale-subtitle">Porta — Cuadernos de&nbsp;Identidad Baionesa</p>
+            <p class="porta-finale-desc">Un&nbsp;mook editorial que&nbsp;traduce o&nbsp;patrimonio de&nbsp;Baiona nunha experiencia de&nbsp;lectura pausada. Identidade de&nbsp;marca, ilustración, fotografía e&nbsp;deseño editorial de&nbsp;principio a&nbsp;fin.</p>
+            <a href="projects/porta" class="button-circle">Ver proxecto →</a>
+        </div>
+    </section>
+
     <section class="journey-cta">
         <div class="journey-cta-inner" data-animate>
             <h2>Creamos algo xuntos?</h2>
@@ -365,6 +493,68 @@
             entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
         }, { threshold: 0.15 });
         revealEls.forEach(el => obs.observe(el));
+    </script>
+
+    <!-- Peza de peche de Porta: aparece ao entrar na pantalla + tilt 3D
+         seguindo o cursor (mesmo mecanismo que .porta-intro-tilt en
+         projects/porta.html) -->
+    <script>
+    (function () {
+        var finale = document.getElementById("porta-finale");
+        if (!finale) return;
+        var prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var canHover = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+        if ("IntersectionObserver" in window) {
+            var finaleObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        finale.classList.add("is-in");
+                        finaleObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            finaleObs.observe(finale);
+        } else {
+            finale.classList.add("is-in");
+        }
+
+        var img = finale.querySelector(".porta-finale-tilt img");
+        if (img) {
+            if (img.complete && img.naturalWidth > 0) {
+                img.classList.add("is-loaded");
+            } else {
+                img.addEventListener("load", function () { img.classList.add("is-loaded"); });
+            }
+        }
+
+        var tilt = document.getElementById("porta-finale-tilt");
+        if (tilt && canHover && !prefersReducedMotion) {
+            var tiltArea = tilt.closest(".porta-finale-media");
+            var maxTilt = 10;
+            var ease = 0.12;
+            var state = { tx: 0, ty: 0, rx: 0, ry: 0 };
+
+            tiltArea.addEventListener("mousemove", function (e) {
+                var rect = tiltArea.getBoundingClientRect();
+                var offsetX = e.clientX - rect.left - rect.width / 2;
+                var offsetY = e.clientY - rect.top - rect.height / 2;
+                state.tx = (offsetY / (rect.height / 2)) * -maxTilt;
+                state.ty = (offsetX / (rect.width / 2)) * maxTilt;
+            });
+            tiltArea.addEventListener("mouseleave", function () {
+                state.tx = 0;
+                state.ty = 0;
+            });
+
+            (function raf() {
+                state.rx += (state.tx - state.rx) * ease;
+                state.ry += (state.ty - state.ry) * ease;
+                tilt.style.transform = "rotateX(" + state.rx.toFixed(2) + "deg) rotateY(" + state.ry.toFixed(2) + "deg)";
+                requestAnimationFrame(raf);
+            })();
+        }
+    })();
     </script>
     <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
