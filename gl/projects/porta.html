@@ -508,7 +508,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 32px;
+                gap: 72px;
                 width: 100%;
             }
             /* Solo controla el hueco/tamaño en la fila; la tipografía,
@@ -1130,6 +1130,18 @@
         // posiciona cada pieza en la columna más corta (masonry real,
         // calculado en JS: no depende de `column-count`, que es lo que
         // fallaba en Safari al combinarse con `transform`).
+        //
+        // El orden de las piezas en el HTML es aleatorio a propósito (para
+        // que la galería no se vea agrupada por categoría), pero recorrer
+        // "columna más corta" en ESE orden desequilibra las columnas: sin
+        // mirar por delante, una racha de piezas altas seguidas puede
+        // acabar apilada entera en la misma columna antes de que el
+        // algoritmo "se dé cuenta". Por eso el REPARTO se calcula en un
+        // orden aparte, de mayor a menor altura (heurística LPT -- Longest
+        // Processing Time, la misma que se usa para repartir tareas entre
+        // procesadores de forma equilibrada), y solo ESE orden interno de
+        // cálculo cambia: el HTML y el orden visual de lectura por columna
+        // siguen siendo los aleatorios de siempre.
         function layout() {
             var width = grid.clientWidth;
             var columns = 3;
@@ -1139,12 +1151,15 @@
             var colWidth = (width - GAP * (columns - 1)) / columns;
             var colHeights = new Array(columns).fill(0);
 
-            items.forEach(function (item) {
+            var heights = items.map(function (item) {
                 var img = item.querySelector("img");
                 var w = parseFloat(img.getAttribute("width")) || 1;
                 var h = parseFloat(img.getAttribute("height")) || 1;
-                var ratio = h / w;
+                return { item: item, itemH: colWidth * (h / w) };
+            });
+            var packOrder = heights.slice().sort(function (a, b) { return b.itemH - a.itemH; });
 
+            packOrder.forEach(function (entry) {
                 var col = 0;
                 var min = colHeights[0];
                 for (var i = 1; i < columns; i++) {
@@ -1153,14 +1168,13 @@
 
                 var x = col * (colWidth + GAP);
                 var y = colHeights[col];
-                var itemH = colWidth * ratio;
 
-                item.style.width = colWidth + "px";
-                item.style.height = itemH + "px";
-                item.style.left = x + "px";
-                item.style.top = y + "px";
+                entry.item.style.width = colWidth + "px";
+                entry.item.style.height = entry.itemH + "px";
+                entry.item.style.left = x + "px";
+                entry.item.style.top = y + "px";
 
-                colHeights[col] = y + itemH + GAP;
+                colHeights[col] = y + entry.itemH + GAP;
             });
 
             grid.style.height = Math.max.apply(null, colHeights) + "px";
