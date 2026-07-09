@@ -253,48 +253,45 @@
             transition: none;
         }
 
-        /* Pista de scroll (solo móvil): en pantallas pequeñas el hero ocupa
-           toda la vista inicial y no queda claro que hay que deslizar hacia
-           abajo para ver el resto de la página. */
-        .scroll-hint {
+        /* Pista de que el carrusel se puede deslizar (solo móvil): la pista
+           de escritorio (.porta-carousel-hint) depende de anclas de texto
+           que solo existen en el layout de escritorio, así que aquí se usa
+           una versión estática y sencilla, colocada justo encima del
+           carrusel en vez de en el hero. */
+        .porta-carousel-hint-mobile {
             display: none;
         }
-        @media (max-width: 768px) {
-            .scroll-hint {
+        @media (max-width: 900px) {
+            .porta-carousel-hint-mobile {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                gap: 4px;
-                position: absolute;
-                left: 50%;
-                bottom: 18px;
-                transform: translateX(-50%);
+                justify-content: center;
+                gap: 8px;
+                margin: 0 0 14px;
                 font-family: var(--font-sans);
                 font-size: 11px;
                 font-weight: 300;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
-                color: var(--gray-dark);
-                opacity: 0.7;
-                pointer-events: none;
+                color: var(--gray-muted);
+                opacity: 0.65;
                 transition: opacity 0.5s ease;
-                z-index: 2;
             }
-            .scroll-hint.is-hidden {
+            .porta-carousel-hint-mobile.is-hidden {
                 opacity: 0;
             }
-            .scroll-hint svg {
-                width: 16px;
-                height: 16px;
-                animation: scroll-hint-nudge 1.8s ease-in-out infinite;
+            .porta-carousel-hint-mobile svg {
+                width: 14px;
+                height: 14px;
+                animation: carousel-hint-mobile-nudge 1.8s ease-in-out infinite;
             }
         }
-        @keyframes scroll-hint-nudge {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(5px); }
+        @keyframes carousel-hint-mobile-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
         }
         @media (prefers-reduced-motion: reduce) {
-            .scroll-hint svg { animation: none; }
+            .porta-carousel-hint-mobile svg { animation: none; }
         }
 
         /* --- Carrusel horizontal infinito: interior del cuaderno Porta --- */
@@ -660,10 +657,6 @@
                 </h1>
             </div>
         </div>
-        <div class="scroll-hint" id="scroll-hint" aria-hidden="true">
-            <span>Desliza</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-        </div>
     </section>
 
     <!-- Carrusel horizontal infinito: paginas interiores del cuaderno Porta -->
@@ -675,6 +668,10 @@
                 <a href="projects/porta" class="explode-link"><span>Ver proxecto</span></a>
             </div>
             <p class="porta-carousel-hint" id="porta-carousel-hint">
+                Desliza para explorar
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </p>
+            <p class="porta-carousel-hint-mobile" id="porta-carousel-hint-mobile" aria-hidden="true">
                 Desliza para explorar
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
             </p>
@@ -1245,18 +1242,6 @@
         });
     </script>
 
-    <!-- Pista de scroll del hero (solo móvil): se oculta en cuanto el usuario ya ha deslizado -->
-    <script>
-        (function () {
-            var hint = document.getElementById("scroll-hint");
-            if (!hint) return;
-            function hideHint() {
-                hint.classList.add("is-hidden");
-                window.removeEventListener("scroll", hideHint);
-            }
-            window.addEventListener("scroll", hideHint, { passive: true, once: true });
-        })();
-    </script>
 
     <!-- Carrusel horizontal infinito con imagen central ampliada -->
     <script>
@@ -1266,11 +1251,13 @@
             if (!viewport || !track) return;
 
             const hint = document.getElementById("porta-carousel-hint");
+            const hintMobile = document.getElementById("porta-carousel-hint-mobile");
             const hintAnchor = document.getElementById("hint-inline-anchor");
             const hintRightAnchor = document.getElementById("hint-right-anchor");
             const hintParent = document.querySelector(".porta-carousel-layout");
             function hideHint() {
                 if (hint) hint.classList.add("is-hidden");
+                if (hintMobile) hintMobile.classList.add("is-hidden");
             }
             // Vertical: a la altura de "MI" (mide el ancla invisible justo
             // tras esa palabra en el título). Horizontal: el hint termina

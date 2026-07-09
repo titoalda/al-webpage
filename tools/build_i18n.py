@@ -108,7 +108,6 @@ EN = [
      "A glimpse of my latest creative adventure: the creation of a brand and the full design of a <em>mook</em>."),
     ("<span>Ver proyecto</span>", "<span>View project</span>"),
     ("Desliza para explorar", "Drag to explore"),
-    ("<span>Desliza</span>", "<span>Scroll</span>"),
     ('alt="Porta, página interior ', 'alt="Porta, inner page '),
     # secciones de proyectos
     ('<h2 class="section-title">OTROS PROYECTOS</h2>', '<h2 class="section-title">OTHER PROJECTS</h2>'),
@@ -203,7 +202,6 @@ GL = [
     ("Un vistazo a&nbsp;mi última aventura creativa: la&nbsp;creación de&nbsp;la&nbsp;marca y&nbsp;el diseño integral de&nbsp;un <em>mook</em>.",
      "Unha ollada á&nbsp;miña última aventura creativa: a&nbsp;creación da&nbsp;marca e&nbsp;o deseño integral dun <em>mook</em>."),
     ("<span>Ver proyecto</span>", "<span>Ver proxecto</span>"),
-    ("<span>Desliza</span>", "<span>Desliza</span>"),
     ('alt="Porta, página interior ', 'alt="Porta, páxina interior '),
     # secciones de proyectos
     ('<h2 class="section-title">OTROS PROYECTOS</h2>', '<h2 class="section-title">OUTROS PROXECTOS</h2>'),
