@@ -511,20 +511,25 @@
                 gap: 72px;
                 width: 100%;
             }
-            /* Solo controla el hueco/tamaño en la fila; la tipografía,
-               borde y hover los hereda de .button-circle (el mismo botón
-               que se usa en el resto de la web) para que no desentone. */
+            /* Círculo perfecto (ancho = alto fijo), no la píldora/óvalo que
+               salía antes: con 3 líneas de texto dentro de una caja de
+               180px de ancho pero alto libre, border-radius:9999px daba un
+               óvalo, no un círculo. Aquí se fuerza el alto igual al ancho
+               y se reduce la tipografía para que el texto quepa dentro. */
             .porta-flipbook-sidebtn {
-                flex: 0 0 180px;
+                flex: 0 0 170px;
+                width: 170px;
+                height: 170px;
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-align: center;
-                line-height: 1.4;
+                line-height: 1.35;
+                font-size: 11px;
+                padding: 24px;
+                box-sizing: border-box;
                 white-space: normal;
-                /* Redondos como el resto de button-circle del sitio (hereda
-                   border-radius: 9999px), en vez del radio de 12px propio
-                   que antes los dejaba como rectángulo redondeado. */
             }
             @media (max-width: 900px) {
                 /* La fila deja de generar caja propia: sus 3 hijos (manual
@@ -562,6 +567,10 @@
                     order: 5;
                     flex: none;
                     width: min(94vw, 680px);
+                    height: auto;
+                    border-radius: 9999px;
+                    font-size: 13px;
+                    padding: 14px 28px;
                 }
             }
             /* El hueco del flipbook en la maqueta: mismo tamaño y posición
