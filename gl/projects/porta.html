@@ -1179,15 +1179,17 @@
             // Lookahead corto: para cada hueco, entre las próximas piezas sin
             // colocar se elige la que mejor ajuste la columna más corta (la
             // que deje menos hueco por debajo de la segunda más corta),
-            // evitando además repetir la categoría del último elemento
-            // colocado en esa misma columna (varias fotos de una misma
-            // serie -- "interior", "icono" -- comparten literalmente el
-            // mismo alto, así que sin esta regla tienden a caer seguidas en
-            // la misma columna aunque el HTML esté bien mezclado). El resto
-            // del orden de lectura queda intacto.
-            var LOOKAHEAD = 6;
+            // evitando repetir la categoría de las últimas piezas colocadas
+            // en CUALQUIER columna (no solo la misma) -- varias fotos de
+            // una misma serie ("interior", "icono"...) comparten literalmente
+            // el mismo alto, así que sin esto tienden a caer juntas en la
+            // misma fila visual (una en cada columna) aunque nunca se repita
+            // dos veces seguidas dentro de una sola columna. El resto del
+            // orden de lectura queda intacto.
+            var LOOKAHEAD = 12;
+            var RECENT_WINDOW = columns + 2; // evita repetir categoría en toda la "fila" reciente
             var pending = heights.slice();
-            var lastCatByCol = new Array(columns).fill(null);
+            var recentCats = [];
 
             while (pending.length) {
                 var shortestCol = 0;
@@ -1208,7 +1210,7 @@
                     var candidateH = pending[k].itemH + GAP;
                     var score = Math.abs(candidateH - room);
                     if (score < bestScoreAny) { bestScoreAny = score; bestIdxAny = k; }
-                    if (pending[k].cat !== lastCatByCol[shortestCol] && score < bestScore) {
+                    if (recentCats.indexOf(pending[k].cat) === -1 && score < bestScore) {
                         bestScore = score; bestIdx = k;
                     }
                 }
@@ -1224,7 +1226,8 @@
                 entry.item.style.top = y + "px";
 
                 colHeights[shortestCol] = y + entry.itemH + GAP;
-                lastCatByCol[shortestCol] = entry.cat;
+                recentCats.push(entry.cat);
+                if (recentCats.length > RECENT_WINDOW) recentCats.shift();
             }
 
             grid.style.height = Math.max.apply(null, colHeights) + "px";

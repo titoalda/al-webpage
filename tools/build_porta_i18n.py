@@ -8,6 +8,43 @@ import re
 SRC = "projects/porta.html"
 base = open(SRC, encoding="utf-8").read()
 
+# Regla del &nbsp; (no dejar articulos/conjunciones/preposiciones cortas
+# sueltas al final de linea): la fuente ES/GL ya la lleva en su propio
+# texto via la tabla de traduccion, pero EN se glueaba aparte a mano y se
+# perdia cada vez que se regeneraba este archivo. Se aplica aqui como
+# paso automatico para que nunca se vuelva a perder.
+EN_NBSP_WORDS = ["a", "an", "the", "and", "or", "but", "of", "to", "in", "on",
+                 "at", "for", "with", "from", "into", "that", "as", "is"]
+EN_NBSP_RE = re.compile(r"\b(" + "|".join(EN_NBSP_WORDS) + r")( )(?=[A-Za-z])", re.IGNORECASE)
+
+def apply_en_nbsp(s):
+    parts = re.split(r"(<[^>]+>)", s)
+    out = []
+    skip_depth = 0
+    in_head = False
+    for part in parts:
+        if part.startswith("<"):
+            low = part.lower()
+            if re.match(r"^<script[\s>]", low):
+                skip_depth += 1
+            elif low.startswith("</script>"):
+                skip_depth = max(0, skip_depth - 1)
+            elif re.match(r"^<style[\s>]", low):
+                skip_depth += 1
+            elif low.startswith("</style>"):
+                skip_depth = max(0, skip_depth - 1)
+            elif re.match(r"^<head[\s>]", low):
+                in_head = True
+            elif low.startswith("</head>"):
+                in_head = False
+            out.append(part)
+        else:
+            if skip_depth > 0 or in_head:
+                out.append(part)
+            else:
+                out.append(EN_NBSP_RE.sub(r"\1&nbsp;", part))
+    return "".join(out)
+
 def build(lang, out_path, T):
     s = base
     # 1) rutas de assets: un nivel más de profundidad
@@ -45,6 +82,8 @@ def build(lang, out_path, T):
         if a not in s:
             print(f"[{lang}] NO ENCONTRADO: {a[:70]}...")
         s = s.replace(a, b)
+    if lang == "en":
+        s = apply_en_nbsp(s)
     open(out_path, "w", encoding="utf-8").write(s)
     print(f"{out_path} escrito ({len(s)} bytes)")
 
