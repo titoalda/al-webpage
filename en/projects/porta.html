@@ -1141,16 +1141,18 @@
         // fallaba en Safari al combinarse con `transform`).
         //
         // El orden de las piezas en el HTML es aleatorio a propósito (para
-        // que la galería no se vea agrupada por categoría), pero recorrer
-        // "columna más corta" en ESE orden desequilibra las columnas: sin
-        // mirar por delante, una racha de piezas altas seguidas puede
-        // acabar apilada entera en la misma columna antes de que el
-        // algoritmo "se dé cuenta". Por eso el REPARTO se calcula en un
-        // orden aparte, de mayor a menor altura (heurística LPT -- Longest
-        // Processing Time, la misma que se usa para repartir tareas entre
-        // procesadores de forma equilibrada), y solo ESE orden interno de
-        // cálculo cambia: el HTML y el orden visual de lectura por columna
-        // siguen siendo los aleatorios de siempre.
+        // que la galería no se vea agrupada por categoría). El reparto por
+        // columnas recorre ESE MISMO orden (no se reordena por altura):
+        // varias fotos de la serie "interior" comparten literalmente el
+        // mismo alto (1800x1344), así que ordenarlas por altura (heurística
+        // LPT usada antes) las juntaba todas seguidas al procesarlas, y
+        // acababan cayendo en bloque en la misma zona del mosaico aunque el
+        // HTML estuviera bien mezclado. Para evitar eso Y mantener las
+        // columnas razonablemente equilibradas, se usa un "mejor de N": en
+        // vez de mirar solo la columna más corta, cada pieza se ofrece a
+        // las `columns` columnas y se elige la que quede más ajustada
+        // (menor hueco resultante) dentro de una ventana de piezas
+        // cercanas, sin alterar el orden de lectura por lo demás.
         function layout() {
             var width = grid.clientWidth;
             var columns = 3;
@@ -1160,31 +1162,70 @@
             var colWidth = (width - GAP * (columns - 1)) / columns;
             var colHeights = new Array(columns).fill(0);
 
+            function categoryOf(item) {
+                var img = item.querySelector("img");
+                var name = img.src.split("/").pop();
+                var m = name.match(/^([a-z]+)/);
+                return m ? m[1] : name;
+            }
+
             var heights = items.map(function (item) {
                 var img = item.querySelector("img");
                 var w = parseFloat(img.getAttribute("width")) || 1;
                 var h = parseFloat(img.getAttribute("height")) || 1;
-                return { item: item, itemH: colWidth * (h / w) };
+                return { item: item, itemH: colWidth * (h / w), cat: categoryOf(item) };
             });
-            var packOrder = heights.slice().sort(function (a, b) { return b.itemH - a.itemH; });
 
-            packOrder.forEach(function (entry) {
-                var col = 0;
+            // Lookahead corto: para cada hueco, entre las próximas piezas sin
+            // colocar se elige la que mejor ajuste la columna más corta (la
+            // que deje menos hueco por debajo de la segunda más corta),
+            // evitando además repetir la categoría del último elemento
+            // colocado en esa misma columna (varias fotos de una misma
+            // serie -- "interior", "icono" -- comparten literalmente el
+            // mismo alto, así que sin esta regla tienden a caer seguidas en
+            // la misma columna aunque el HTML esté bien mezclado). El resto
+            // del orden de lectura queda intacto.
+            var LOOKAHEAD = 6;
+            var pending = heights.slice();
+            var lastCatByCol = new Array(columns).fill(null);
+
+            while (pending.length) {
+                var shortestCol = 0;
                 var min = colHeights[0];
                 for (var i = 1; i < columns; i++) {
-                    if (colHeights[i] < min) { min = colHeights[i]; col = i; }
+                    if (colHeights[i] < min) { min = colHeights[i]; shortestCol = i; }
                 }
+                var secondMin = Infinity;
+                for (var j = 0; j < columns; j++) {
+                    if (j !== shortestCol && colHeights[j] < secondMin) secondMin = colHeights[j];
+                }
+                var room = secondMin - min; // hueco disponible antes de dejar de ser la más corta
 
-                var x = col * (colWidth + GAP);
-                var y = colHeights[col];
+                var windowSize = Math.min(LOOKAHEAD, pending.length);
+                var bestIdx = -1, bestScore = Infinity;
+                var bestIdxAny = 0, bestScoreAny = Infinity;
+                for (var k = 0; k < windowSize; k++) {
+                    var candidateH = pending[k].itemH + GAP;
+                    var score = Math.abs(candidateH - room);
+                    if (score < bestScoreAny) { bestScoreAny = score; bestIdxAny = k; }
+                    if (pending[k].cat !== lastCatByCol[shortestCol] && score < bestScore) {
+                        bestScore = score; bestIdx = k;
+                    }
+                }
+                if (bestIdx === -1) bestIdx = bestIdxAny; // no había alternativa sin repetir categoría
+
+                var entry = pending.splice(bestIdx, 1)[0];
+                var x = shortestCol * (colWidth + GAP);
+                var y = colHeights[shortestCol];
 
                 entry.item.style.width = colWidth + "px";
                 entry.item.style.height = entry.itemH + "px";
                 entry.item.style.left = x + "px";
                 entry.item.style.top = y + "px";
 
-                colHeights[col] = y + entry.itemH + GAP;
-            });
+                colHeights[shortestCol] = y + entry.itemH + GAP;
+                lastCatByCol[shortestCol] = entry.cat;
+            }
 
             grid.style.height = Math.max.apply(null, colHeights) + "px";
         }
