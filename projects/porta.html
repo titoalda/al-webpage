@@ -9,6 +9,7 @@
         <link rel="preload" href="../static/fonts/clash-display-300.woff2" as="font" type="font/woff2" crossorigin>
         <link rel="preload" href="../static/fonts/clash-display-700.woff2" as="font" type="font/woff2" crossorigin>
         <link rel="preload" href="../static/fonts/satoshi-300.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="../static/images/porta/porta-portada.webp" as="image" fetchpriority="high">
         <link rel="stylesheet" href="../static/styles/fonts.css">
         <script src="../static/scripts/script-scroll.js" defer></script>
 
@@ -45,7 +46,14 @@
     "description": "Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.",
     "image": "https://aldaraalvarez.es/static/images/porta/porta-cover.jpg",
     "url": "https://aldaraalvarez.es/projects/porta",
+    "inLanguage": "es",
+    "dateModified": "2026-07-04",
     "creator": {
+        "@type": "Person",
+        "name": "Aldara Álvarez",
+        "url": "https://aldaraalvarez.es/"
+    },
+    "author": {
         "@type": "Person",
         "name": "Aldara Álvarez",
         "url": "https://aldaraalvarez.es/"
@@ -355,6 +363,12 @@
             }
             .briefing-popup .popup-body .porta-intro-block:last-child {
                 padding-bottom: 0;
+            }
+            /* El popup ya muestra "Porta" como título (.popup-title):
+               el <h1>PORTA</h1> del primer bloque clonado queda redundante
+               justo debajo, así que se oculta solo en este contexto. */
+            .briefing-popup .popup-body .porta-intro-block:first-child h1 {
+                display: none;
             }
             @media (prefers-reduced-motion: reduce) {
                 .porta-intro-block {
@@ -992,7 +1006,7 @@
                         <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="10">
-                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../static/images/porta/mook/mobile/porta-page-82.webp"><img src="../static/images/porta/mook/porta-page-82.jpg" alt="Página 82 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../static/images/porta/mook/mobile/porta-page-83.webp"><img src="../static/images/porta/mook/porta-page-83.jpg" alt="Página 83 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
+                        <div class="porta-flipbook-face porta-flipbook-front"><div class="porta-flipbook-spread"><picture><source media="(max-width: 768px)" type="image/webp" srcset="../static/images/porta/mook/mobile/porta-page-86.webp"><img src="../static/images/porta/mook/porta-page-86.jpg" alt="Página 86 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture><picture><source media="(max-width: 768px)" type="image/webp" srcset="../static/images/porta/mook/mobile/porta-page-87.webp"><img src="../static/images/porta/mook/porta-page-87.jpg" alt="Página 87 del mook PORTA" width="1004" height="1418" loading="lazy" decoding="async"></picture></div><div class="porta-flipbook-shade"></div></div>
                         <div class="porta-flipbook-face porta-flipbook-back"></div>
                     </div>
                     <div class="porta-flipbook-page" data-index="11">
@@ -1118,7 +1132,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2026 Aldara Álvarez. Todos los derechos reservados.</span>
+            <span>&copy; 2023 Aldara Álvarez. Todos los derechos reservados.</span>
             <a href="../legal" class="footer-legal-link">Aviso Legal</a>
 
         </div>

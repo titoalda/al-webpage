@@ -30,3 +30,6 @@ default.conf
 # Docker deploy local (no relacionado con el despliegue real)
 docker-compose.yml
 docker/
+
+# Scripts internos de build/mantenimiento (el repo es solo la web estatica)
+tools/
