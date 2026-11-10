@@ -838,6 +838,73 @@
                 color: var(--text-color);
                 margin: 0;
             }
+            /* --- Enlace destacado a la web del libro (portamook.com) --- */
+            .porta-web {
+                padding: 88px 4vw;
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
+                background-color: #111111;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+                text-align: center;
+            }
+            .porta-web-eyebrow {
+                font-size: 14px;
+                font-weight: 300;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--gray-dark);
+                margin: 0;
+            }
+            .porta-web-link {
+                display: inline-flex;
+                align-items: baseline;
+                gap: 0.25em;
+                font-family: var(--font-display);
+                font-weight: 300;
+                font-size: clamp(40px, 8vw, 104px);
+                line-height: 1;
+                letter-spacing: -0.02em;
+                color: var(--text-color);
+                text-decoration: none;
+                padding-bottom: 0.08em;
+                background-image: linear-gradient(currentColor, currentColor);
+                background-repeat: no-repeat;
+                background-position: 0 100%;
+                background-size: 0% 1px;
+                transition: background-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .porta-web-arrow {
+                font-size: 0.45em;
+                color: var(--gray-muted);
+                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+            }
+            .porta-web-link:hover,
+            .porta-web-link:focus-visible {
+                background-size: 100% 1px;
+            }
+            .porta-web-link:focus-visible {
+                outline: 2px solid #ffffff;
+                outline-offset: 6px;
+            }
+            .porta-web-link:hover .porta-web-arrow,
+            .porta-web-link:focus-visible .porta-web-arrow {
+                transform: translate(0.12em, -0.12em);
+                color: var(--text-color);
+            }
+            .porta-web-text {
+                font-size: 16px;
+                line-height: 1.6;
+                font-weight: 300;
+                color: var(--gray-muted);
+                max-width: 46ch;
+                margin: 0;
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .porta-web-link, .porta-web-arrow { transition: none; }
+            }
         </style>
     </head>
 
@@ -935,6 +1002,13 @@
                     <p><strong>Procreate:</strong> Creación, abocetado e&nbsp;ilustración digital de&nbsp;los recursos gráficos de&nbsp;la&nbsp;obra.</p>
                 </div>
             </div>
+        </section>
+
+        <!-- Enlace destacado a la web del libro -->
+        <section class="porta-web">
+            <p class="porta-web-eyebrow">Web oficial del&nbsp;libro</p>
+            <a href="https://portamook.com/" target="_blank" rel="noopener" class="porta-web-link">portamook.com<span class="porta-web-arrow" aria-hidden="true">↗</span></a>
+            <p class="porta-web-text">Descubre PORTA Nº&nbsp;1 y&nbsp;reserva tu&nbsp;ejemplar.</p>
         </section>
 
         <!-- Popup de briefing (solo se usa en móvil, disparado por #porta-intro-toggle) -->
