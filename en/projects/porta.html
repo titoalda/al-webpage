@@ -556,7 +556,7 @@
                     display: contents;
                 }
                 /* Orden en móvil: flipbook, contador, controles, CTA de
-                   tienda (desactivada por ahora) y, al final, los dos
+                   reserva y, al final, los dos
                    accesos a los manuales. */
                 .porta-flipbook {
                     order: 1;
@@ -568,13 +568,6 @@
                     order: 3;
                 }
                 .porta-flipbook-cta {
-                    /* Desactivado temporalmente: no se enlaza a la tienda
-                       todavía. Sigue en el DOM (y con su order) por si se
-                       reactiva más adelante. !important porque la regla
-                       base .porta-flipbook-cta (display:flex) aparece más
-                       abajo en el CSS y, sin esto, gana en la cascada aunque
-                       esta media query "parezca" más específica. */
-                    display: none !important;
                     order: 4;
                 }
                 .porta-flipbook-sidebtn {
@@ -914,7 +907,7 @@
                 <div class="porta-intro-block">
                     <p class="porta-intro-eyebrow">01</p>
                     <h2>The&nbsp;project</h2>
-                    <p>PORTA is&nbsp;a&nbsp;comprehensive authorial project covering the&nbsp;conceptualisation, editing and&nbsp;production, from&nbsp;start to&nbsp;finish, of&nbsp;a <em>mook</em> —a&nbsp;hybrid format between magazine and&nbsp;book— devoted to&nbsp;the&nbsp;heritage of&nbsp;Baiona. In&nbsp;response to&nbsp;the&nbsp;saturation of&nbsp;mass tourism communication, the&nbsp;proposal embraces <em>slow journalism</em>, materialising as&nbsp;a&nbsp;collector's editorial piece with&nbsp;high cultural and&nbsp;aesthetic value, designed to&nbsp;stand the&nbsp;test of&nbsp;time.</p>
+                    <p>PORTA is&nbsp;a&nbsp;comprehensive authorial project covering the&nbsp;conceptualisation, editing and&nbsp;production, from&nbsp;start to&nbsp;finish, of&nbsp;a <em>mook</em> —a&nbsp;hybrid format between magazine and&nbsp;book— devoted to&nbsp;the&nbsp;heritage of&nbsp;Baiona. In&nbsp;response to&nbsp;the&nbsp;saturation of&nbsp;mass tourism communication, the&nbsp;proposal embraces slow, unhurried reading, materialising as&nbsp;a&nbsp;collector's editorial piece with&nbsp;high cultural and&nbsp;aesthetic value, designed to&nbsp;stand the&nbsp;test of&nbsp;time. The&nbsp;first volume, PORTA No.&nbsp;1, is&nbsp;due out in&nbsp;December 2026 and&nbsp;can already be&nbsp;reserved, with&nbsp;no&nbsp;payment, at&nbsp;<a href="https://portamook.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px">portamook.com</a> (in&nbsp;Spanish and&nbsp;Galician).</p>
                 </div>
                 <div class="porta-intro-block">
                     <p class="porta-intro-eyebrow">02</p>
@@ -927,14 +920,14 @@
                     <p>To&nbsp;resolve this global project, the&nbsp;workflow was structured into&nbsp;four strategic phases:</p>
                     <p><strong>Strategy and&nbsp;Brand Identity:</strong> Creation of&nbsp;the <em>branding</em> from&nbsp;scratch under the&nbsp;name PORTA (door in&nbsp;Galician), evoking the&nbsp;concept of&nbsp;a&nbsp;port of&nbsp;arrival and&nbsp;the&nbsp;local fortress. The&nbsp;imagotype was designed (a&nbsp;round arch and&nbsp;a&nbsp;lateen sail), together with&nbsp;a&nbsp;colour palette based on&nbsp;the&nbsp;Atlantic landscape, and&nbsp;its normative Brand Identity Manual was developed.</p>
                     <p><strong>Art Direction and&nbsp;Content:</strong> Full copywriting of&nbsp;the&nbsp;publication's texts and&nbsp;creative direction of&nbsp;the&nbsp;visual universe. This included producing the&nbsp;editorial photography series on&nbsp;location and&nbsp;creating bespoke digital illustrations to&nbsp;enrich the&nbsp;narrative.</p>
-                    <p><strong>Editorial Design and&nbsp;Style:</strong> Global design of&nbsp;the 96-page publication, structured on&nbsp;a&nbsp;strict modular grid. To&nbsp;ensure the&nbsp;visual cohesion of&nbsp;the&nbsp;format, an&nbsp;exhaustive Editorial Style Manual was developed, unifying typographic hierarchies and&nbsp;reading rhythms.</p>
+                    <p><strong>Editorial Design and&nbsp;Style:</strong> Global design of&nbsp;the publication of&nbsp;over 100&nbsp;pages, structured on&nbsp;a&nbsp;strict modular grid. To&nbsp;ensure the&nbsp;visual cohesion of&nbsp;the&nbsp;format, an&nbsp;exhaustive Editorial Style Manual was developed, unifying typographic hierarchies and&nbsp;reading rhythms.</p>
                     <p><strong>Technical Production:</strong> Planning and&nbsp;preparation of&nbsp;final artwork for&nbsp;its physical production as&nbsp;a&nbsp;premium object: <em>offset</em> printing on&nbsp;FSC-certified natural paper, exposed thread-sewn binding, blind embossing of&nbsp;the&nbsp;logo on&nbsp;the&nbsp;cover and&nbsp;a&nbsp;rigid slipcase.</p>
                 </div>
                 <div class="porta-intro-block">
                     <p class="porta-intro-eyebrow">04</p>
                     <h2>Technical details</h2>
                     <p><strong>Role and&nbsp;Disciplines:</strong> Integral art direction, Content writing and&nbsp;editing, Editorial design, Brand identity, Photography, Illustration and&nbsp;Packaging.</p>
-                    <p><strong>Main deliverables:</strong> Printed <em>mook</em> (17 × 24&nbsp;cm, 96 pp.), Brand Identity Manual, Editorial Style Manual and&nbsp;Slipcase.</p>
+                    <p><strong>Main deliverables:</strong> Printed <em>mook</em> (17 × 24&nbsp;cm, 100+&nbsp;pp.), Brand Identity Manual, Editorial Style Manual and&nbsp;Slipcase.</p>
                     <p><strong>Software used:</strong></p>
                     <p><strong>Adobe InDesign:</strong> Full layout of&nbsp;the&nbsp;publication, grid systems, styles and&nbsp;preparation of&nbsp;print-ready artwork.</p>
                     <p><strong>Adobe Illustrator:</strong> Design, vectorisation and&nbsp;standardisation of&nbsp;the&nbsp;brand identity, graphic elements and&nbsp;cartography.</p>
@@ -1024,12 +1017,11 @@
                 <button type="button" class="porta-flipbook-btn" id="porta-flipbook-prev" aria-label="Previous page">←</button>
                 <button type="button" class="porta-flipbook-btn" id="porta-flipbook-next" aria-label="Next page">→</button>
             </div>
-            <!-- CTA de compra desactivado temporalmente: aún no existe la tienda en portamook.com
+            <!-- CTA de reserva del ejemplar en portamook.com -->
             <div class="porta-flipbook-cta">
-                <p class="porta-flipbook-cta-text">Buy your copy here</p>
-                <a href="https://portamook.com" target="_blank" rel="noopener noreferrer" class="button-circle">Go to&nbsp;the&nbsp;store</a>
+                <p class="porta-flipbook-cta-text">Reserve your copy, no&nbsp;payment for&nbsp;now</p>
+                <a href="https://portamook.com/" target="_blank" rel="noopener noreferrer" class="button-circle">Reserve a&nbsp;copy</a>
             </div>
-            -->
         </section>
 
 
