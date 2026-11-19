@@ -342,6 +342,12 @@
             margin: 0 0 28px;
         }
 
+        .porta-carousel-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
         /* Botón "pill" a juego con .button-circle del resto del sitio,
            pero con un halo que sigue al cursor (--mx/--my, actualizadas
            por JS en pointermove) en vez del borde giratorio de
@@ -666,7 +672,10 @@
             <div class="porta-carousel-copy">
                 <h2 class="section-title">O<span class="hint-inline-anchor" id="hint-inline-anchor"></span><br>MEU ÚLTIMO <span id="hint-right-anchor">PROXECTO</span></h2>
                 <p class="explode-desc">Unha ollada á&nbsp;miña última aventura creativa: a&nbsp;creación da&nbsp;marca e&nbsp;o deseño integral dun <em>mook</em>.</p>
-                <a href="projects/porta" class="explode-link"><span>Ver proxecto</span></a>
+                <div class="porta-carousel-actions">
+                    <a href="projects/porta" class="explode-link"><span>Ver proxecto</span></a>
+                    <a href="https://portamook.com/" class="explode-link" target="_blank" rel="noopener"><span>Visita portamook.com</span></a>
+                </div>
             </div>
             <p class="porta-carousel-hint" id="porta-carousel-hint">
                 Desliza para explorar
@@ -707,18 +716,7 @@
         </div>
 
         <div class="projects-desktop-grid">
-            <!-- Project 1: El viejo y el mar -->
-            <div class="project-info">
-                <a href="projects/elviejoyelmar">
-                    <img src="../static/images/pr_viejomar_cover.webp" alt="Proxecto El viejo y el mar" class="image-size" loading="lazy" width="1637" height="1500">
-                    <div class="image-text">
-                        <h3 class="titulo-text">EL VIEJO Y EL MAR</h3>
-                        <h4 class="proyecto-text">DESEÑO DE CUBERTA E ILUSTRACIÓN</h4>
-                    </div>
-                </a>
-            </div>
-            
-            <!-- Project 2: Forma y Función -->
+            <!-- Project 1: Forma y Función -->
             <div class="project-info">
                 <a href="projects/formayfuncion">
                     <img src="../static/images/pr_formayfuncion_cover.webp" alt="Proxecto Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
@@ -728,14 +726,25 @@
                     </div>
                 </a>
             </div>
-            
-            <!-- Project 3: Casa Decor -->
+
+            <!-- Project 2: Casa Decor -->
             <div class="project-info">
                 <a href="projects/casadecor">
                     <img src="../static/images/pr_casadecor_cover.webp" alt="Proxecto Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
                     <div class="image-text">
                         <h3 class="titulo-text">CASA DECOR</h3>
                         <h4 class="proyecto-text">DESEÑO DE SINALÉTICA</h4>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Project 3: Flechas Amarillas -->
+            <div class="project-info">
+                <a href="projects/flechasamarillas">
+                    <img src="../static/images/pr_flechasamarillas_cover.webp" alt="Proxecto Flechas Amarillas" class="image-size" loading="lazy" width="1200" height="917">
+                    <div class="image-text">
+                        <h3 class="titulo-text">FLECHAS AMARILLAS</h3>
+                        <h4 class="proyecto-text">DESEÑO EDITORIAL E ILUSTRACIÓN</h4>
                     </div>
                 </a>
             </div>
@@ -761,11 +770,11 @@
             <div id="showcase-ticker" class="projects-scroller">
                 <!-- Project 1: El viejo y el mar -->
                 <div class="project-info">
-                    <a href="projects/elviejoyelmar">
-                        <img src="../static/images/pr_viejomar_cover.webp" alt="Proxecto El viejo y el mar" class="image-size" loading="lazy" width="1637" height="1500">
+                    <a href="projects/flechasamarillas">
+                        <img src="../static/images/pr_flechasamarillas_cover.webp" alt="Proxecto Flechas Amarillas" class="image-size" loading="lazy" width="1200" height="917">
                         <div class="image-text">
-                            <h3 class="titulo-text">EL VIEJO Y EL MAR</h3>
-                            <h4 class="proyecto-text">DESEÑO DE CUBERTA E ILUSTRACIÓN</h4>
+                            <h3 class="titulo-text">FLECHAS AMARILLAS</h3>
+                            <h4 class="proyecto-text">DESEÑO EDITORIAL E ILUSTRACIÓN</h4>
                         </div>
                     </a>
                 </div>
@@ -998,7 +1007,7 @@
                 <h3>Proxectos Destacados</h3>
                 <ul>
                     <li><a href="projects/porta">Porta</a></li>
-                    <li><a href="projects/elviejoyelmar">El viejo y&nbsp;el mar</a></li>
+                    <li><a href="projects/flechasamarillas">Flechas Amarillas</a></li>
                     <li><a href="projects/formayfuncion">Forma y&nbsp;función</a></li>
                     <li><a href="projects/casadecor">Casa Decor</a></li>
                 </ul>

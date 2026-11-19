@@ -52,6 +52,12 @@ Unha mostra do meu enfoque creativo e conceptual.
 
 [VER PROXECTO](https://aldaraalvarez.es/gl/projects/dieznegritos)
 
+## FLECHAS AMARILLAS
+
+### DESEÑO EDITORIAL E ILUSTRACIÓN
+
+[VER PROXECTO](https://aldaraalvarez.es/gl/projects/flechasamarillas)
+
 Edición Nº1 · *Mook* editorial
 
 ## O meu último proxecto

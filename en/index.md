@@ -10,10 +10,6 @@ Here is a selection of projects that I hope will convey my dedication and passio
 
 [View more projects](https://aldaraalvarez.es/projects)
 
-### EL VIEJO Y EL MAR
-
-#### COVER DESIGN AND ILLUSTRATION
-
 ### FORMA Y FUNCIÓN
 
 #### EDITORIAL DESIGN
@@ -21,6 +17,10 @@ Here is a selection of projects that I hope will convey my dedication and passio
 ### CASA DECOR
 
 #### SIGNAGE DESIGN
+
+### FLECHAS AMARILLAS
+
+#### EDITORIAL DESIGN AND ILLUSTRATION
 
 ## PROJECTS
 

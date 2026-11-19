@@ -10,10 +10,6 @@ Aquí che deixo unha selección de proxectos que espero que che transmitan a mi�
 
 [Ver máis proxectos](https://aldaraalvarez.es/projects)
 
-### EL VIEJO Y EL MAR
-
-#### DESEÑO DE CUBERTA E ILUSTRACIÓN
-
 ### FORMA Y FUNCIÓN
 
 #### DESEÑO EDITORIAL
@@ -21,6 +17,10 @@ Aquí che deixo unha selección de proxectos que espero que che transmitan a mi�
 ### CASA DECOR
 
 #### DESEÑO DE SINALÉTICA
+
+### FLECHAS AMARILLAS
+
+#### DESEÑO EDITORIAL E ILUSTRACIÓN
 
 ## PROXECTOS
 

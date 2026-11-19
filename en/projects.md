@@ -52,6 +52,12 @@ A sample of my creative and conceptual approach.
 
 [VIEW PROJECT](https://aldaraalvarez.es/en/projects/dieznegritos)
 
+## FLECHAS AMARILLAS
+
+### EDITORIAL DESIGN AND ILLUSTRATION
+
+[VIEW PROJECT](https://aldaraalvarez.es/en/projects/flechasamarillas)
+
 Edition Nº1 · Editorial *mook*
 
 ## My latest project
