@@ -31,5 +31,6 @@ Política de IA: los buscadores y asistentes de IA pueden leer y citar este cont
 
 ## Más
 
+- [Contenido completo en un solo fichero](https://aldaraalvarez.es/llms-full.txt)
 - [Sitemap](https://aldaraalvarez.es/sitemap.xml)
 - [PORTA, sitio del libro](https://portamook.com/)
