@@ -1,6 +1,6 @@
 # Aldara Álvarez
 
-> Portafolio de Aldara Álvarez, diseñadora gráfica especializada en diseño editorial, identidad de marca y diseño UX·UI. Web trilingüe (español, gallego e inglés). Cada página tiene una versión en Markdown (.md) con el mismo contenido.
+> Portafolio de Aldara Álvarez, diseñadora gráfica especializada en diseño editorial, identidad de marca y diseño UX·UI. Web en cinco idiomas (español, gallego, inglés, catalán y euskera). Cada página tiene una versión en Markdown (.md) con el mismo contenido.
 
 Política de IA: los buscadores y asistentes de IA pueden leer y citar este contenido; no está permitido usarlo para entrenar modelos (ver /robots.txt).
 
@@ -29,6 +29,8 @@ Política de IA: los buscadores y asistentes de IA pueden leer y citar este cont
 
 - Galego: https://aldaraalvarez.es/gl/index.md
 - English: https://aldaraalvarez.es/en/index.md
+- Català: https://aldaraalvarez.es/ca/index.md
+- Euskara: https://aldaraalvarez.es/eu/index.md
 
 ## Más
 

@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const hamburger = document.createElement("button");
     hamburger.className = "hamburger-menu";
     hamburger.id = "hamburger-btn";
-    hamburger.setAttribute("aria-label", "Abrir menú");
+    hamburger.setAttribute("aria-label", ({ en: "Open menu", ca: "Obre el menú", eu: "Ireki menua" })[document.documentElement.lang] || "Abrir menú");
     hamburger.innerHTML = "<span></span><span></span><span></span>";
     
     header.appendChild(hamburger);

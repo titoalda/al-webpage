@@ -18,10 +18,12 @@
 
         <link rel="canonical" href="https://aldaraalvarez.es/gl/projects/porta">
         <link rel="alternate" type="text/markdown" href="https://aldaraalvarez.es/gl/projects/porta.md">
-        <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta" />
-        <link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/porta" />
-        <link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/porta" />
-        <link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta" />
+        <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects/porta">
+        <link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects/porta">
+        <link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects/porta">
+        <link rel="alternate" hreflang="ca" href="https://aldaraalvarez.es/ca/projects/porta">
+        <link rel="alternate" hreflang="eu" href="https://aldaraalvarez.es/eu/projects/porta">
+        <link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects/porta">
         <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- para que sea responsive -->
         <meta name="theme-color" content="#111111">
 
@@ -942,6 +944,8 @@
                     <a href="../../projects/porta" class="lang-option">ES</a>
                     <a href="../../en/projects/porta" class="lang-option">EN</a>
                     <a href="porta" class="lang-option active">GAL</a>
+                    <a href="../../ca/projects/porta" class="lang-option">CAT</a>
+                    <a href="../../eu/projects/porta" class="lang-option">EUS</a>
                 </div>
             </div>
             </nav>
@@ -1670,7 +1674,7 @@
             // Flechas del teclado cuando el flipbook tiene el foco.
             flipbookEl.setAttribute("tabindex", "0");
             flipbookEl.setAttribute("role", "region");
-            flipbookEl.setAttribute("aria-label", "Flipbook del mook PORTA: usa las flechas para pasar página");
+            flipbookEl.setAttribute("aria-label", "Flipbook do mook PORTA: usa as frechas para pasar páxina");
             flipbookEl.addEventListener("keydown", function (e) {
                 if (e.key === "ArrowRight") { flipForward(); e.preventDefault(); }
                 else if (e.key === "ArrowLeft") { flipBackward(); e.preventDefault(); }

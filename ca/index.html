@@ -1,0 +1,1522 @@
+﻿<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <link rel="shortcut icon" href="../static/logo/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../static/logo/apple-touch-icon.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script>
+        // Evita el parpadeo del intro (barrido + hero) en visitas repetidas
+        // dentro de la misma sesion: si ya se reprodujo, marca <html> antes
+        // de que se pinte nada para que el CSS arranque ya en su estado final.
+        if (sessionStorage.getItem("heroIntroPlayed")) {
+            document.documentElement.classList.add("no-intro");
+        }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="btlxaaof0wmCUsqybOUHnUKYGFLHdww5OdvdoZFqh44" />
+    <meta name="theme-color" content="#111111">
+    <title>Aldara Álvarez |&nbsp;Dissenyadora</title>
+    <meta name="description" content="Portfoli de disseny d'Aldara Álvarez, dissenyadora gràfica. Especialitzada en disseny editorial i identitat de marca, amb projectes de direcció d'art i maquetació.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aldaraalvarez.es/ca/">
+    <meta property="og:title" content="Aldara Álvarez | Dissenyadora Gràfica, Editorial i de Marca">
+    <meta property="og:description" content="Explora el portfoli de disseny d'Aldara Álvarez. Solucions visuals en disseny editorial, identitat de marca i direcció d'art.">
+    <meta property="og:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aldaraalvarez.es/ca/">
+    <meta name="twitter:title" content="Aldara Álvarez | Dissenyadora Gràfica, Editorial i de Marca">
+    <meta name="twitter:description" content="Explora el portfoli de disseny d'Aldara Álvarez. Solucions visuals en disseny editorial, identitat de marca i direcció d'art.">
+    <meta name="twitter:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+
+    <link rel="canonical" href="https://aldaraalvarez.es/ca/">
+    <link rel="alternate" type="text/markdown" href="https://aldaraalvarez.es/ca/index.md">
+    <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/">
+    <link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/">
+    <link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/">
+    <link rel="alternate" hreflang="ca" href="https://aldaraalvarez.es/ca/">
+    <link rel="alternate" hreflang="eu" href="https://aldaraalvarez.es/eu/">
+    <link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/">
+    <link rel="preload" href="../static/fonts/clash-display-300.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../static/fonts/clash-display-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../static/fonts/satoshi-300.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../static/styles/fonts.css">
+    <link rel="stylesheet" href="../static/styles/style.min.css">
+
+    <style>
+        /* Responsive visibility */
+        @media (min-width: 1025px) {
+            .showcase-mobile-only {
+                display: none !important;
+            }
+            .showcase-desktop-only {
+                display: flex !important;
+            }
+        }
+        @media (max-width: 1024px) {
+            .showcase-mobile-only {
+                display: flex !important;
+            }
+            .showcase-desktop-only {
+                display: none !important;
+            }
+        }
+
+        /* Desktop Grid Styles */
+        .showcase-desktop-only {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #111111;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding: 60px 0;
+            box-sizing: border-box;
+        }
+
+        .showcase-desktop-only .projects-section-header {
+            text-align: right;
+        }
+
+        .showcase-desktop-only .projects-cta-btn-wrapper {
+            justify-content: flex-end;
+            padding: 0 4vw;
+            box-sizing: border-box;
+            margin-top: 8px;
+            margin-bottom: 40px;
+        }
+
+        /* Alinea "Especialidades" a la izquierda (por defecto va centrado
+           en style.css). */
+        .services-header {
+            text-align: left !important;
+        }
+
+        .projects-desktop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 24px;
+            padding: 0 4vw;
+            box-sizing: border-box;
+            width: 100%;
+            perspective: 1000px; /* Enable 3D perspective */
+        }
+
+        .projects-desktop-grid .project-info {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Square cards */
+            flex: unset;
+            will-change: transform;
+        }
+
+        /* Button Wrapper & Centering */
+        .projects-cta-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 40px;
+            z-index: 5;
+            /* Slide-in blur entrance lives on the wrapper (not the button)
+               so Safari doesn't keep the button's transform pinned to the
+               animation's forwards-fill state and block the hover scale. */
+            opacity: 0;
+            animation: slideInBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        .projects-cta-btn {
+            font-weight: 500;
+        }
+
+        @keyframes slideInBlur {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+                filter: blur(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* --- Intro: barrido horizontal de inversion + entrada del hero --- */
+        .viewport-wiper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 10000; /* Por encima de todo, incluyendo el header */
+            mix-blend-mode: difference; /* Invierte los colores dinamicamente */
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+
+        .viewport-wiper.animate {
+            animation: viewportWipe 2.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+        }
+
+        @keyframes viewportWipe {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        body.loading-active {
+            overflow: hidden;
+        }
+
+        /* Ocultar divisoria al inicio */
+        .hero-divider {
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body.loaded .hero-divider {
+            transform: scaleY(1);
+        }
+
+        /* Ocultar suavemente el subtitulo al inicio (opacidad + desplazamiento).
+           El hueco (margin-top + altura de linea) se reserva SIEMPRE, tanto
+           visible como invisible: por eso NO se colapsa via max-height. */
+        .hero-subtitle {
+            display: inline-block !important;
+            opacity: 0;
+            transform: translateY(-15px);
+            margin-top: 15px !important;
+            transition: opacity 1.2s cubic-bezier(0.76, 0, 0.24, 1),
+                        transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        body.loaded .hero-subtitle {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* El nombre mantiene siempre el mismo tamaño (antes se agrandaba en
+           la intro -7.5vw- y encogia al cargar -6.5vw-: ese cambio de
+           tamaño alteraba la altura total de hero-right-col mientras duraba
+           la transicion, desplazando "Aldara Alvarez" respecto al logo, que
+           no cambia de tamaño). */
+        .hero-right-col .echo-text {
+            font-size: 6.5vw;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-right-col .echo-text {
+                font-size: 11vw;
+            }
+        }
+
+        /* Ajuste optico: "ALDARA ALVAREZ" en mayusculas no tiene
+           descendentes, así que dentro de su propia caja de linea el hueco
+           vacio queda todo por debajo del texto -- su centro visual (el que
+           ve el ojo) queda mas alto que el centro real de esa caja, y por
+           tanto mas alto que el centro del logo (que si ocupa toda su caja).
+           Se nota sobre todo antes de que aparezca el subtitulo, que luego
+           "ancla" visualmente el conjunto y compensa la diferencia. Se
+           corrige con un pequeño desplazamiento que desaparece en cuanto el
+           subtitulo empieza a aparecer. */
+        .hero-right-col .echo-container {
+            transform: translateY(30px);
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        body.loaded .hero-right-col .echo-container {
+            transform: translateY(0);
+        }
+
+        /* Visitas repetidas en la misma sesion: sin barrido, hero ya abierto */
+        html.no-intro .viewport-wiper {
+            display: none;
+        }
+        html.no-intro body.loading-active {
+            overflow: visible;
+        }
+        html.no-intro .hero-divider {
+            transform: scaleY(1);
+            transition: none;
+        }
+        html.no-intro .hero-subtitle {
+            opacity: 1;
+            transform: translateY(0);
+            transition: none;
+        }
+        html.no-intro .hero-right-col .echo-container {
+            transform: translateY(0);
+            transition: none;
+        }
+
+        /* Pista de que el carrusel se puede deslizar (solo móvil): la pista
+           de escritorio (.porta-carousel-hint) depende de anclas de texto
+           que solo existen en el layout de escritorio, así que aquí se usa
+           una versión estática y sencilla, colocada justo encima del
+           carrusel en vez de en el hero. */
+        .porta-carousel-hint-mobile {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .porta-carousel-hint-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin: 0 0 14px;
+                font-family: var(--font-sans);
+                font-size: 11px;
+                font-weight: 300;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: var(--gray-muted);
+                opacity: 0.65;
+                transition: opacity 0.5s ease;
+            }
+            .porta-carousel-hint-mobile.is-hidden {
+                opacity: 0;
+            }
+            .porta-carousel-hint-mobile svg {
+                width: 14px;
+                height: 14px;
+                animation: carousel-hint-mobile-nudge 1.8s ease-in-out infinite;
+            }
+        }
+        @keyframes carousel-hint-mobile-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .porta-carousel-hint-mobile svg { animation: none; }
+        }
+
+        /* --- Carrusel horizontal infinito: interior del cuaderno Porta --- */
+        .porta-carousel-section {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 70px 0 80px;
+            overflow: hidden;
+        }
+
+        /* Texto a la izquierda (ancho según su contenido, no medio
+           pantalla) y carrusel a la derecha: así el carrusel no se ve
+           empujado casi al borde mientras el texto deja un hueco muerto
+           en el centro. */
+        .porta-carousel-layout {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 3vw;
+            width: 100%;
+        }
+
+        .porta-carousel-copy {
+            flex: 0 0 auto;
+            width: min(34vw, 460px);
+            padding: 0 2vw 0 6vw;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        /* Cabecera de texto: título, descripción y botón "Ver proyecto",
+           alineados a la izquierda en la mitad de la sección. */
+        .porta-carousel-copy .section-title {
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 0.98;
+            margin: 0 0 20px 0;
+        }
+
+        .porta-carousel-copy .explode-desc {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--gray-muted);
+            font-weight: 300;
+            max-width: 34ch;
+            margin: 0 0 28px;
+        }
+
+        .porta-carousel-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Botón "pill" a juego con .button-circle del resto del sitio,
+           pero con un halo que sigue al cursor (--mx/--my, actualizadas
+           por JS en pointermove) en vez del borde giratorio de
+           .btn-lightbeam. */
+        .explode-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 26px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 9999px;
+            background-color: transparent;
+            overflow: hidden;
+            isolation: isolate;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .explode-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .explode-link span,
+        .explode-link svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .explode-link:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .explode-link:hover::before {
+            opacity: 1;
+        }
+
+        /* Mitad derecha: el carrusel, con perspectiva 3D para que las
+           fotos se curven hacia atrás como en un tiovivo/carrusel de
+           feria en vez de deslizarse en línea recta. */
+        .porta-carousel-visual {
+            position: relative;
+            flex: 1 1 auto;
+            min-width: 0;
+            padding-right: 6vw;
+            box-sizing: border-box;
+        }
+
+        .porta-carousel-viewport {
+            position: relative;
+            width: 100%;
+            /* clamp() en vez de min() para poner un suelo: en pantallas
+               bajas (portátiles con poca altura) 66vh se quedaba corto y
+               la imagen central (escalada 1.18x + sombra) se recortaba
+               contra el borde superior/inferior del contenedor. El
+               padding vertical añade colchón extra sin ser recortado,
+               porque overflow-y:hidden solo recorta fuera del padding-box. */
+            height: clamp(560px, 72vh, 700px);
+            padding: 40px 0;
+            box-sizing: content-box;
+            overflow-x: auto;
+            overflow-y: hidden;
+            cursor: grab;
+            -webkit-user-select: none;
+            user-select: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            perspective: 1400px;
+            /* El arrastre se gestiona a mano vía Pointer Events (con
+               inercia), así que se desactiva el paneo táctil nativo para
+               que no compita con él. */
+            touch-action: none;
+            /* Difumina los bordes izquierdo/derecho para que el carrusel
+               infinito no revele un corte brusco de las fotos. */
+            -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+        }
+
+        .porta-carousel-viewport.is-dragging {
+            cursor: grabbing;
+        }
+
+        .porta-carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+
+        .porta-carousel-track {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 100%;
+            width: max-content;
+            padding: 0 20vw;
+            transform-style: preserve-3d;
+        }
+
+        .porta-carousel-item {
+            flex: 0 0 auto;
+            width: min(30vw, 440px);
+            aspect-ratio: 1 / 1;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: #17232b;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            /* rotateY + translateZ curvan cada foto hacia atrás según se
+               aleja del centro, como los caballitos de un tiovivo vistos
+               de frente; scale/opacity refuerzan la sensación de anillo. */
+            transform:
+                translateY(var(--carousel-y, 0px))
+                translateZ(var(--carousel-z, -120px))
+                rotateY(var(--carousel-rot, 0deg))
+                scale(var(--carousel-scale, 0.8));
+            opacity: var(--carousel-opacity, 0.6);
+            transition: box-shadow 0.3s ease;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        .porta-carousel-item.is-center {
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+        }
+
+        .porta-carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* Pista de que el carrusel se puede deslizar: pegada literalmente
+           a la derecha de la palabra "MI" en el título, en el hueco que
+           deja el salto de línea. Ancla invisible (.hint-inline-anchor)
+           justo tras "MI" en el HTML; el JS mide su posición real y
+           coloca el hint ahí, relativo a .porta-carousel-layout. */
+        .porta-carousel-hint {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            white-space: nowrap;
+            color: var(--gray-muted);
+            opacity: 0.65;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .porta-carousel-hint svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            animation: carousel-hint-nudge 1.8s ease-in-out infinite;
+        }
+
+        .porta-carousel-hint.is-hidden {
+            opacity: 0;
+        }
+
+        @keyframes carousel-hint-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+
+        @media (max-width: 900px) {
+            .porta-carousel-section {
+                padding: 28px 0;
+            }
+            .porta-carousel-layout {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .porta-carousel-copy {
+                width: 100%;
+                padding: 0 6vw;
+                margin-bottom: 4px;
+            }
+            .porta-carousel-copy .section-title {
+                font-size: clamp(30px, 9vw, 38px);
+                margin: 0 0 8px 0;
+            }
+            .porta-carousel-copy .explode-desc {
+                margin: 0 0 14px;
+            }
+            .porta-carousel-viewport {
+                height: clamp(340px, 56vh, 460px);
+                padding: 10px 0;
+            }
+            .porta-carousel-track {
+                padding: 0 20vw;
+            }
+            .porta-carousel-item {
+                width: min(64vw, 340px);
+            }
+            .porta-carousel-hint {
+                display: none;
+            }
+        }
+    
+        /* Movil: la primera pantalla es solo el hero (logo y subtitulo); "Mi ultimo
+           proyecto" aparece al hacer scroll. Especialidades mas compactas. */
+        @media (max-width: 768px) {
+            .hero { height: 100vh !important; height: 100svh !important; min-height: 100svh; }
+            .services-header { margin-bottom: 20px !important; }
+            .services-grid { gap: 16px !important; }
+            .service-card {
+                padding: 16px 16px 14px !important;
+                display: grid !important;
+                grid-template-columns: 44px 1fr;
+                column-gap: 14px !important;
+                align-items: start;
+            }
+            .service-card .icon-container { width: 44px; height: 44px; margin: 0 !important; }
+            .service-card .icon-container svg { width: 22px; height: 22px; }
+            .service-card .service-content { margin: 0 !important; }
+            .service-card .service-content h3 { font-size: 18px !important; margin-bottom: 6px !important; }
+            .service-card .service-content p { font-size: 13.5px !important; line-height: 1.4 !important; margin-bottom: 0 !important; }
+        }
+    </style>
+
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Aldara Álvarez",
+        "alternateName": ["Aldara Álvarez González", "aldaraalvarez.es"],
+        "url": "https://aldaraalvarez.es/",
+        "inLanguage": ["es", "gl", "en", "ca", "eu"],
+        "author": { "@type": "Person", "name": "Aldara Álvarez", "url": "https://aldaraalvarez.es/" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Aldara Álvarez",
+        "alternateName": "Aldara Álvarez González",
+        "sameAs": ["https://portamook.com/"],
+        "jobTitle": "Dissenyadora Gràfica",
+        "description": "Dissenyadora gràfica especialitzada en identitat de marca, disseny editorial i direcció d'art.",
+        "url": "https://aldaraalvarez.es/ca/",
+        "image": "https://aldaraalvarez.es/static/logo/logo_google.png",
+        "email": "aldaraalvarezglez@gmail.com",
+        "knowsAbout": ["Disseny Editorial", "Identitat de Marca", "Disseny de Packaging", "Modelatge 3D", "Disseny UX/UI"],
+        "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Universidad Complutense de Madrid" },
+            { "@type": "CollegeOrUniversity", "name": "UNIR - Universidad Internacional de La Rioja" }
+        ]
+    }
+    </script>
+</head>
+<body class="loading-active">
+
+    <div id="viewport-wiper" class="viewport-wiper"></div>
+
+    <header>
+        <a href="./" class="logo"><img src="../static/logo/logo.png" alt="Logo Aldara Álvarez" width="53" height="40"></a>
+        <div class="header-nav-group">
+        <nav class="magnification-dock">
+            <a href="projects" class="dock-item" data-label="Projectes">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Projectes</span>
+            </a>
+            <a href="about" class="dock-item" data-label="Sobre mi">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Sobre&nbsp;mi</span>
+            </a>
+            <a href="contact" class="dock-item" data-label="Contacte">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Contacte</span>
+            </a>
+            <div class="dock-item lang-selector" data-label="Idioma">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span class="dock-tooltip">Idioma</span>
+                <div class="lang-dropdown">
+                    <a href="../" class="lang-option">ES</a>
+                    <a href="../en/" class="lang-option">EN</a>
+                    <a href="../gl/" class="lang-option">GAL</a>
+                    <a href="./" class="lang-option active">CAT</a>
+                    <a href="../eu/" class="lang-option">EUS</a>
+                </div>
+            </div>
+            </nav>
+        <div class="dock-item lang-selector lang-switch-external" data-label="Idioma">
+            <button type="button" class="dock-icon lang-switch-toggle" aria-haspopup="true" aria-expanded="false">CAT</button>
+            <span class="dock-tooltip">Idioma</span>
+            <div class="lang-dropdown">
+                <a href="../" class="lang-option">ES</a>
+                <a href="../en/" class="lang-option">EN</a>
+                <a href="../gl/" class="lang-option">GAL</a>
+                <a href="../eu/" class="lang-option">EUS</a>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Typographic Echo Stack & Split Layout -->
+    <section class="hero">
+        <div class="hero-split-container">
+            <!-- Left Column: Logo -->
+            <div class="hero-left-col">
+                <img src="../static/logo/logo.png" width="1692" height="1269" alt="Logo Aldara Álvarez" class="hero-logo">
+            </div>
+            
+            <!-- Vertical Divider -->
+            <div class="hero-divider"></div>
+            
+            <!-- Right Column: Name and Tagline -->
+            <div class="hero-right-col">
+                <h1 class="hero-heading-group">
+                    <span class="echo-container">
+                        <span class="echo-text echo-front">Aldara&nbsp;Álvarez</span>
+                    </span>
+                    <span id="hero-subtitle" class="hero-subtitle"><strong>dissenyadora</strong><span class="hero-pipe"> | </span>especialista en&nbsp;identitat de&nbsp;marca i&nbsp;disseny&nbsp;editorial</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel horizontal infinito: paginas interiores del cuaderno Porta -->
+    <section class="porta-carousel-section">
+        <div class="porta-carousel-layout">
+            <div class="porta-carousel-copy">
+                <h2 class="section-title">EL<span class="hint-inline-anchor" id="hint-inline-anchor"></span> MEU&nbsp;ÚLTIM <span id="hint-right-anchor">PROJECTE</span></h2>
+                <p class="explode-desc">Un&nbsp;cop d'ull a&nbsp;la&nbsp;meva última aventura creativa: la&nbsp;creació de&nbsp;la&nbsp;marca i&nbsp;el&nbsp;disseny integral&nbsp;d'un <em>mook</em>.</p>
+                <div class="porta-carousel-actions">
+                    <a href="projects/porta" class="explode-link"><span>Veure&nbsp;projecte</span></a>
+                    <a href="https://portamook.com/" class="explode-link" target="_blank" rel="noopener"><span>Visita&nbsp;portamook.com</span></a>
+                </div>
+            </div>
+            <p class="porta-carousel-hint" id="porta-carousel-hint">
+                Llisca per&nbsp;explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </p>
+            <p class="porta-carousel-hint-mobile" id="porta-carousel-hint-mobile" aria-hidden="true">
+                Llisca per&nbsp;explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </p>
+            <div class="porta-carousel-visual">
+                <div class="porta-carousel-viewport" id="porta-carousel-viewport">
+                    <div class="porta-carousel-track" id="porta-carousel-track">
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-01.webp" alt="Porta, pàgina interior 1" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-02.webp" alt="Porta, pàgina interior 2" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-03.webp" alt="Porta, pàgina interior 3" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-04.webp" alt="Porta, pàgina interior 4" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-05.webp" alt="Porta, pàgina interior 5" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-06.webp" alt="Porta, pàgina interior 6" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-07.webp" alt="Porta, pàgina interior 7" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-08.webp" alt="Porta, pàgina interior 8" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-09.webp" alt="Porta, pàgina interior 9" loading="lazy"></div>
+                        <div class="porta-carousel-item"><img src="../static/images/porta/carousel/porta-carousel-10.webp" alt="Porta, pàgina interior 10" loading="lazy"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion Proyectos para Ordenador (4 proyectos en una fila, sin carrusel) -->
+    <section id="showcase-desktop-container" class="showcase-desktop-only">
+        <div class="projects-section-header">
+            <h2 class="section-title">ALTRES&nbsp;PROJECTES</h2>
+            <p class="section-subtitle">Aquí et&nbsp;deixo una&nbsp;selecció de&nbsp;projectes que&nbsp;espero que&nbsp;et&nbsp;transmetin la&nbsp;meva dedicació i&nbsp;passió pel&nbsp;disseny.</p>
+        </div>
+
+        <div class="projects-cta-btn-wrapper">
+            <a href="projects" id="projects-cta-btn" class="explode-link"><span>Veure més&nbsp;projectes</span></a>
+        </div>
+
+        <div class="projects-desktop-grid">
+            <!-- Project 1: Forma y Función -->
+            <div class="project-info">
+                <a href="projects/formayfuncion">
+                    <img src="../static/images/pr_formayfuncion_cover.webp" alt="Projecte Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
+                    <div class="image-text">
+                        <h3 class="titulo-text">FORMA Y&nbsp;FUNCIÓN</h3>
+                        <h4 class="proyecto-text">DISSENY&nbsp;EDITORIAL</h4>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Project 2: Casa Decor -->
+            <div class="project-info">
+                <a href="projects/casadecor">
+                    <img src="../static/images/pr_casadecor_cover.webp" alt="Projecte Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
+                    <div class="image-text">
+                        <h3 class="titulo-text">CASA&nbsp;DECOR</h3>
+                        <h4 class="proyecto-text">DISSENY DE&nbsp;SENYALÈCTICA</h4>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Project 3: Flechas Amarillas -->
+            <div class="project-info">
+                <a href="projects/flechasamarillas">
+                    <img src="../static/images/pr_flechasamarillas_cover_card.webp" alt="Projecte Flechas Amarillas" class="image-size" loading="lazy" width="1200" height="1111">
+                    <div class="image-text">
+                        <h3 class="titulo-text">FLECHAS&nbsp;AMARILLAS</h3>
+                        <h4 class="proyecto-text">DISSENY EDITORIAL I&nbsp;IL·LUSTRACIÓ</h4>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="showcase-pin-container" class="showcase-pin-container showcase-mobile-only">
+        <div class="projects-section-header">
+            <h2 class="section-title">PROJECTES</h2>
+            <p class="section-subtitle">Aquí et&nbsp;deixo una&nbsp;selecció de&nbsp;projectes que&nbsp;espero que&nbsp;et&nbsp;transmetin la&nbsp;meva dedicació i&nbsp;passió pel&nbsp;disseny.</p>
+        </div>
+        
+        <div class="scroller-wrapper">
+            <div class="hover-area-left"></div>
+            <div class="hover-area-right"></div>
+            <button class="scroll-arrow arrow-left"  id="arrow-left"  aria-label="Anterior">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <button class="scroll-arrow arrow-right" id="arrow-right" aria-label="Següent">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <div id="showcase-ticker" class="projects-scroller">
+                <!-- Project 1: El viejo y el mar -->
+                <div class="project-info">
+                    <a href="projects/flechasamarillas">
+                        <img src="../static/images/pr_flechasamarillas_cover_card.webp" alt="Projecte Flechas Amarillas" class="image-size" loading="lazy" width="1200" height="1111">
+                        <div class="image-text">
+                            <h3 class="titulo-text">FLECHAS&nbsp;AMARILLAS</h3>
+                            <h4 class="proyecto-text">DISSENY EDITORIAL I&nbsp;IL·LUSTRACIÓ</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 2: Namasté -->
+                <div class="project-info">
+                    <a href="projects/namaste">
+                        <img src="../static/images/pr_namaste_cover.webp" alt="Projecte Namasté" class="image-size" loading="lazy" width="2146" height="2084">
+                        <div class="image-text">
+                            <h3 class="titulo-text">NAMASTÉ</h3>
+                            <h4 class="proyecto-text">DISSENY D'IDENTITAT CORPORATIVA&nbsp;I <em>PACKAGING</em></h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 3: Casa de Cuentos -->
+                <div class="project-info">
+                    <a href="projects/casacuentos">
+                        <img src="../static/images/pr_casacuentos_cover.webp" alt="Projecte Casa de Cuentos" class="image-size" loading="lazy" width="1621" height="1578">
+                        <div class="image-text">
+                            <h3 class="titulo-text">CASA DE&nbsp;CUENTOS</h3>
+                            <h4 class="proyecto-text">DISSENY DE&nbsp;MODEL&nbsp;3D</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 4: Forma y Función -->
+                <div class="project-info">
+                    <a href="projects/formayfuncion">
+                        <img src="../static/images/pr_formayfuncion_cover.webp" alt="Projecte Forma y Función" class="image-size" loading="lazy" width="4151" height="3171">
+                        <div class="image-text">
+                            <h3 class="titulo-text">FORMA Y&nbsp;FUNCIÓN</h3>
+                            <h4 class="proyecto-text">DISSENY&nbsp;EDITORIAL</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 5: Deporte en Señales -->
+                <div class="project-info">
+                    <a href="projects/deporteensenales">
+                        <img src="../static/images/pr_deporteensenales_cover.webp" alt="Projecte Deporte en Señales" class="image-size" loading="lazy" width="3685" height="3550">
+                        <div class="image-text">
+                            <h3 class="titulo-text">DEPORTE EN&nbsp;SEÑALES</h3>
+                            <h4 class="proyecto-text">DISSENY DE&nbsp;SENYALÈCTICA</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 6: La boca del lobo -->
+                <div class="project-info">
+                    <a href="projects/labocadellobo">
+                        <img src="../static/images/pr_labocadellobo_cover.webp" alt="Projecte La boca del lobo" class="image-size" loading="lazy" width="1131" height="1131">
+                        <div class="image-text">
+                            <h3 class="titulo-text">LA&nbsp;BOCA DEL&nbsp;LOBO</h3>
+                            <h4 class="proyecto-text">DISSENY&nbsp;DE <em>LETTERING</em></h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 7: Casa Decor -->
+                <div class="project-info">
+                    <a href="projects/casadecor">
+                        <img src="../static/images/pr_casadecor_cover.webp" alt="Projecte Casa Decor" class="image-size" loading="lazy" width="3994" height="3802">
+                        <div class="image-text">
+                            <h3 class="titulo-text">CASA&nbsp;DECOR</h3>
+                            <h4 class="proyecto-text">DISSENY DE&nbsp;SENYALÈCTICA</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Project 8: Diez Negritos -->
+                <div class="project-info">
+                    <a href="projects/dieznegritos">
+                        <img src="../static/images/pr_dieznegritos_cover.webp" alt="Projecte Diez Negritos" class="image-size" loading="lazy" width="1940" height="1885">
+                        <div class="image-text">
+                            <h3 class="titulo-text">DIEZ&nbsp;NEGRITOS</h3>
+                            <h4 class="proyecto-text">DISSENY DE&nbsp;COBERTA</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bespoke Service Cards -->
+    <section class="services">
+        <div class="services-header">
+            <h2>Especialitats</h2>
+        </div>
+        <div class="services-grid">
+            <!-- Card 1 -->
+            <div class="service-card">
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <div class="service-content">
+                    <h3>Disseny&nbsp;Editorial</h3>
+                    <p>Maquetació de&nbsp;publicacions, direcció tipogràfica i&nbsp;disseny de&nbsp;llibres, revistes i&nbsp;catàlegs amb&nbsp;criteri i&nbsp;detall.</p>
+                </div>
+                <a href="projects" class="service-cta" style="display:none;">
+                    Explorar&nbsp;projectes <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+            <!-- Card 2 -->
+            <div class="service-card">
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                </div>
+                <div class="service-content">
+                    <h3>Identitat de&nbsp;Marca</h3>
+                    <p>Creació d'identitats visuals coherents i&nbsp;duradores: logotip, paleta, tipografia i&nbsp;sistema de&nbsp;marca&nbsp;complet.</p>
+                </div>
+                <a href="projects" class="service-cta" style="display:none;">
+                    Explorar&nbsp;projectes <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+            <!-- Card 3 -->
+            <div class="service-card">
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polygon points="2 17 12 22 22 17"/><polygon points="2 12 12 17 22 12"/></svg>
+                </div>
+                <div class="service-content">
+                    <h3>Disseny&nbsp;UX·UI</h3>
+                    <p>Interfícies digitals centrades en&nbsp;l'usuari: wireframes, prototips i&nbsp;disseny visual de&nbsp;productes web i&nbsp;app.</p>
+                </div>
+                <a href="projects" class="service-cta" style="display:none;">
+                    Explorar&nbsp;projectes <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    
+        <!-- Secure Sanitized Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contacte</h2>
+        <p class="intro">Tens algun projecte en&nbsp;ment o&nbsp;em&nbsp;vols preguntar alguna&nbsp;cosa?<br><span style="display:inline-block; margin-top:12px;">Parlem de&nbsp;forma&nbsp;segura.</span></p>
+        
+        <div class="contact-form-wrapper" style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
+            <!-- Hidden Loading State Overlay -->
+            <div id="loading-overlay" class="loading-overlay" style="display: none;">
+                <!-- Long Fazers Background -->
+                <div class="longfazers">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="loader-container">
+                    <div class="loader">
+                        <span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <div class="base">
+                            <span></span>
+                            <div class="face"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading-content">
+                    <h2 class="loading-title">ENVIANT&nbsp;MISSATGE</h2>
+                    <p class="loading-subtitle">Establint connexió&nbsp;segura...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Success State Overlay -->
+            <div id="success-overlay" class="success-overlay" style="display: none;">
+                <div class="success-icon-container">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <h2 class="success-title" id="success-title-text">Gràcies!</h2>
+                <p class="success-subtitle">Et&nbsp;contactaré ben&nbsp;aviat.</p>
+            </div>
+
+            <form id="contact-form" class="contact-form" action="#" method="POST">
+                <!-- Spambot Honeypot Field -->
+                <div style="display:none;">
+                    <label for="honeypot">Deixar&nbsp;buit</label>
+                    <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" name="name" placeholder="Com et dius?" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="A quin correu et responc?" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="message">Missatge</label>
+                    <textarea id="message" name="message" placeholder="Explica'm què tens en ment, què necessites dissenyar i ens hi posem..." rows="5" required></textarea>
+                </div>
+                <button type="submit" class="button-circle btn-lightbeam"><span>ENVIAR&nbsp;MISSATGE</span></button>
+                <div id="form-status" class="form-status" style="display:none; margin-top: 15px; font-weight: 700; font-size: 14px;"></div>
+            </form>
+        </div>
+    </section>
+    
+
+        <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="../static/logo/logo.png" alt="Logo Aldara Álvarez" class="footer-logo" width="40" height="30">
+                <p><strong>Aldara&nbsp;Álvarez</strong> — Dissenyadora&nbsp;Gràfica.<br>Graduada en&nbsp;Disseny per&nbsp;la&nbsp;UCM i&nbsp;Màster en&nbsp;Disseny Gràfic Digital per&nbsp;la&nbsp;UNIR. Especialitzada en&nbsp;solucions visuals conceptuals, disseny editorial i&nbsp;identitat&nbsp;corporativa.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Seccions</h3>
+                <ul>
+                    <li><a href="projects">Projectes</a></li>
+                    <li><a href="about">Sobre&nbsp;mi</a></li>
+                    <li><a href="contact">Contacte</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Projectes&nbsp;Destacats</h3>
+                <ul>
+                    <li><a href="projects/porta">Porta</a></li>
+                    <li><a href="projects/flechasamarillas">Flechas&nbsp;Amarillas</a></li>
+                    <li><a href="projects/formayfuncion">Forma y&nbsp;función</a></li>
+                    <li><a href="projects/casadecor">Casa&nbsp;Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contacte</h3>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <a href="mailto:aldaraalvarezglez@gmail.com">aldaraalvarezglez@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara&nbsp;Álvarez. Tots els&nbsp;drets&nbsp;reservats.</span>
+            <a href="legal" class="footer-legal-link">Avís&nbsp;Legal</a>
+            
+        </div>
+    </footer>
+
+    
+
+    <script>
+        // Carrusel de proyectos: scroll horizontal nativo (trackpad, swipe
+        // táctil, shift+rueda) con flechas que avanzan una tarjeta cada vez.
+        const ticker = document.getElementById("showcase-ticker");
+        const scroller = document.querySelector(".scroller-wrapper");
+        const arrowLeft = document.getElementById("arrow-left");
+        const arrowRight = document.getElementById("arrow-right");
+
+        function scrollStep() {
+            const firstCard = ticker.querySelector(".project-info");
+            if (!firstCard) return scroller.clientWidth * 0.8;
+            const gap = parseFloat(getComputedStyle(ticker).gap) || 0;
+            return firstCard.getBoundingClientRect().width + gap;
+        }
+
+        arrowLeft.addEventListener("click", () => {
+            scroller.scrollBy({ left: -scrollStep(), behavior: "smooth" });
+        });
+        arrowRight.addEventListener("click", () => {
+            scroller.scrollBy({ left: scrollStep(), behavior: "smooth" });
+        });
+    </script>
+
+    <!-- Intro: barrido horizontal + entrada del hero (una vez por sesion) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const introAlreadyPlayed = document.documentElement.classList.contains("no-intro");
+            const wiper = document.getElementById("viewport-wiper");
+            const subtitleEl = document.getElementById("hero-subtitle");
+            const text = "dissenyadora | especialista en identitat de marca i disseny editorial";
+
+            function showSubtitleFinal() {
+                if (subtitleEl) {
+                    subtitleEl.innerHTML = '<strong>dissenyadora</strong><span class="hero-pipe"> | </span>especialista en&nbsp;identitat de&nbsp;marca i&nbsp;disseny&nbsp;editorial';
+                }
+            }
+
+            function type(i = 0) {
+                if (!subtitleEl) return;
+                if (i < text.length) {
+                    if (i < text.indexOf(" | ")) {
+                        subtitleEl.innerHTML = `<strong>${text.substring(0, i + 1)}</strong>`;
+                    } else {
+                        subtitleEl.innerHTML = `<strong>${text.substring(0, text.indexOf(" | "))}</strong><span class="hero-pipe"> | </span>${text.substring(text.indexOf(" | ") + 3, i + 1)}`;
+                    }
+                    setTimeout(() => type(i + 1), 40);
+                } else {
+                    showSubtitleFinal();
+                }
+            }
+
+            if (introAlreadyPlayed) {
+                // Ya se vio el intro en esta sesion: mostrar directamente el
+                // estado final, sin barrido ni transiciones.
+                document.body.classList.remove("loading-active");
+                document.body.classList.add("loaded");
+                showSubtitleFinal();
+                return;
+            }
+
+            sessionStorage.setItem("heroIntroPlayed", "1");
+
+            if (subtitleEl) subtitleEl.innerHTML = "";
+            if (wiper) wiper.classList.add("animate");
+
+            // Esperar a que finalice el barrido (2.4s) antes de abrir el hero
+            setTimeout(() => {
+                document.body.classList.remove("loading-active");
+                document.body.classList.add("loaded");
+
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    setTimeout(() => type(0), 500);
+                } else {
+                    showSubtitleFinal();
+                }
+            }, 2400);
+        });
+    </script>
+
+<script src="../static/scripts/contact.js"></script>
+<script src="../static/scripts/dock.js"></script>
+    <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+    <!-- Interactive Effects: Mouse Glow, Tilted Cards, and TextPressure -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+            // 2. Tilted Card effect for Projects Desktop Grid
+            const cards = document.querySelectorAll("#showcase-desktop-container .project-info");
+            if (cards.length > 0 && !prefersReducedMotion) {
+                cards.forEach(card => {
+                    let reqId = null;
+                    let targetRotateX = 0;
+                    let targetRotateY = 0;
+                    let targetScale = 1;
+                    let currentRotateX = 0;
+                    let currentRotateY = 0;
+                    let currentScale = 1;
+                    let isHovered = false;
+
+                    card.addEventListener("mouseenter", () => {
+                        isHovered = true;
+                        targetScale = 1.06; // subtle scale up
+                        if (!reqId) {
+                            reqId = requestAnimationFrame(updateCardTransform);
+                        }
+                    });
+
+                    card.addEventListener("mousemove", (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const width = rect.width;
+                        const height = rect.height;
+                        const x = e.clientX - rect.left - width / 2;
+                        const y = e.clientY - rect.top - height / 2;
+                        
+                        // Normalize between -1 and 1
+                        const normX = x / (width / 2);
+                        const normY = y / (height / 2);
+
+                        // Max 8 degrees tilt
+                        targetRotateY = normX * 8;
+                        targetRotateX = -normY * 8;
+                    });
+
+                    card.addEventListener("mouseleave", () => {
+                        isHovered = false;
+                        targetRotateX = 0;
+                        targetRotateY = 0;
+                        targetScale = 1;
+                    });
+
+                    function updateCardTransform() {
+                        // Spring interpolation (lerp factor 0.1)
+                        currentRotateX += (targetRotateX - currentRotateX) * 0.1;
+                        currentRotateY += (targetRotateY - currentRotateY) * 0.1;
+                        currentScale += (targetScale - currentScale) * 0.1;
+
+                        card.style.transform = `rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg) scale(${currentScale.toFixed(3)})`;
+
+                        const diffX = Math.abs(targetRotateX - currentRotateX);
+                        const diffY = Math.abs(targetRotateY - currentRotateY);
+                        const diffScale = Math.abs(targetScale - currentScale);
+
+                        if (!isHovered && diffX < 0.01 && diffY < 0.01 && diffScale < 0.001) {
+                            card.style.transform = 'none';
+                            reqId = null;
+                        } else {
+                            reqId = requestAnimationFrame(updateCardTransform);
+                        }
+                    }
+                });
+            }
+
+            // 3. TextPressure variable font-weight effect for Hero Title
+            const nameEl = document.querySelector(".echo-text.echo-front");
+            if (nameEl && !prefersReducedMotion) {
+                const text = nameEl.textContent.trim();
+                nameEl.setAttribute("aria-label", text);
+                nameEl.innerHTML = "";
+                
+                // Split text into spans for each character (preserving spacing and accents)
+                const spans = Array.from(text).map(char => {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    span.setAttribute("aria-hidden", "true");
+                    span.style.display = "inline-block";
+                    span.style.fontWeight = "300"; // base font-weight
+                    span.style.transition = "font-weight 0.15s ease, font-variation-settings 0.15s ease";
+                    if (char === " ") {
+                        span.style.whiteSpace = "pre";
+                    }
+                    nameEl.appendChild(span);
+                    return span;
+                });
+
+                let mouseX = -1000;
+                let mouseY = -1000;
+                let reqId = null;
+
+                document.addEventListener("mousemove", (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (!reqId) {
+                        reqId = requestAnimationFrame(updateTextWeight);
+                    }
+                });
+
+                document.addEventListener("mouseleave", () => {
+                    mouseX = -1000;
+                    mouseY = -1000;
+                    if (!reqId) {
+                        reqId = requestAnimationFrame(updateTextWeight);
+                    }
+                });
+
+                function updateTextWeight() {
+                    spans.forEach(span => {
+                        const rect = span.getBoundingClientRect();
+                        const charX = rect.left + rect.width / 2;
+                        const charY = rect.top + rect.height / 2;
+                        const dist = Math.hypot(mouseX - charX, mouseY - charY);
+                        
+                        const maxRadius = 180; // area of influence
+                        let weight = 300; // base weight
+
+                        if (dist < maxRadius) {
+                            const factor = 1 - (dist / maxRadius);
+                            const easeFactor = factor * factor; // quadratic curve for visual appeal
+                            // Clash Display variable weight range is 200 to 700. Max out weight at 700.
+                            weight = 300 + Math.round(easeFactor * 400); 
+                        }
+
+                        span.style.fontWeight = weight.toString();
+                        span.style.fontVariationSettings = `'wght' ${weight}`;
+                    });
+                    reqId = null;
+                }
+            }
+        });
+    </script>
+
+
+    <!-- Carrusel horizontal infinito con imagen central ampliada -->
+    <script>
+        (function () {
+            const viewport = document.getElementById("porta-carousel-viewport");
+            const track = document.getElementById("porta-carousel-track");
+            if (!viewport || !track) return;
+
+            const hint = document.getElementById("porta-carousel-hint");
+            const hintMobile = document.getElementById("porta-carousel-hint-mobile");
+            const hintAnchor = document.getElementById("hint-inline-anchor");
+            const hintRightAnchor = document.getElementById("hint-right-anchor");
+            const hintParent = document.querySelector(".porta-carousel-layout");
+            function hideHint() {
+                if (hint) hint.classList.add("is-hidden");
+                if (hintMobile) hintMobile.classList.add("is-hidden");
+            }
+            // Vertical: a la altura de "MI" (mide el ancla invisible justo
+            // tras esa palabra en el título). Horizontal: el hint termina
+            // (su borde derecho) donde termina "PROYECTO", así no invade el
+            // carrusel ni queda pegado a él, pero tampoco se acerca tanto
+            // al texto como para tocar "MI".
+            function positionHint() {
+                if (!hint || !hintParent) return;
+                // Siempre debajo de los botones y alineada con el titulo: el hueco junto a "MI"
+                // solo existe si el titulo se parte en tres lineas y en tablet se solapaba.
+                const actions = document.querySelector(".porta-carousel-actions");
+                const parentRect = hintParent.getBoundingClientRect();
+                const ref = (actions || hintRightAnchor).getBoundingClientRect();
+                hint.style.left = (ref.left - parentRect.left) + "px";
+                hint.style.top = (ref.bottom - parentRect.top + 26 + hint.offsetHeight / 2) + "px";
+            }
+
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            // Triplicamos las 10 fotos para poder hacer scroll infinito en
+            // ambas direcciones: mientras el usuario navega dentro del
+            // bloque central, al acercarse a un extremo saltamos (sin
+            // animación) al mismo punto del bloque siguiente/anterior, así
+            // el bucle 1→10→1 nunca se nota.
+            const SET_COUNT = 3;
+            track.innerHTML = track.innerHTML.repeat(SET_COUNT);
+            const items = Array.from(track.children);
+            const itemsPerSet = items.length / SET_COUNT;
+
+            let setWidth = 0;
+
+            // Posición "real" que se pinta cada frame (currentX) persiguiendo
+            // suavemente a la posición que pide el usuario (targetX). En vez
+            // de mover scrollLeft a saltos en cada evento de rueda/scroll,
+            // todo el input (rueda, trackpad, arrastre) solo actualiza
+            // targetX, y un único bucle de render hace el resto con
+            // interpolación — así el movimiento siempre es fluido, sin
+            // importar lo brusco que sea el input.
+            let currentX = 0;
+            let targetX = 0;
+            const EASE = 0.085;
+
+            function measure() {
+                if (items.length > itemsPerSet) {
+                    setWidth = items[itemsPerSet].offsetLeft - items[0].offsetLeft;
+                }
+            }
+
+            function wrap() {
+                if (setWidth <= 0) return;
+                while (currentX < setWidth * 0.5) {
+                    currentX += setWidth;
+                    targetX += setWidth;
+                }
+                while (currentX > setWidth * 1.5) {
+                    currentX -= setWidth;
+                    targetX -= setWidth;
+                }
+            }
+
+            // Coloca cada foto sobre un arco 3D según lo lejos que esté del
+            // centro del viewport (como los caballitos de un tiovivo
+            // vistos de frente): las del centro quedan grandes y de
+            // frente, las de los lados se giran, encogen, se atenúan y se
+            // hunden hacia atrás siguiendo una curva.
+            function updateScales() {
+                const rect = viewport.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                let closest = null;
+                let closestDist = Infinity;
+
+                items.forEach((item) => {
+                    const r = item.getBoundingClientRect();
+                    const itemCenter = r.left + r.width / 2;
+                    const signedDist = itemCenter - centerX;
+                    const dist = Math.abs(signedDist);
+                    const norm = Math.max(-1, Math.min(1, signedDist / (rect.width / 2 + r.width / 2)));
+                    const absNorm = Math.abs(norm);
+
+                    const rot = -norm * 46; // gira hacia el centro, como en un anillo
+                    const z = -absNorm * 260; // se hunde hacia el fondo
+                    const y = absNorm * absNorm * 36; // cae en curva, como un arco
+                    const scale = 1.18 - absNorm * 0.42;
+                    const opacity = Math.max(0.3, 1 - absNorm * 0.65);
+
+                    item.style.setProperty("--carousel-rot", rot.toFixed(2) + "deg");
+                    item.style.setProperty("--carousel-z", z.toFixed(1) + "px");
+                    item.style.setProperty("--carousel-y", y.toFixed(1) + "px");
+                    item.style.setProperty("--carousel-scale", scale.toFixed(3));
+                    item.style.setProperty("--carousel-opacity", opacity.toFixed(3));
+
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        closest = item;
+                    }
+                });
+
+                items.forEach((item) => item.classList.toggle("is-center", item === closest));
+            }
+
+            function renderLoop() {
+                const diff = targetX - currentX;
+                if (Math.abs(diff) < 0.05) {
+                    currentX = targetX;
+                } else {
+                    currentX += diff * (prefersReducedMotion ? 1 : EASE);
+                }
+                wrap();
+                viewport.scrollLeft = currentX;
+                updateScales();
+                requestAnimationFrame(renderLoop);
+            }
+
+            // Solo "roba" el scroll de la rueda cuando el carrusel se ve
+            // entero en pantalla: si está a medio tapar (aún entrando o
+            // saliendo del viewport), dejamos que el scroll normal de la
+            // página siga funcionando, porque si no el usuario mueve el
+            // carrusel sin apenas verlo.
+            function isFullyInViewport() {
+                const rect = viewport.getBoundingClientRect();
+                return rect.top >= 0 && rect.bottom <= window.innerHeight;
+            }
+
+            // Todo el input (rueda vertical, trackpad horizontal, shift+rueda)
+            // se redirige a targetX; el bucle de render se encarga de
+            // suavizarlo, así no hay tirones aunque el usuario haga scroll
+            // a golpes.
+            viewport.addEventListener("wheel", (e) => {
+                if (!isFullyInViewport()) return;
+                e.preventDefault();
+                const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+                targetX += delta;
+                hideHint();
+            }, { passive: false });
+
+            // Arrastre con ratón/dedo: mientras se arrastra sigue al puntero
+            // 1:1 (sin lag), y al soltar se proyecta la velocidad como
+            // impulso para que el carrusel siga deslizando y frene solo,
+            // como un scroll con inercia real.
+            let isDragging = false;
+            let dragLastX = 0;
+            let dragLastT = 0;
+            let dragVelocity = 0;
+
+            viewport.addEventListener("pointerdown", (e) => {
+                isDragging = true;
+                dragLastX = e.clientX;
+                dragLastT = performance.now();
+                dragVelocity = 0;
+                viewport.classList.add("is-dragging");
+                viewport.setPointerCapture(e.pointerId);
+                hideHint();
+            });
+
+            viewport.addEventListener("pointermove", (e) => {
+                if (!isDragging) return;
+                const now = performance.now();
+                const dx = e.clientX - dragLastX;
+                const dt = Math.max(1, now - dragLastT);
+                dragVelocity = -dx / dt; // px por ms, sentido del scroll
+                targetX -= dx;
+                currentX = targetX; // sin inercia mientras el dedo/ratón sigue activo
+                dragLastX = e.clientX;
+                dragLastT = now;
+            });
+
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                viewport.classList.remove("is-dragging");
+                // Impulso de inercia proporcional a la velocidad del arrastre.
+                targetX += dragVelocity * 180;
+            }
+
+            viewport.addEventListener("pointerup", endDrag);
+            viewport.addEventListener("pointercancel", endDrag);
+
+            function init() {
+                measure();
+                currentX = setWidth;
+                targetX = setWidth;
+                viewport.scrollLeft = currentX;
+                updateScales();
+                positionHint();
+            }
+
+            init();
+            window.addEventListener("load", init);
+            window.addEventListener("resize", () => {
+                measure();
+                wrap();
+                updateScales();
+                positionHint();
+            });
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(positionHint);
+            }
+
+            requestAnimationFrame(renderLoop);
+        })();
+
+        // Halo que sigue al cursor en los botones "pill" (--mx/--my en %
+        // relativos al propio botón, consumidos por el radial-gradient
+        // de .explode-link::before).
+        (function () {
+            document.querySelectorAll(".explode-link").forEach((btn) => {
+                btn.addEventListener("pointermove", (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+                    const my = ((e.clientY - rect.top) / rect.height) * 100;
+                    btn.style.setProperty("--mx", mx.toFixed(1) + "%");
+                    btn.style.setProperty("--my", my.toFixed(1) + "%");
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

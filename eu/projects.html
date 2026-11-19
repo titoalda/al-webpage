@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <link rel="shortcut icon" href="../static/logo/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../static/logo/apple-touch-icon.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <title>Proiektuak | Aldara&nbsp;Álvarez</title>
+    <link rel="canonical" href="https://aldaraalvarez.es/eu/projects">
+    <link rel="alternate" type="text/markdown" href="https://aldaraalvarez.es/eu/projects.md">
+    <link rel="alternate" hreflang="es" href="https://aldaraalvarez.es/projects">
+    <link rel="alternate" hreflang="en" href="https://aldaraalvarez.es/en/projects">
+    <link rel="alternate" hreflang="gl" href="https://aldaraalvarez.es/gl/projects">
+    <link rel="alternate" hreflang="ca" href="https://aldaraalvarez.es/ca/projects">
+    <link rel="alternate" hreflang="eu" href="https://aldaraalvarez.es/eu/projects">
+    <link rel="alternate" hreflang="x-default" href="https://aldaraalvarez.es/projects">
+    <meta name="description" content="Esploratu Aldara Álvarezen diseinu grafikoko proiektuak. Diseinu editoriala, marka-eskuliburuak, low-poly 3D modelatzea eta seinaletika-sistemak.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aldaraalvarez.es/eu/projects">
+    <meta property="og:title" content="Proiektuak | Aldara Álvarezen portfolioa">
+    <meta property="og:description" content="Esploratu Aldara Álvarezen diseinu grafikoko proiektuak. Diseinu editoriala, marka-eskuliburuak, low-poly 3D modelatzea eta seinaletika-sistemak.">
+    <meta property="og:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aldaraalvarez.es/eu/projects">
+    <meta name="twitter:title" content="Proiektuak | Aldara Álvarezen portfolioa">
+    <meta name="twitter:description" content="Esploratu Aldara Álvarezen diseinu grafikoko proiektuak. Diseinu editoriala, marka-eskuliburuak, low-poly 3D modelatzea eta seinaletika-sistemak.">
+    <meta name="twitter:image" content="https://aldaraalvarez.es/static/logo/logo_inverted.png">
+
+    <link rel="preload" href="../static/fonts/clash-display-300.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../static/fonts/clash-display-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../static/fonts/satoshi-300.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../static/styles/fonts.css">
+
+    <link rel="stylesheet" href="../static/styles/style.min.css?v=13">
+    <style>
+        .journey-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 4vw 120px;
+        }
+        .journey-cta-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+            max-width: 480px;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .journey-cta-inner.visible { opacity: 1; transform: none; }
+        .journey-cta-inner h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-color);
+            margin: 0;
+        }
+        .journey-cta-inner p {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--gray-muted);
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        /* --- Peza de peche: Porta como último elemento da lista --- */
+        .porta-finale {
+            display: flex;
+            align-items: center;
+            gap: 6vw;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 6vw;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .porta-finale.is-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .porta-finale-media {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1800px;
+        }
+        .porta-finale-tilt {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .porta-finale-tilt img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6));
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .porta-finale-tilt img.is-loaded {
+            opacity: 1;
+        }
+        .porta-finale-text {
+            flex: 1;
+            min-width: 0;
+            max-width: 480px;
+        }
+        .porta-finale-eyebrow {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--gray-dark);
+            margin: 0 0 16px;
+        }
+        .porta-finale-title {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: clamp(48px, 6vw, 80px);
+            text-transform: uppercase;
+            line-height: 0.95;
+            color: var(--text-color);
+            margin: 0 0 16px;
+        }
+        .porta-finale-subtitle {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            color: #7ea3d9;
+            margin: 0 0 24px;
+        }
+        .porta-finale-desc {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-muted);
+            max-width: 42ch;
+            margin: 0 0 40px;
+        }
+        @media (max-width: 1024px) {
+            .porta-finale {
+                flex-direction: column;
+                text-align: center;
+                padding: 70px 6vw;
+                gap: 40px;
+            }
+            .porta-finale-media {
+                perspective: none;
+            }
+            .porta-finale-tilt {
+                max-width: 260px;
+            }
+            .porta-finale-text {
+                max-width: 100%;
+            }
+            .porta-finale-desc {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .porta-finale {
+                transition: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Proiektuak | Aldara Álvarez",
+        "url": "https://aldaraalvarez.es/eu/projects",
+        "description": "Aldara Álvarezen diseinu grafiko, editorial eta marka-identitateko proiektuen portfolioa.",
+        "inLanguage": "gl",
+        "author": {
+            "@type": "Person",
+            "name": "Aldara Álvarez",
+            "url": "https://aldaraalvarez.es/"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Hasiera",
+                "item": "https://aldaraalvarez.es/eu/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Proiektuak",
+                "item": "https://aldaraalvarez.es/eu/projects"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+
+    <header>
+        <a href="./" class="logo"><img src="../static/logo/logo.png" alt="Aldara Álvarezen logoa" width="53" height="40"></a>
+        <div class="header-nav-group">
+        <nav class="magnification-dock">
+            <a href="projects" class="dock-item" data-label="Proiektuak">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                <span class="dock-tooltip">Proiektuak</span>
+            </a>
+            <a href="about" class="dock-item" data-label="Niri buruz">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="dock-tooltip">Niri&nbsp;buruz</span>
+            </a>
+            <a href="contact" class="dock-item" data-label="Harremana">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span class="dock-tooltip">Harremana</span>
+            </a>
+            <div class="dock-item lang-selector" data-label="Hizkuntza">
+                <span class="dock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span class="dock-tooltip">Hizkuntza</span>
+                <div class="lang-dropdown">
+                    <a href="../projects" class="lang-option">ES</a>
+                    <a href="../en/projects" class="lang-option">EN</a>
+                    <a href="../gl/projects" class="lang-option">GAL</a>
+                    <a href="../ca/projects" class="lang-option">CAT</a>
+                    <a href="projects" class="lang-option active">EUS</a>
+                </div>
+            </div>
+            </nav>
+        <div class="dock-item lang-selector lang-switch-external" data-label="Hizkuntza">
+            <button type="button" class="dock-icon lang-switch-toggle" aria-haspopup="true" aria-expanded="false">EUS</button>
+            <span class="dock-tooltip">Hizkuntza</span>
+            <div class="lang-dropdown">
+                <a href="../projects" class="lang-option">ES</a>
+                <a href="../en/projects" class="lang-option">EN</a>
+                <a href="../gl/projects" class="lang-option">GAL</a>
+                <a href="../ca/projects" class="lang-option">CAT</a>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <div class="back-btn-wrapper">
+        <a href="./" class="back-btn"><span class="back-arrow">←</span> Itzuli&nbsp;hasierara</a>
+    </div>
+
+    <!-- Stacking Cards Gallery Section -->
+    <section class="gallery-header-section">
+        <h1 class="gallery-title">PROIEKTUAK</h1>
+        <p class="gallery-subtitle">Nire ikuspegi sortzaile eta&nbsp;kontzeptualaren erakusgarri&nbsp;bat.</p>
+    </section>
+
+    <div class="stacking-cards-container">
+        <!-- Project 1: El viejo y el mar -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_viejomar_cover.webp" width="1200" height="1100" alt="El viejo y el mar proiektua">
+            </div>
+            <div class="card-info">
+                <div class="card-num">01/</div>
+                <h2 class="card-title">EL&nbsp;VIEJO<br>Y EL&nbsp;MAR</h2>
+                <h3 class="card-category">AZALAREN DISEINUA ETA&nbsp;ILUSTRAZIOA</h3>
+                <a href="projects/elviejoyelmar" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 2: Flechas Amarillas -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_flechasamarillas_cover.webp" width="1200" height="917" alt="Flechas Amarillas proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">02/</div>
+                <h2 class="card-title">FLECHAS&nbsp;AMARILLAS</h2>
+                <h3 class="card-category">DISEINU EDITORIALA ETA&nbsp;ILUSTRAZIOA</h3>
+                <a href="projects/flechasamarillas" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 3: Namasté -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_namaste_cover.webp" width="1200" height="1165" alt="Namasté proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">03/</div>
+                <h2 class="card-title">NAMASTÉ</h2>
+                <h3 class="card-category">IDENTITATEAREN&nbsp;ETA <em>PACKAGING</em>-AREN&nbsp;DISEINUA</h3>
+                <a href="projects/namaste" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 4: Casa de Cuentos -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_casacuentos_cover.webp" width="1200" height="1168" alt="Casa de Cuentos proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">04/</div>
+                <h2 class="card-title">CASA DE&nbsp;CUENTOS</h2>
+                <h3 class="card-category">3D MODELOAREN&nbsp;DISEINUA</h3>
+                <a href="projects/casacuentos" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 5: Forma y Función -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_formayfuncion_cover.webp" width="1200" height="917" alt="Forma y Función proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">05/</div>
+                <h2 class="card-title">FORMA Y&nbsp;FUNCIÓN</h2>
+                <h3 class="card-category">DISEINU&nbsp;EDITORIALA</h3>
+                <a href="projects/formayfuncion" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 6: Deporte en Señales -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_deporteensenales_cover.webp" width="1200" height="1156" alt="Deporte en Señales proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">06/</div>
+                <h2 class="card-title">DEPORTE EN&nbsp;SEÑALES</h2>
+                <h3 class="card-category">SEINALETIKA-DISEINUA</h3>
+                <a href="projects/deporteensenales" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 7: La boca del lobo -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_labocadellobo_cover.webp" width="1131" height="1131" alt="La boca del lobo proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">07/</div>
+                <h2 class="card-title">LA BOCA DEL&nbsp;LOBO</h2>
+                <h3 class="card-category"><em>LETTERING</em>-DISEINUA</h3>
+                <a href="projects/labocadellobo" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 8: Casa Decor -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_casadecor_cover.webp" width="1200" height="1142" alt="Casa Decor proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">08/</div>
+                <h2 class="card-title">CASA&nbsp;DECOR</h2>
+                <h3 class="card-category">SEINALETIKA-DISEINUA</h3>
+                <a href="projects/casadecor" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+
+        <!-- Project 9: Diez Negritos -->
+        <div class="project-stack-card">
+            <div class="card-image">
+                <img src="../static/images/pr_dieznegritos_cover.webp" width="1200" height="1166" alt="Diez Negritos proiektua" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-num">09/</div>
+                <h2 class="card-title">DIEZ&nbsp;NEGRITOS</h2>
+                <h3 class="card-category">AZALAREN&nbsp;DISEINUA</h3>
+                <a href="projects/dieznegritos" class="card-link button-circle">IKUSI&nbsp;PROIEKTUA</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Peza de peche: Porta, proxecto principal -->
+    <section class="porta-finale" id="porta-finale">
+        <div class="porta-finale-media">
+            <div class="porta-finale-tilt" id="porta-finale-tilt">
+                <img src="../static/images/porta/porta-portada.webp" width="1195" height="1600" alt="Porta">
+            </div>
+        </div>
+        <div class="porta-finale-text">
+            <p class="porta-finale-eyebrow">1. edizioa&nbsp;· <em>Mook</em> editoriala</p>
+            <h2 class="porta-finale-title">Nire azken&nbsp;proiektua</h2>
+            <p class="porta-finale-subtitle">Porta — Cuadernos de Identidad&nbsp;Baionesa</p>
+            <p class="porta-finale-desc">Baionako ondarea irakurketa pausatuko esperientzia bihurtzen&nbsp;duen <em>mook</em> editorial&nbsp;bat. Marka-identitatea, ilustrazioa, argazkilaritza eta&nbsp;diseinu editoriala hasieratik&nbsp;amaierara.</p>
+            <a href="projects/porta" class="button-circle">Ikusi&nbsp;proiektua</a>
+        </div>
+    </section>
+
+    <section class="journey-cta">
+        <div class="journey-cta-inner" data-animate>
+            <h2>Elkarrekin zerbait sortuko&nbsp;dugu?</h2>
+            <p>Ideia bat buruan baduzu, istorio bat kontatuko duen diseinu bat behar baduzu eta&nbsp;ikusten duzuna gustatzen&nbsp;bazaizu... hitz egin&nbsp;dezagun!</p>
+            <a href="contact" class="button-circle btn-lightbeam"><span>Bidali&nbsp;mezua</span></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="../static/logo/logo.png" alt="Aldara Álvarezen logoa" class="footer-logo" width="40" height="30">
+                <p><strong>Aldara&nbsp;Álvarez</strong> — Diseinatzaile&nbsp;Grafikoa.<br>Diseinuan graduatua UCMn eta&nbsp;Diseinu Grafiko Digitalean Masterra&nbsp;UNIRen. Ikusizko soluzio kontzeptualetan, diseinu editorialean eta&nbsp;identitate korporatiboan&nbsp;espezializatua.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Atalak</h3>
+                <ul>
+                    <li><a href="projects">Proiektuak</a></li>
+                    <li><a href="about">Niri&nbsp;buruz</a></li>
+                    <li><a href="contact">Harremana</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Proiektu&nbsp;Nabarmenak</h3>
+                <ul>
+                    <li><a href="projects/porta">Porta</a></li>
+                    <li><a href="projects/flechasamarillas">Flechas&nbsp;Amarillas</a></li>
+                    <li><a href="projects/formayfuncion">Forma y&nbsp;función</a></li>
+                    <li><a href="projects/casadecor">Casa&nbsp;Decor</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Harremana</h3>
+                <div class="footer-contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <a href="mailto:aldaraalvarezglez@gmail.com">aldaraalvarezglez@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aldara&nbsp;Álvarez. Eskubide guztiak&nbsp;erreserbatuta.</span>
+            <a href="legal" class="footer-legal-link">Lege&nbsp;Oharra</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../static/scripts/dock.js"></script>
+
+    <!-- 3D Stacking Cards Dimensionality Effect -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const cards = document.querySelectorAll(".project-stack-card");
+        
+        function updateCardStack() {
+            const stickyTop = 120;
+            cards.forEach((card, index) => {
+                const nextCard = cards[index + 1];
+                if (nextCard) {
+                    const nextRect = nextCard.getBoundingClientRect();
+                    const cardHeight = card.offsetHeight;
+                    
+                    // Overlap computed when next card scrolls up and begins covering current card
+                    const progress = nextRect.top - stickyTop;
+                    
+                    let pct = 0;
+                    if (progress < cardHeight) {
+                        pct = 1 - Math.max(0, progress / cardHeight);
+                    }
+                    
+                    // Apply 3D scale down, translate backward, and fade
+                    const scale = 1 - (pct * 0.08); // Scale from 1 to 0.92
+                    const opacity = 1 - (pct * 0.5); // Opacity from 1 to 0.5
+                    const translateY = -pct * 30;    // Translate up to create vertical depth offset
+                    
+                    card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+                    card.style.opacity = opacity;
+                }
+            });
+        }
+        
+        window.addEventListener("scroll", updateCardStack);
+        window.addEventListener("resize", updateCardStack);
+        updateCardStack(); // Initial execution
+    });
+    </script>
+
+    <script>
+        /* Animate journey-cta on scroll */
+        const revealEls = [...document.querySelectorAll('[data-animate]')];
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => obs.observe(el));
+    </script>
+
+    <!-- Peza de peche de Porta: aparece ao entrar na pantalla + tilt 3D
+         seguindo o cursor (mesmo mecanismo que .porta-intro-tilt en
+         projects/porta.html) -->
+    <script>
+    (function () {
+        var finale = document.getElementById("porta-finale");
+        if (!finale) return;
+        var prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var canHover = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+        if ("IntersectionObserver" in window) {
+            var finaleObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        finale.classList.add("is-in");
+                        finaleObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            finaleObs.observe(finale);
+        } else {
+            finale.classList.add("is-in");
+        }
+
+        var img = finale.querySelector(".porta-finale-tilt img");
+        if (img) {
+            if (img.complete && img.naturalWidth > 0) {
+                img.classList.add("is-loaded");
+            } else {
+                img.addEventListener("load", function () { img.classList.add("is-loaded"); });
+            }
+        }
+
+        var tilt = document.getElementById("porta-finale-tilt");
+        if (tilt && canHover && !prefersReducedMotion) {
+            var tiltArea = tilt.closest(".porta-finale-media");
+            var maxTilt = 10;
+            var ease = 0.12;
+            var state = { tx: 0, ty: 0, rx: 0, ry: 0 };
+
+            tiltArea.addEventListener("mousemove", function (e) {
+                var rect = tiltArea.getBoundingClientRect();
+                var offsetX = e.clientX - rect.left - rect.width / 2;
+                var offsetY = e.clientY - rect.top - rect.height / 2;
+                state.tx = (offsetY / (rect.height / 2)) * -maxTilt;
+                state.ty = (offsetX / (rect.width / 2)) * maxTilt;
+            });
+            tiltArea.addEventListener("mouseleave", function () {
+                state.tx = 0;
+                state.ty = 0;
+            });
+
+            (function raf() {
+                state.rx += (state.tx - state.rx) * ease;
+                state.ry += (state.ty - state.ry) * ease;
+                tilt.style.transform = "rotateX(" + state.rx.toFixed(2) + "deg) rotateY(" + state.ry.toFixed(2) + "deg)";
+                requestAnimationFrame(raf);
+            })();
+        }
+    })();
+    </script>
+    <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+
+</html>

@@ -42,6 +42,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     statusDiv.innerText = "Please enter a valid email address.";
                 } else if (currentLang === 'gl') {
                     statusDiv.innerText = "Por favor, introduce un correo electrónico válido.";
+                } else if (currentLang === 'ca') {
+                    statusDiv.innerText = "Si us plau, introdueix un correu electrònic vàlid.";
+                } else if (currentLang === 'eu') {
+                    statusDiv.innerText = "Mesedez, sartu baliozko helbide elektroniko bat.";
                 } else {
                     statusDiv.innerText = "Por favor, introduce un email válido.";
                 }
@@ -94,6 +98,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         successTitle.innerText = `Thank you, ${cleanName}!`;
                     } else if (currentLang === 'gl') {
                         successTitle.innerText = `Grazas, ${cleanName}!`;
+                    } else if (currentLang === 'ca') {
+                        successTitle.innerText = `Gràcies, ${cleanName}!`;
+                    } else if (currentLang === 'eu') {
+                        successTitle.innerText = `Eskerrik asko, ${cleanName}!`;
                     } else {
                         successTitle.innerText = `¡Gracias, ${cleanName}!`;
                     }
@@ -119,6 +127,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     statusDiv.innerText = "Something went wrong sending your message. Please try again or email me directly.";
                 } else if (currentLang === 'gl') {
                     statusDiv.innerText = "Algo fallou ao enviar a túa mensaxe. Téntao de novo ou escríbeme directamente.";
+                } else if (currentLang === 'ca') {
+                    statusDiv.innerText = "Alguna cosa ha fallat en enviar el teu missatge. Torna-ho a provar o escriu-me directament.";
+                } else if (currentLang === 'eu') {
+                    statusDiv.innerText = "Zerbait gaizki atera da zure mezua bidaltzean. Saiatu berriro edo idatzi zuzenean niri.";
                 } else {
                     statusDiv.innerText = "Ha ocurrido un error al enviar tu mensaje. Inténtalo de nuevo o escríbeme directamente.";
                 }
