@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
         size: baseSize,
         targetSize: baseSize,
         velocity: 0,
+        written: -1, // ultimo tamano aplicado al DOM (evita reescribir cada frame)
         x: 0 // Center X coordinate of item
     }));
 
@@ -30,15 +31,37 @@ document.addEventListener("DOMContentLoaded", function() {
     dock.addEventListener("mousemove", (e) => {
         isHovered = true;
         mouseX = e.pageX;
+        wake();
     });
+    dock.addEventListener("mouseenter", wake);
 
     dock.addEventListener("mouseleave", () => {
         isHovered = false;
         mouseX = Infinity;
+        wake();
     });
 
     // Timing tracking for delta time
     let lastTime = performance.now();
+    let running = false;
+
+    // El bucle solo corre mientras hay movimiento: en reposo se detiene y no
+    // lee layout ni escribe estilos en cada frame.
+    function wake() {
+        if (running) return;
+        running = true;
+        lastTime = performance.now();
+        requestAnimationFrame(animate);
+    }
+    // Los tamanos se aplican en medios pixeles: con decimales cualquiera los
+    // circulos y los trazos del icono se reparten entre pixeles y se ven blandos.
+    function applySize(state, value) {
+        const px = Math.round(value * 2) / 2;
+        if (state.written === px) return;
+        state.written = px;
+        state.element.style.width = px + 'px';
+        state.element.style.height = px + 'px';
+    }
 
     function animate(now) {
         let dt = (now - lastTime) / 1000; // Convert to seconds
@@ -59,8 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Freeze sizes if language menu is open to prevent cursor shifting
             if (isLangOpen) {
                 state.velocity = 0;
-                state.element.style.width = `${state.size}px`;
-                state.element.style.height = `${state.size}px`;
+                applySize(state, state.size);
                 return;
             }
 
@@ -104,11 +126,15 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             // Apply size styles
-            state.element.style.width = `${state.size}px`;
-            state.element.style.height = `${state.size}px`;
+            applySize(state, state.size);
         });
 
-        // Loop animation
+        // Reposo: nada se mueve ni hay cursor encima -> se para el bucle
+        const settled = states.every(s => Math.abs(s.size - baseSize) < 0.05 && Math.abs(s.velocity) < 0.05);
+        if (!isHovered && !isLangOpen && settled) {
+            running = false;
+            return;
+        }
         requestAnimationFrame(animate);
     }
 
@@ -186,8 +212,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Start requestAnimationFrame loop
-    requestAnimationFrame(animate);
+    // Primer frame (coloca los tamanos base); despues el bucle se para solo
+    wake();
 });
 
 // --- External language switch (desktop/web): lives outside the dock,
