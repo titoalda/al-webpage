@@ -579,7 +579,7 @@
         @media (max-width: 768px) {
             .hero { height: 100vh !important; height: 100svh !important; min-height: 100svh; }
             .services-header { margin-bottom: 20px !important; }
-            .services-grid { gap: 10px !important; }
+            .services-grid { gap: 16px !important; }
             .service-card {
                 padding: 16px 16px 14px !important;
                 display: grid !important;
@@ -1308,14 +1308,14 @@
             // carrusel ni queda pegado a él, pero tampoco se acerca tanto
             // al texto como para tocar "MI".
             function positionHint() {
-                if (!hint || !hintAnchor || !hintRightAnchor || !hintParent) return;
-                const anchorRect = hintAnchor.getBoundingClientRect();
-                const rightAnchorRect = hintRightAnchor.getBoundingClientRect();
+                if (!hint || !hintParent) return;
+                // Siempre debajo de los botones y alineada con el titulo: el hueco junto a "MI"
+                // solo existe si el titulo se parte en tres lineas y en tablet se solapaba.
+                const actions = document.querySelector(".porta-carousel-actions");
                 const parentRect = hintParent.getBoundingClientRect();
-                const left = rightAnchorRect.right - parentRect.left - hint.offsetWidth;
-                const top = anchorRect.top + anchorRect.height / 2 - parentRect.top;
-                hint.style.left = left + "px";
-                hint.style.top = top + "px";
+                const ref = (actions || hintRightAnchor).getBoundingClientRect();
+                hint.style.left = (ref.left - parentRect.left) + "px";
+                hint.style.top = (ref.bottom - parentRect.top + 26 + hint.offsetHeight / 2) + "px";
             }
 
             const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
