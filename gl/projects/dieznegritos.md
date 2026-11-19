@@ -1,9 +1,6 @@
----
-title: "Diez Negritos | Deseño Editorial e Ilustración - Aldara Álvarez"
-url: https://aldaraalvarez.es/gl/projects/dieznegritos
-lang: gl
-description: "Redeseño editorial e ilustración da portada da novela clásica Diez Negritos de Agatha Christie, pola deseñadora Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/gl/projects/dieznegritos | Idioma: gl
+
+> Redeseño editorial e ilustración da portada da novela clásica Diez Negritos de Agatha Christie, pola deseñadora Aldara Álvarez.
 
 # DIEZ NEGRITOS
 

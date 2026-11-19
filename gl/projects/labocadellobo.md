@@ -1,9 +1,6 @@
----
-title: "La Boca del Lobo | Lettering e Dirección de Arte - Aldara Álvarez"
-url: https://aldaraalvarez.es/gl/projects/labocadellobo
-lang: gl
-description: "Lettering e dirección de arte para a portada do vinilo do músico galego Carlos Ares: caligrafía gótica contemporánea con acabados metalizados."
----
+Fuente: https://aldaraalvarez.es/gl/projects/labocadellobo | Idioma: gl
+
+> Lettering e dirección de arte para a portada do vinilo do músico galego Carlos Ares: caligrafía gótica contemporánea con acabados metalizados.
 
 # LA BOCA DEL LOBO
 

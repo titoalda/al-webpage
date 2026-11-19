@@ -1,9 +1,6 @@
----
-title: "Casa de Cuentos | Low-Poly 3D Modeling - Aldara Álvarez"
-url: https://aldaraalvarez.es/en/projects/casacuentos
-lang: en
-description: "Explore Casa de Cuentos by Aldara Álvarez. Design project, low-poly 3D modeling and digital renders in 3dsMax."
----
+Fuente: https://aldaraalvarez.es/en/projects/casacuentos | Idioma: en
+
+> Explore Casa de Cuentos by Aldara Álvarez. Design project, low-poly 3D modeling and digital renders in 3dsMax.
 
 # CASA DE CUENTOS
 

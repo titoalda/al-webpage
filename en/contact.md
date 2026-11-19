@@ -1,9 +1,6 @@
----
-title: "Contact | Aldara Álvarez - Graphic Designer"
-url: https://aldaraalvarez.es/en/contact
-lang: en
-description: "Do you have a graphic design, editorial, branding or 3D modeling project in mind? Contact Aldara Álvarez to collaborate."
----
+Fuente: https://aldaraalvarez.es/en/contact | Idioma: en
+
+> Do you have a graphic design, editorial, branding or 3D modeling project in mind? Contact Aldara Álvarez to collaborate.
 
 # Let's talk
 

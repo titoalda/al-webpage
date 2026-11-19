@@ -1,9 +1,6 @@
----
-title: "Sobre Min | Aldara Álvarez - Deseñadora Gráfica"
-url: https://aldaraalvarez.es/gl/about
-lang: gl
-description: "Coñece a Aldara Álvarez, deseñadora gráfica de Galicia graduada pola UCM. Especialista en deseño editorial, maquetación e identidade visual corporativa."
----
+Fuente: https://aldaraalvarez.es/gl/about | Idioma: gl
+
+> Coñece a Aldara Álvarez, deseñadora gráfica de Galicia graduada pola UCM. Especialista en deseño editorial, maquetación e identidade visual corporativa.
 
 # A miña historia
 

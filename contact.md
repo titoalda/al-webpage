@@ -1,9 +1,6 @@
----
-title: "Contacto | Aldara Álvarez - Diseñadora Gráfica"
-url: https://aldaraalvarez.es/contact
-lang: es
-description: "¿Tienes un proyecto de diseño gráfico, editorial, branding o modelado 3D en mente? Ponte en contacto con Aldara Álvarez para colaborar."
----
+Fuente: https://aldaraalvarez.es/contact | Idioma: es
+
+> ¿Tienes un proyecto de diseño gráfico, editorial, branding o modelado 3D en mente? Ponte en contacto con Aldara Álvarez para colaborar.
 
 # Hablemos
 

@@ -1,9 +1,6 @@
----
-title: "Casa Decor | Signage System - Aldara Álvarez"
-url: https://aldaraalvarez.es/en/projects/casadecor
-lang: en
-description: "Signage identity proposal and pictographic system development for Casa Decor, designed by Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/en/projects/casadecor | Idioma: en
+
+> Signage identity proposal and pictographic system development for Casa Decor, designed by Aldara Álvarez.
 
 # CASA DECOR
 

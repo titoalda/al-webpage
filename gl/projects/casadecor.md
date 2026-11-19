@@ -1,9 +1,6 @@
----
-title: "Casa Decor | Sistema de Sinaléctica - Aldara Álvarez"
-url: https://aldaraalvarez.es/gl/projects/casadecor
-lang: gl
-description: "Proposta de identidade sinaléctica e desenvolvemento de sistema pictográfico para Casa Decor, deseñado por Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/gl/projects/casadecor | Idioma: gl
+
+> Proposta de identidade sinaléctica e desenvolvemento de sistema pictográfico para Casa Decor, deseñado por Aldara Álvarez.
 
 # CASA DECOR
 

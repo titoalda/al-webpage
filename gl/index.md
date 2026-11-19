@@ -1,9 +1,6 @@
----
-title: "Aldara Álvarez | Deseñadora Gráfica, Editorial e de Marca"
-url: https://aldaraalvarez.es/gl
-lang: gl
-description: "Portafolio de deseño de Aldara Álvarez, deseñadora gráfica en Galicia. Especializada en deseño editorial, identidade de marca e dirección de arte."
----
+Fuente: https://aldaraalvarez.es/gl | Idioma: gl
+
+> Portafolio de deseño de Aldara Álvarez, deseñadora gráfica en Galicia. Especializada en deseño editorial, identidade de marca e dirección de arte.
 
 # Aldara Álvarez **deseñadora**|especialista en identidade de marca e deseño editorial
 

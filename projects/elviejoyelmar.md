@@ -1,9 +1,6 @@
----
-title: "El Viejo y el Mar | Ilustración y Maquetación - Aldara Álvarez"
-url: https://aldaraalvarez.es/projects/elviejoyelmar
-lang: es
-description: "Proyecto de ilustración y maquetación editorial de la obra clásica El Viejo y el Mar de Ernest Hemingway, realizado por Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/projects/elviejoyelmar | Idioma: es
+
+> Proyecto de ilustración y maquetación editorial de la obra clásica El Viejo y el Mar de Ernest Hemingway, realizado por Aldara Álvarez.
 
 # EL VIEJO Y EL MAR
 

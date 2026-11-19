@@ -1,9 +1,6 @@
----
-title: "Proyectos | Aldara Álvarez"
-url: https://aldaraalvarez.es/projects
-lang: es
-description: "Explora los proyectos de diseño gráfico de Aldara Álvarez. Diseño editorial, manuales de marca, modelado low-poly 3D y sistemas de señalética."
----
+Fuente: https://aldaraalvarez.es/projects | Idioma: es
+
+> Explora los proyectos de diseño gráfico de Aldara Álvarez. Diseño editorial, manuales de marca, modelado low-poly 3D y sistemas de señalética.
 
 # PROYECTOS
 

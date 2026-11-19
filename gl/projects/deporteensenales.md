@@ -1,9 +1,6 @@
----
-title: "Deporte en Señales | Sistema de Sinaléctica - Aldara Álvarez"
-url: https://aldaraalvarez.es/gl/projects/deporteensenales
-lang: gl
-description: "Deseño de sistema sinaléctico e creación de pictogramas a medida para un complexo deportivo, realizado por Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/gl/projects/deporteensenales | Idioma: gl
+
+> Deseño de sistema sinaléctico e creación de pictogramas a medida para un complexo deportivo, realizado por Aldara Álvarez.
 
 # DEPORTE EN SEÑALES
 

@@ -1,9 +1,6 @@
----
-title: "El Viejo y el Mar | Illustration and Layout - Aldara Álvarez"
-url: https://aldaraalvarez.es/en/projects/elviejoyelmar
-lang: en
-description: "Illustration and editorial layout project of the classic work El Viejo y el Mar by Ernest Hemingway, created by Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/en/projects/elviejoyelmar | Idioma: en
+
+> Illustration and editorial layout project of the classic work El Viejo y el Mar by Ernest Hemingway, created by Aldara Álvarez.
 
 # EL VIEJO Y EL MAR
 

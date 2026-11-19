@@ -1,9 +1,6 @@
----
-title: "Casa Decor | Sistema de Señalética - Aldara Álvarez"
-url: https://aldaraalvarez.es/projects/casadecor
-lang: es
-description: "Propuesta de identidad señalética y desarrollo de sistema pictográfico para Casa Decor, diseñado por Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/projects/casadecor | Idioma: es
+
+> Propuesta de identidad señalética y desarrollo de sistema pictográfico para Casa Decor, diseñado por Aldara Álvarez.
 
 # CASA DECOR
 

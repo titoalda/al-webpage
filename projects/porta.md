@@ -1,9 +1,6 @@
----
-title: "Porta | Identidad Visual y Diseño Editorial - Aldara Álvarez"
-url: https://aldaraalvarez.es/projects/porta
-lang: es
-description: "Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/projects/porta | Idioma: es
+
+> Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.
 
 proyecto de diseño de identidad visual y editorial
 

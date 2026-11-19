@@ -1,9 +1,6 @@
----
-title: "Aldara Álvarez | Graphic, Editorial and Brand Designer"
-url: https://aldaraalvarez.es/en
-lang: en
-description: "Design portfolio of Aldara Álvarez, graphic designer in Galicia. Specialized in editorial design, brand identity and art direction."
----
+Fuente: https://aldaraalvarez.es/en | Idioma: en
+
+> Design portfolio of Aldara Álvarez, graphic designer in Galicia. Specialized in editorial design, brand identity and art direction.
 
 # Aldara Álvarez **designer**|specialist in brand identity and editorial design
 

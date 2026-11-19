@@ -1,9 +1,6 @@
----
-title: "Legal Notice and Privacy Policy | Aldara Álvarez"
-url: https://aldaraalvarez.es/en/legal
-lang: en
-description: "Legal notice, privacy policy and terms of use for the professional portfolio of Aldara Álvarez, graphic designer."
----
+Fuente: https://aldaraalvarez.es/en/legal | Idioma: en
+
+> Legal notice, privacy policy and terms of use for the professional portfolio of Aldara Álvarez, graphic designer.
 
 # Legal Notice and Privacy Policy
 

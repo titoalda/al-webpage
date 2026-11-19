@@ -1,9 +1,6 @@
----
-title: "Aviso Legal e Política de Privacidade | Aldara Álvarez"
-url: https://aldaraalvarez.es/gl/legal
-lang: gl
-description: "Aviso legal, política de privacidade e condicións de uso do portafolio profesional de Aldara Álvarez, deseñadora gráfica."
----
+Fuente: https://aldaraalvarez.es/gl/legal | Idioma: gl
+
+> Aviso legal, política de privacidade e condicións de uso do portafolio profesional de Aldara Álvarez, deseñadora gráfica.
 
 # Aviso Legal e Política de Privacidade
 

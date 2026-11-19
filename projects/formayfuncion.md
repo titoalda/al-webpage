@@ -1,9 +1,6 @@
----
-title: "Forma y Función | Diseño Editorial - Aldara Álvarez"
-url: https://aldaraalvarez.es/projects/formayfuncion
-lang: es
-description: "Explora el proyecto de diseño editorial y maquetación Forma y Función de Aldara Álvarez, que incluye el diseño de la revista y su manual de estilo."
----
+Fuente: https://aldaraalvarez.es/projects/formayfuncion | Idioma: es
+
+> Explora el proyecto de diseño editorial y maquetación Forma y Función de Aldara Álvarez, que incluye el diseño de la revista y su manual de estilo.
 
 # FORMA Y FUNCIÓN
 

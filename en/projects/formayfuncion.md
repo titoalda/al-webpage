@@ -1,9 +1,6 @@
----
-title: "Forma y Función | Editorial Design - Aldara Álvarez"
-url: https://aldaraalvarez.es/en/projects/formayfuncion
-lang: en
-description: "Explore the Forma y Función editorial design and layout project by Aldara Álvarez, including the magazine design and its style manual."
----
+Fuente: https://aldaraalvarez.es/en/projects/formayfuncion | Idioma: en
+
+> Explore the Forma y Función editorial design and layout project by Aldara Álvarez, including the magazine design and its style manual.
 
 # FORMA Y FUNCIÓN
 

@@ -1,9 +1,6 @@
----
-title: "Aldara Álvarez | Diseñadora"
-url: https://aldaraalvarez.es/
-lang: es
-description: "Portafolio de diseño de Aldara Álvarez, diseñadora gráfica. Especializada en diseño editorial e identidad de marca, con proyectos de dirección de arte y maquetación."
----
+Fuente: https://aldaraalvarez.es/ | Idioma: es
+
+> Portafolio de diseño de Aldara Álvarez, diseñadora gráfica. Especializada en diseño editorial e identidad de marca, con proyectos de dirección de arte y maquetación.
 
 # Aldara Álvarez **diseñadora**|especialista en identidad de marca y diseño editorial
 

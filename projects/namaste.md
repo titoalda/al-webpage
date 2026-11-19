@@ -1,9 +1,6 @@
----
-title: "Namasté | Identidad Corporativa y Packaging - Aldara Álvarez"
-url: https://aldaraalvarez.es/projects/namaste
-lang: es
-description: "Explora el proyecto Namasté de Aldara Álvarez. Diseño de identidad corporativa y packaging ecológico para una marca de té premium."
----
+Fuente: https://aldaraalvarez.es/projects/namaste | Idioma: es
+
+> Explora el proyecto Namasté de Aldara Álvarez. Diseño de identidad corporativa y packaging ecológico para una marca de té premium.
 
 # NAMASTÉ
 

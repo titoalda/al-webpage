@@ -1,9 +1,6 @@
----
-title: "About Me | Aldara Álvarez - Graphic Designer"
-url: https://aldaraalvarez.es/en/about
-lang: en
-description: "Get to know Aldara Álvarez, graphic designer from Galicia graduated from UCM. Specialist in editorial design, layout and corporate visual identity."
----
+Fuente: https://aldaraalvarez.es/en/about | Idioma: en
+
+> Get to know Aldara Álvarez, graphic designer from Galicia graduated from UCM. Specialist in editorial design, layout and corporate visual identity.
 
 # My story
 

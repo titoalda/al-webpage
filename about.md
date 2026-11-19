@@ -1,9 +1,6 @@
----
-title: "Sobre Mí | Aldara Álvarez - Diseñadora Gráfica"
-url: https://aldaraalvarez.es/about
-lang: es
-description: "Conoce a Aldara Álvarez, diseñadora gráfica graduada por la UCM. Especialista en diseño editorial, maquetación e identidad visual corporativa."
----
+Fuente: https://aldaraalvarez.es/about | Idioma: es
+
+> Conoce a Aldara Álvarez, diseñadora gráfica graduada por la UCM. Especialista en diseño editorial, maquetación e identidad visual corporativa.
 
 # Mi historia
 

@@ -1,9 +1,6 @@
----
-title: "Deporte en Señales | Signage System - Aldara Álvarez"
-url: https://aldaraalvarez.es/en/projects/deporteensenales
-lang: en
-description: "Design of a signage system and creation of custom pictograms for a sports complex, created by Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/en/projects/deporteensenales | Idioma: en
+
+> Design of a signage system and creation of custom pictograms for a sports complex, created by Aldara Álvarez.
 
 # DEPORTE EN SEÑALES
 

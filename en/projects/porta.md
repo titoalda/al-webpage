@@ -1,9 +1,6 @@
----
-title: "Porta | Visual Identity and Editorial Design - Aldara Álvarez"
-url: https://aldaraalvarez.es/en/projects/porta
-lang: en
-description: "Porta visual identity and editorial design project — a mook about Baiona's heritage: naming, logo, graphic system, editorial layout, photography, illustration and stationery, by Aldara Álvarez."
----
+Fuente: https://aldaraalvarez.es/en/projects/porta | Idioma: en
+
+> Porta visual identity and editorial design project — a mook about Baiona's heritage: naming, logo, graphic system, editorial layout, photography, illustration and stationery, by Aldara Álvarez.
 
 visual identity and editorial design project
 
