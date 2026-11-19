@@ -1,0 +1,35 @@
+# Aldara Álvarez
+
+> Portafolio de Aldara Álvarez, diseñadora gráfica especializada en diseño editorial, identidad de marca y diseño UX·UI. Web trilingüe (español, gallego e inglés). Cada página tiene una versión en Markdown (.md) con el mismo contenido.
+
+Política de IA: los buscadores y asistentes de IA pueden leer y citar este contenido; no está permitido usarlo para entrenar modelos (ver /robots.txt).
+
+## Páginas principales
+
+- [Aldara Álvarez | Diseñadora](https://aldaraalvarez.es/index.md): Portafolio de diseño de Aldara Álvarez, diseñadora gráfica. Especializada en diseño editorial e identidad de marca, con proyectos de dirección de arte y maquetación.
+- [Sobre Mí | Aldara Álvarez - Diseñadora Gráfica](https://aldaraalvarez.es/about.md): Conoce a Aldara Álvarez, diseñadora gráfica graduada por la UCM. Especialista en diseño editorial, maquetación e identidad visual corporativa.
+- [Proyectos | Aldara Álvarez](https://aldaraalvarez.es/projects.md): Explora los proyectos de diseño gráfico de Aldara Álvarez. Diseño editorial, manuales de marca, modelado low-poly 3D y sistemas de señalética.
+- [Contacto | Aldara Álvarez - Diseñadora Gráfica](https://aldaraalvarez.es/contact.md): ¿Tienes un proyecto de diseño gráfico, editorial, branding o modelado 3D en mente? Ponte en contacto con Aldara Álvarez para colaborar.
+- [Aviso Legal y Política de Privacidad | Aldara Álvarez](https://aldaraalvarez.es/legal.md): Aviso legal, política de privacidad y condiciones de uso del portafolio profesional de Aldara Álvarez, diseñadora gráfica.
+
+## Proyectos
+
+- [Casa de Cuentos](https://aldaraalvarez.es/projects/casacuentos.md): Explora la Casa de Cuentos de Aldara Álvarez. Proyecto de diseño, modelado 3D low-poly y renders digitales en 3dsMax.
+- [Casa Decor](https://aldaraalvarez.es/projects/casadecor.md): Propuesta de identidad señalética y desarrollo de sistema pictográfico para Casa Decor, diseñado por Aldara Álvarez.
+- [Deporte en Señales](https://aldaraalvarez.es/projects/deporteensenales.md): Diseño de sistema señalético y creación de pictogramas a medida para un complejo deportivo, realizado por Aldara Álvarez.
+- [Diez Negritos](https://aldaraalvarez.es/projects/dieznegritos.md): Rediseño editorial e ilustración de la portada de la novela clásica Diez Negritos de Agatha Christie, por la diseñadora Aldara Álvarez.
+- [El Viejo y el Mar](https://aldaraalvarez.es/projects/elviejoyelmar.md): Proyecto de ilustración y maquetación editorial de la obra clásica El Viejo y el Mar de Ernest Hemingway, realizado por Aldara Álvarez.
+- [Forma y Función](https://aldaraalvarez.es/projects/formayfuncion.md): Explora el proyecto de diseño editorial y maquetación Forma y Función de Aldara Álvarez, que incluye el diseño de la revista y su manual de estilo.
+- [La Boca del Lobo](https://aldaraalvarez.es/projects/labocadellobo.md): Lettering y dirección de arte para la portada del vinilo del músico gallego Carlos Ares: caligrafía gótica contemporánea con acabados metalizados.
+- [Namasté](https://aldaraalvarez.es/projects/namaste.md): Explora el proyecto Namasté de Aldara Álvarez. Diseño de identidad corporativa y packaging ecológico para una marca de té premium.
+- [Porta](https://aldaraalvarez.es/projects/porta.md): Proyecto de identidad visual y diseño editorial de Porta, cuadernos de identidad baionesa: naming, logotipo, sistema gráfico, maquetación, fotografía, ilustración y papelería, realizado por Aldara Álvarez.
+
+## Otros idiomas
+
+- Galego: https://aldaraalvarez.es/gl/index.md
+- English: https://aldaraalvarez.es/en/index.md
+
+## Más
+
+- [Sitemap](https://aldaraalvarez.es/sitemap.xml)
+- [PORTA, sitio del libro](https://portamook.com/)
