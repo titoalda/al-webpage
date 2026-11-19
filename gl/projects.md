@@ -12,6 +12,12 @@ Unha mostra do meu enfoque creativo e conceptual.
 
 [VER PROXECTO](https://aldaraalvarez.es/gl/projects/elviejoyelmar)
 
+## FLECHAS AMARILLAS
+
+### DESEÑO EDITORIAL E ILUSTRACIÓN
+
+[VER PROXECTO](https://aldaraalvarez.es/gl/projects/flechasamarillas)
+
 ## NAMASTÉ
 
 ### DESEÑO DE IDENTIDADE E *PACKAGING*
@@ -51,12 +57,6 @@ Unha mostra do meu enfoque creativo e conceptual.
 ### DESEÑO DE CUBERTA
 
 [VER PROXECTO](https://aldaraalvarez.es/gl/projects/dieznegritos)
-
-## FLECHAS AMARILLAS
-
-### DESEÑO EDITORIAL E ILUSTRACIÓN
-
-[VER PROXECTO](https://aldaraalvarez.es/gl/projects/flechasamarillas)
 
 Edición Nº1 · *Mook* editorial
 

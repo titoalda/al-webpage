@@ -12,6 +12,12 @@ A sample of my creative and conceptual approach.
 
 [VIEW PROJECT](https://aldaraalvarez.es/en/projects/elviejoyelmar)
 
+## FLECHAS AMARILLAS
+
+### EDITORIAL DESIGN AND ILLUSTRATION
+
+[VIEW PROJECT](https://aldaraalvarez.es/en/projects/flechasamarillas)
+
 ## NAMASTÉ
 
 ### IDENTITY AND *PACKAGING* DESIGN
@@ -51,12 +57,6 @@ A sample of my creative and conceptual approach.
 ### COVER DESIGN
 
 [VIEW PROJECT](https://aldaraalvarez.es/en/projects/dieznegritos)
-
-## FLECHAS AMARILLAS
-
-### EDITORIAL DESIGN AND ILLUSTRATION
-
-[VIEW PROJECT](https://aldaraalvarez.es/en/projects/flechasamarillas)
 
 Edition Nº1 · Editorial *mook*
 
