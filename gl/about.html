@@ -291,6 +291,7 @@
 
         let totalLen = 0;
         let dotPoints = [];
+        let isMobile = false;
 
         // ── Build SVG path from real DOM positions ───────────────
         function build() {
@@ -308,8 +309,15 @@
                 return sTop + s.offsetHeight / 2;
             });
 
+            // Móvil: línea recta vertical pegada al margen izquierdo
+            isMobile = window.innerWidth <= 768;
+            const lineX = 22;
             // Key points: start (top center) → dots → end (bottom center)
-            const pts = [
+            const pts = isMobile ? [
+                { x: lineX, y: 0 },
+                ...mids.map(y => ({ x: lineX, y })),
+                { x: lineX, y: H }
+            ] : [
                 { x: W * 0.5, y: 0 },
                 ...mids.map((y, i) => ({ x: W * xRatios[i], y })),
                 { x: W * 0.5, y: H }
@@ -353,7 +361,10 @@
             dots.forEach((dot, i) => {
                 // section i sits at roughly (i+1)/(sections.length+1) of the path
                 const dotFrac = (i + 1) / (sections.length + 1);
-                dot.classList.toggle('active', progress >= dotFrac - 0.05);
+                const reached = isMobile && dotPoints[i]
+                    ? progress * wrapper.offsetHeight >= dotPoints[i].y
+                    : progress >= dotFrac - 0.05;
+                dot.classList.toggle('active', reached);
             });
         }
 

@@ -312,7 +312,7 @@
     .formation-list li { line-height: 1.45; }
 
     /* On mobile, straighten the line to left edge */
-    .journey-svg { display: none; }
-    .journey-dot { display: none; }
+    .journey-path-bg { stroke: rgba(255, 255, 255, 0.12); }
+    .journey-path-progress { stroke: rgba(255, 255, 255, 0.55); }
     .journey-scroll-hint { display: none; }
 }
