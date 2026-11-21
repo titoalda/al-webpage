@@ -165,10 +165,9 @@
                 .porta-web-link, .porta-web-arrow { transition: none; }
             }
             .porta-web-link--largo {
-                font-size: clamp(20px, 4.4vw, 68px);
+                font-size: min(68px, calc(92vw / 17));
                 letter-spacing: -0.01em;
-                overflow-wrap: anywhere;
-                text-align: center;
+                white-space: nowrap;
             }
         </style>
     </head>
