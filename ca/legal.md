@@ -96,6 +96,8 @@ La Titular adopta les mesures tècniques i organitzatives raonables, atenent a l
 
 El Lloc Web no instal·la cookies pròpies ni de tercers amb fins publicitaris, de perfilat o de seguiment. Per a l'anàlisi estadística de les visites s'utilitza el servei **GoatCounter**, una eina d'analítica web dissenyada específicament per no dependre de cookies ni d'identificadors persistents, i que no recopila adreces IP completes ni cap altra dada que permeti la identificació directa de la persona usuària. La informació recollida es limita a dades agregades de naturalesa estadística (nombre de visites, pàgines més consultades, país aproximat d'origen i tipus de dispositiu), utilitzades exclusivament per conèixer l'interès generat pels continguts del Lloc Web.
 
+A més, el Lloc Web mesura les visites amb un sistema propi d'analítica, també sense cookies ni seguiment entre webs. De cada visita anota la pàgina, d'on arriba, el tipus de dispositiu, el navegador, el sistema, l'idioma, l'amplada de pantalla, el país i l'adreça IP. La IP es conserva un any i després s'esborra; no s'usa per identificar la persona usuària ni es cedeix a tercers. Els avisos els rep un servidor de nanuve.net, sense intermediaris, i el país es calcula allà mateix amb una base pública. La base legal és l'interès legítim a conèixer l'ús del Lloc Web (art. 6.1.f del RGPD).
+
 ## 9. Menors d'edat
 
 L'accés i ús del Lloc Web, així com l'enviament de dades personals a través del formulari de contacte, està dirigit a persones majors d'edat. La Titular no recull de forma conscient dades personals de menors d'edat i, en cas de tenir coneixement que s'haguessin facilitat dades d'un menor sense el consentiment dels seus progenitors o tutors legals, procedirà a la seva supressió immediata.

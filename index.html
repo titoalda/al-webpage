@@ -4,7 +4,7 @@
     <link rel="shortcut icon" href="static/logo/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="static/logo/apple-touch-icon.png">
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com https://nanuve.net; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
     <script>
         // Evita el parpadeo del intro (barrido + hero) en visitas repetidas
         // dentro de la misma sesion: si ya se reprodujo, marca <html> antes
@@ -1522,6 +1522,12 @@
                 });
             });
         })();
+    </script>
+    <script>
+    (function(d,l){var u=new URLSearchParams(l.search),q=function(k){return encodeURIComponent(u.get(k)||'')};
+    new Image().src='https://nanuve.net/v?site=2cTmyuL_UFRC&path='+encodeURIComponent(l.pathname)+'&ref='+encodeURIComponent(d.referrer)
+    +'&w='+screen.width+'&l='+encodeURIComponent(navigator.language||'')+'&us='+q('utm_source')+'&um='+q('utm_medium')+'&uc='+q('utm_campaign');
+    })(document,location);
     </script>
 </body>
 </html>

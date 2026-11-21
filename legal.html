@@ -4,7 +4,7 @@
     <link rel="shortcut icon" href="static/logo/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="static/logo/apple-touch-icon.png">
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://luiscorbachoflores.goatcounter.com https://nanuve.net; font-src 'self'; connect-src 'self' https://api.web3forms.com https://luiscorbachoflores.goatcounter.com; frame-src https://sketchfab.com https://*.sketchfab.com; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#111111">
     <title>Aviso Legal y Política de Privacidad | Aldara Álvarez</title>
@@ -213,6 +213,7 @@
 
         <h2>8. Política de cookies y tecnologías de analítica</h2>
         <p>El Sitio Web no instala cookies propias ni de terceros con fines publicitarios, de perfilado o de seguimiento. Para el análisis estadístico de las visitas se utiliza el servicio <strong>GoatCounter</strong>, una herramienta de analítica web diseñada específicamente para no depender de cookies ni de identificadores persistentes, y que no recopila direcciones IP completas ni ningún otro dato que permita la identificación directa de la persona usuaria. La información recabada se limita a datos agregados de naturaleza estadística (número de visitas, páginas más consultadas, país aproximado de origen y tipo de dispositivo), utilizados exclusivamente para conocer el interés generado por los contenidos del Sitio Web.</p>
+        <p>Además, el Sitio Web mide las visitas con un sistema propio de analítica, también sin cookies ni seguimiento entre webs. De cada visita anota la página, de dónde llega, el tipo de dispositivo, el navegador, el sistema, el idioma, el ancho de pantalla, el país y la dirección IP. La IP se conserva un año y después se borra; no se usa para identificar a la persona usuaria ni se cede a terceros. Los avisos los recibe un servidor de nanuve.net, sin intermediarios, y el país se calcula allí mismo con una base pública. La base legal es el interés legítimo en conocer el uso del Sitio Web (art. 6.1.f del RGPD).</p>
 
         <h2>9. Menores de edad</h2>
         <p>El acceso y uso del Sitio Web, así como el envío de datos personales a través del formulario de contacto, está dirigido a personas mayores de edad. La Titular no recaba de forma consciente datos personales de menores de edad y, en caso de tener conocimiento de que se hubieran facilitado datos de un menor sin el consentimiento de sus progenitores o tutores legales, procederá a su supresión inmediata.</p>
@@ -229,5 +230,11 @@
 
     <script src="static/scripts/dock.js"></script>
     <script data-goatcounter="https://luiscorbachoflores.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <script>
+    (function(d,l){var u=new URLSearchParams(l.search),q=function(k){return encodeURIComponent(u.get(k)||'')};
+    new Image().src='https://nanuve.net/v?site=2cTmyuL_UFRC&path='+encodeURIComponent(l.pathname)+'&ref='+encodeURIComponent(d.referrer)
+    +'&w='+screen.width+'&l='+encodeURIComponent(navigator.language||'')+'&us='+q('utm_source')+'&um='+q('utm_medium')+'&uc='+q('utm_campaign');
+    })(document,location);
+    </script>
 </body>
 </html>

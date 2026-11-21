@@ -96,6 +96,8 @@ A Titular adopta as medidas técnicas e organizativas razoables, atendendo ao es
 
 O Sitio Web non instala cookies propias nin de terceiros con fins publicitarios, de perfilado ou de seguimento. Para a análise estatística das visitas utilízase o servizo **GoatCounter**, unha ferramenta de analítica web deseñada especificamente para non debedes depender de cookies nin de identificadores persistentes, e que non recompila direccións IP completas nin ningún outro dato que permita a identificación directa da persoa usuaria. A información recollida limítase a datos agregados de natureza estatística (número de visitas, páxinas máis consultadas, país aproximado de orixe e tipo de dispositivo), utilizados exclusivamente para coñecer o interese xerado polos contidos do Sitio Web.
 
+Ademais, o Sitio Web mide as visitas cun sistema propio de analítica, tamén sen cookies nin seguimento entre webs. De cada visita anota a páxina, de onde chega, o tipo de dispositivo, o navegador, o sistema, o idioma, o ancho de pantalla, o país e o enderezo IP. A IP consérvase un ano e despois bórrase; non se usa para identificar a persoa usuaria nin se cede a terceiros. Os avisos recíbeos un servidor de nanuve.net, sen intermediarios, e o país calcúlase alí mesmo cunha base pública. A base xurídica é o interese lexítimo en coñecer o uso do Sitio Web (art. 6.1.f do RXPD).
+
 ## 9. Menores de idade
 
 O acceso e uso do Sitio Web, así como o envío de datos persoais a través del formulario de contacto, está dirixido a persoas maiores de idade. A Titular non recolle de forma consciente datos persoais de menores de idade e, en caso de ter coñecemento de que se facilitaran datos dun menor sen o consentimento dos seus proxenitores ou titoría legal, procederá á súa supresión inmediata.
