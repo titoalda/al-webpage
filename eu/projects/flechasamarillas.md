@@ -27,6 +27,12 @@ Norberak sortutako testuak gaztelaniaz eta ingelesez. InDesign-en maketatuak Poi
 
 Liburuaren azaleko eta barruko norberak sortutako ilustrazioak. Procreate-n eginak eta Illustrator-en bektorializatuak.
 
+Liburuaren webgune ofiziala
+
+[flechasamarillas.aldaraalvarez.es↗](https://flechasamarillas.aldaraalvarez.es/)
+
+Ezagutu liburua eta erreserbatu zure alea.
+
 ## *Briefing*
 
 **Flechas Amarillas** diseinu editorialeko eta ilustrazioko proiektu bat da, *Lo que esconden las flechas amarillas* liburuaren sorkuntza osoan datzana: Portotik Santiago de Compostelara doan Kostaldeko Bide Portugesari buruzko A6 formatuko poltsikoko liburu elebidun bat. Lanak testuen erredakziotik eta ilustrazioen sorkuntzatik hasi eta bolumenaren maketazio osoraino jorratzen du, azalaren, kontrazalaren eta bizkarraren egitura eta ibilbidea lau ekitalditan banatzea ildo kontzeptual beraren pean definituz: ilustrazio bakoitzean ezkutatutako gezi hori bat.

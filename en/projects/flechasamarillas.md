@@ -27,6 +27,12 @@ Self-written texts in Spanish and English. Layout designed in InDesign with the 
 
 Self-created illustrations for the cover and interior of the book. Created in Procreate and vectorized in Illustrator.
 
+The book’s official website
+
+[flechasamarillas.aldaraalvarez.es↗](https://flechasamarillas.aldaraalvarez.es/en/)
+
+Discover the book and reserve your copy.
+
 ## *Briefing*
 
 **Flechas Amarillas** is an editorial design and illustration project consisting of the complete creation of *Behind the Yellow Arrows*, a bilingual A6 pocket book about the Portuguese Coastal Way, from Porto to Santiago de Compostela. The work ranges from writing the texts and creating the illustrations to the full layout of the volume, defining the cover, back cover and spine structure and the division of the route into four acts under a single conceptual line: a yellow arrow hidden in every illustration.

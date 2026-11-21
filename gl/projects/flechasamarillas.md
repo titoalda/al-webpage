@@ -27,6 +27,12 @@ Textos de creación propia en español e inglés. Maquetados en InDesign coas ti
 
 Ilustracións de cuberta e interior do libro de creación propia. Realizadas en Procreate e vectorizadas en Illustrator.
 
+Web oficial do libro
+
+[flechasamarillas.aldaraalvarez.es↗](https://flechasamarillas.aldaraalvarez.es/)
+
+Descobre o libro e reserva o teu exemplar.
+
 ## *Briefing*
 
 **Flechas Amarillas** é un proxecto de deseño editorial e ilustración que consiste na creación íntegra de *Lo que esconden las flechas amarillas*, un libro de peto bilingüe en formato A6 sobre o Camiño Portugués da Costa, de Porto a Santiago de Compostela. O traballo aborda dende a redacción dos textos e a creación das ilustracións ata a maquetación total do volume, definindo a estrutura de portada, contraportada e lombo e a división do percorrido en catro actos baixo unha mesma liña conceptual: unha frecha amarela agochada en cada ilustración.

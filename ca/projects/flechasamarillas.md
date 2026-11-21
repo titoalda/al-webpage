@@ -27,6 +27,12 @@ Textos de creació pròpia en espanyol i anglès. Maquetats en InDesign amb les 
 
 Il·lustracions de coberta i interior del llibre de creació pròpia. Realitzades en Procreate i vectoritzades en Illustrator.
 
+Web oficial del llibre
+
+[flechasamarillas.aldaraalvarez.es↗](https://flechasamarillas.aldaraalvarez.es/)
+
+Descobreix el llibre i reserva el teu exemplar.
+
 ## *Briefing*
 
 **Flechas Amarillas** és un projecte de disseny editorial i il·lustració que consisteix en la creació íntegra de *Lo que esconden las flechas amarillas*, un llibre de butxaca bilingüe en format A6 sobre el Camí Portuguès per la Costa, de Porto a Santiago de Compostela. El treball aborda des de la redacció dels textos i la creació de les il·lustracions fins a la maquetació total del volum, definint l'estructura de portada, contraportada i llom i la divisió del recorregut en quatre actes sota una mateixa línia conceptual: una fletxa groga amagada a cada il·lustració.
